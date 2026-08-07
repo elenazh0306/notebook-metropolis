@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   resources :categories do
     resources :notes
-    resources :citizens, :only [:new, :create]
+    resources :citizens, :only [:create, :destroy]
   end
 
   resources :citizens, :only [:show] do
