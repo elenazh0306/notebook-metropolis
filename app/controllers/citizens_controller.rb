@@ -1,6 +1,6 @@
 class CitizensController < ApplicationController
   before_action :set_category, only: %i[create destroy]
-  before_action :citizen, only: %i[show destroy]
+  before_action :set_citizen, only: %i[show destroy]
 
   def create
     @citizen = Citizen.new(name: Citizen::DEFAULT_NAME)
@@ -30,7 +30,7 @@ class CitizensController < ApplicationController
     @category = Category.find(params[:category_id])
   end
 
-  def citizen
+  def set_citizen
     @citizen = Citizen.find(params[:id])
   end
 end
