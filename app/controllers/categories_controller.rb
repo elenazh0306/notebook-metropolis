@@ -4,8 +4,8 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    authorize @category
     @category = Category.find(params[:id])
+    authorize @category
   end
 
   def new
@@ -26,8 +26,8 @@ class CategoriesController < ApplicationController
   end
 
   def edit
-    authorize @category
     @category = Category.find(params[:id])
+    authorize @category
   end
 
   def update
@@ -40,8 +40,8 @@ class CategoriesController < ApplicationController
   end
 
   def destroy
-    authorize @category
     @category = Category.find(params[:id])
+    authorize @category
     @category.destroy
 
     redirect_to categories_path
@@ -50,6 +50,6 @@ class CategoriesController < ApplicationController
   private
 
   def category_params
-    params.require(:category).require(:name, :summary)
+    params.require(:category).permit(:name)
   end
 end
