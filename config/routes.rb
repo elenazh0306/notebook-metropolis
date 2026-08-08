@@ -1,14 +1,24 @@
 Rails.application.routes.draw do
   devise_for :users
-  root to: "pages#home"
+
+
+  authenticated :user do
+    root to: "categories#index", as: :authenticated_root
+  end
+
+  unauthenticated do
+    devise_scope :user do
+      root to: "pages#home", as: :unauthenticated_root
+    end
+  end
 
   resources :categories do
     resources :notes
-    resources :citizens, :only [:new, :create]
+    resources :citizens, only: [:new, :create]
   end
 
-  resources :citizens, :only [:show] do
-    resources :messages, :only [:create]
+  resources :citizens, only: [:show] do
+    resources :messages, only: [:create]
   end
 
 end
