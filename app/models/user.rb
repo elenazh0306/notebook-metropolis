@@ -6,4 +6,10 @@ class User < ApplicationRecord
   has_many :categories, dependent: :destroy
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  TILE_TYPES = {
+  "grass": { buildable: true, name: "grass" },
+  "path": { buildable: false, name: "path" },
+  "base": { buildable: false, name: "base" }
+  }
 end

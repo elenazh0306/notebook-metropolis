@@ -8,6 +8,7 @@
   transform: rotate(45deg) rotate3d(-3, 3, 0, 60deg);
 
   .tile {
+    position: relative;
     height: 100px;
     width: 100px;
     box-shadow: 0 0 0 0 rgba(0,0,0,.7);
@@ -24,6 +25,32 @@
 
   }
 
+}
+
+.building-block {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+
+  .add-btn {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    opacity: 0.6;
+
+    &:hover {
+      opacity: 1.0;
+    }
+  }
 }
 
 .row {

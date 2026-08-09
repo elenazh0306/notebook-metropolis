@@ -7,6 +7,10 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
-
+puts "deleting old seeds"
+User.destroy_all
+puts "creating a new user"
 user = User.create(name: "user", email:"email@email.com", password: "111111")
 user.tile_map = [["grass", "grass"],["grass", "path"]]
+user.save!
+puts "new user created!"
