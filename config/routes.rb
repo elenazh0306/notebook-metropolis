@@ -21,4 +21,6 @@ Rails.application.routes.draw do
     resources :messages, only: [:create]
   end
 
+  patch "tile_map/update", to: "tile_maps#update", as: :update_tile
+
 end

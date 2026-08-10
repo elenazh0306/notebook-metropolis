@@ -1,0 +1,31 @@
+<% current_type = tile_map[y][x].to_s %>
+<% tile = User::TILE_TYPES[current_type.to_sym] %>
+<% tile_order = User::TILE_TYPES.keys.map(&:to_s) %>
+<% category_on_tile = @categories.find { |c| c.x == x && c.y == y } %>
+
+<div id="tile_<%= x %>_<%= y %>"
+      class="tile"
+      data-controller="tile"
+      data-tile-x-value="<%= x %>"
+      data-tile-y-value="<%= y %>"
+      data-tile-current-value="<%= current_type %>"
+      data-tile-types-value="<%= tile_order.to_json %>"
+      data-action="click->tile#cycleForward">
+  <%= tile[:name] %>
+  <% case tile[:name] %>
+    <% when 'base' %>
+      <% unless category_on_tile %>
+        <%= link_to "+", new_category_path(x: x, y: y), class: "add-btn", title: "Build here" %>
+      <% end %>
+
+    <% when 'path' %>
+      <span class="tile-symbol">🛣️</span>
+
+    <% when 'grass' %>
+      <span class="tile-symbol">🌱</span>
+
+    <% else %>
+      <span class="tile-symbol">❓</span>
+  <% end %>
+
+</div>

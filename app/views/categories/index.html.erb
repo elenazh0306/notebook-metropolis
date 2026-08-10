@@ -1,0 +1,15 @@
+<h3><%= current_user.name %></h3>
+<%= current_user.tile_map%>
+<div class="board">
+  <% rows = 2 %>
+  <% columns = 2 %>
+  <% category_on_tile = @categories.find { |category| category.x == x && category.y == y } %>
+ <% tile_order = User::TILE_TYPES.keys.map(&:to_s)%>
+  <% rows.times do |y| %>
+    <div class="d-flex">
+    <% columns.times do |x| %>
+      <%= render "tile_maps/tile", x: x, y: y, tile_map: current_user.tile_map %>
+    <% end %>
+    </div>
+  <% end %>
+</div>
