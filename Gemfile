@@ -74,4 +74,4 @@ group :test do
 end
 
 gem "pundit"
-gem "ruby_llm", "~> 1.2.0"
+gem "ruby_llm", "~> 1.16.0"
