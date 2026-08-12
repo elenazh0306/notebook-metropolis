@@ -1,5 +1,5 @@
 class CategoriesController < ApplicationController
-   def index
+  def index
     @categories = policy_scope(Category)
     x = params[:x].to_i
     y = params[:y].to_i
