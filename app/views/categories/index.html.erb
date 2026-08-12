@@ -4,7 +4,7 @@
   <% rows = 2 %>
   <% columns = 2 %>
   <% category_on_tile = @categories.find { |category| category.x == x && category.y == y } %>
- <% tile_order = User::TILE_TYPES.keys.map(&:to_s)%>
+    <% tile_order = User::TILE_TYPES.keys.map(&:to_s)%>
   <% rows.times do |y| %>
     <div class="d-flex">
     <% columns.times do |x| %>
