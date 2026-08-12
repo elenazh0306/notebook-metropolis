@@ -11,6 +11,20 @@ puts "deleting old seeds"
 User.destroy_all
 puts "creating a new user"
 user = User.create(name: "user", email:"email@email.com", password: "111111")
-user.tile_map = [["grass", "grass"],["grass", "path"]]
+user.tile_map = [["grass", "grass"],["path", "base"]]
 user.save!
+
+category = user.categories.create!(
+  name: "Cozy Study",
+  sprite_image: "default.png",
+  room_image: "cat_room.png",
+  x: 1,
+  y: 1
+)
+
+category.notes.create!(
+  title: "First Study Note",
+  content: "Rooms and Modals and Notes and Turbo Frames documentation!"
+)
+
 puts "new user created!"

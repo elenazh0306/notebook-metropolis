@@ -1,0 +1,28 @@
+<!-- Links to the ID on categories/index.html.erb -->
+<turbo-frame id="notice_board_content">
+  <!-- We keep the exact same container as notes/index.html.erb so the note overlays perfectly -->
+  <div class="corkboard-container p-3">
+
+    <!-- Header with a Back Link to notice board on notes/index.html.erb -->
+    <div class="mb-3">
+      <%= link_to category_notes_path(@category),
+                  data: { turbo_frame: "notice_board_content" }, # the ID that connects us to categories/index.html.erb
+                  class: "btn btn-outline-secondary btn-sm mb-2" do %>
+        ⬅️ Back to Board
+      <% end %>
+    </div>
+
+    <!-- The Full Note Displayed as an Expanded Post-It -->
+    <div class="card shadow-sm border-0 my-3 style-postit-detail">
+      <div class="card-body p-4">
+        <h4 class="card-title fw-bold text-dark border-bottom pb-2 mb-3">
+          📌 <%= @note.title %>
+        </h4>
+        <p class="card-text text-dark fs-5" style="white-space: pre-line;">
+          <%= @note.content %>
+        </p>
+      </div>
+    </div>
+
+  </div>
+</turbo-frame>

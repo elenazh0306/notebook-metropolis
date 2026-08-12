@@ -1,21 +1,19 @@
 class NotesController < ApplicationController
+  before_action :set_category
+
   def index
-    @category = Category.find(params[:category_id])
     @notes = @category.notes
   end
 
   def show
-    @category = Category.find(params[:category_id])
-    @note = Note.find(params[:id])
+    @note = @category.notes.find(params[:id])
   end
 
   def new
-    @category = Category.find(params[:category_id])
     @note = Note.new
   end
 
   def create
-    @category = Category.find(params[:category_id])
     @note = @category.notes.new(note_params)
 
     if @note.save
@@ -26,7 +24,6 @@ class NotesController < ApplicationController
   end
 
   def edit
-    @category = Category.find(params[:category_id])
     @note = Note.find(params[:id])
   end
 
@@ -45,6 +42,10 @@ class NotesController < ApplicationController
   end
 
   private
+
+  def set_category
+    @category = Category.find(params[:category_id])
+  end
 
   def note_params
     params.require(:note).permit(:title, :content)
