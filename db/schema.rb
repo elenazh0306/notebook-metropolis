@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_08_034544) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_12_060514) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -27,6 +27,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_08_034544) do
   create_table "categories", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name"
+    t.string "room_image"
+    t.string "sprite_image"
     t.text "summary"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
@@ -60,9 +62,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_08_034544) do
 
   create_table "movies", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.text "overview"
+    t.string "overview"
     t.string "poster_url"
-    t.decimal "rating"
+    t.integer "rating"
     t.string "title"
     t.datetime "updated_at", null: false
   end
@@ -90,6 +92,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_08_034544) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "bookmarks", "lists"
   add_foreign_key "bookmarks", "movies"
   add_foreign_key "categories", "users"

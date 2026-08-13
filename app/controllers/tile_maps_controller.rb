@@ -1,8 +1,11 @@
 class TileMapsController < ApplicationController
   def update
+
+
     @categories = current_user.categories
     x = params[:x].to_i
     y = params[:y].to_i
+
     new_type = params[:new_type]
 
     # Notify Rails that tile_map changed

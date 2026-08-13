@@ -1,17 +1,54 @@
 <h3><%= current_user.name %></h3>
-<%= current_user.tile_map%>
-<div class="board">
-  <% rows = 2 %>
-  <% columns = 2 %>
-  <% category_on_tile = @categories.find { |category| category.x == x && category.y == y } %>
- <% tile_order = User::TILE_TYPES.keys.map(&:to_s)%>
-  <% rows.times do |y| %>
-    <div class="d-flex">
-    <% columns.times do |x| %>
-      <%= render "tile_maps/tile", x: x, y: y, tile_map: current_user.tile_map %>
+
+<div data-controller="board" data-board-editing-value="false">
+  <button type="button"
+          class="btn btn-primary btn-sm"
+          data-board-target="editBtn"
+          data-action="click->board#edit">
+    ✏️ Edit Map
+  </button>
+
+  <button type="button"
+          class="btn btn-success btn-sm d-none"
+          data-board-target="saveBtn"
+          data-action="click->board#save">
+    💾 Save Changes
+  </button>
+
+  <div class="board">
+    <% @row.times do |y| %>
+      <div class="d-flex">
+        <% @column.times do |x| %>
+          <%= render "tile_maps/tile", x: x, y: y, tile_map: current_user.tile_map %>
+        <% end %>
+      </div>
     <% end %>
-    </div>
-  <% end %>
+  </div>
 </div>
 
 <%= render "form" %>
+<!-- Render the Modal Partial for this Category -->
+<% @categories.each do |category| %>
+  <%= render "categories/room_modal", category: category %>
+<% end %>
+
+<!-- A Resuable Modal for all Notes 'Notice Boards'-->
+<div class="modal fade" id="noticeBoardModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content notice-board-background">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Corkboard Notes</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Turbo Frame target: This is where the list of notes will load -->
+        <turbo-frame id="notice_board_content">
+          <p class="text-center text-muted my-4">Loading notice board...</p>
+        </turbo-frame>
+      </div>
+
+    </div>
+  </div>
+</div>

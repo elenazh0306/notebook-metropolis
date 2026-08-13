@@ -1,0 +1,53 @@
+/* Post-It Grid Layout */
+.postit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1.5rem;
+}
+
+.postit-card-link {
+  text-decoration: none;
+  color: inherit;
+
+  &:hover .postit-card {
+    transform: scale(1.05) rotate(0deg);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.postit-card {
+  position: relative;
+  background-color: #fffa75; /* I found the classic Post-It Yellow, lol */
+  width: 100%;
+  aspect-ratio: 1 / 1; /* Keeps the post-it it square */
+  padding: 1rem;
+  border-radius: 2px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: rotate(-2deg); /* Slight tilt for playful look */
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  .pin {
+    position: absolute;
+    top: -10px;
+    font-size: 1.2rem;
+  }
+
+  .postit-title {
+    font-family: sans-serif;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+    word-break: break-word;
+  }
+
+  .style-postit-detail {
+  background-color: #fffa75; /* Same Post-It yellow */
+  border-radius: 4px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+}
