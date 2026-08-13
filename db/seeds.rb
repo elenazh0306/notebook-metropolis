@@ -9,8 +9,7 @@
 #   end
 puts "deleting old seeds"
 User.destroy_all
-puts "creating a new user"
-user = User.create(name: "user", email:"email@email.com", password: "111111")
-user.tile_map = [["grass", "grass"],["grass", "path"]]
-user.save!
-puts "new user created!"
+# puts "creating a new user"
+# user = User.create(name: "user", email:"email@email.com", password: "111111")
+# user.save!
+# puts "new user created!"
