@@ -1,0 +1,43 @@
+.room-modal {
+  .room-container {
+    position: relative;
+    width: 100%;
+
+    .room-image {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+    }
+
+    // Hotspot positioning over the isometric mural / notice board
+    .mural {
+      position: absolute;
+      top: 29%;
+      left: 16%;
+      width: 15%;
+      height: 21%;
+      transform: skewY(-24deg);
+      background-color: transparent;
+      border: 2px solid transparent; // Prevents layout shift on hover
+      transition: 0.2s ease-in-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .hotspot-label {
+        opacity: 0;
+      }
+
+      &:hover {
+        background-color: whitesmoke;
+        border-color: red;
+        opacity: .8;
+
+        .hotspot-label {
+        opacity: 1;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,42 @@
+<div class="modal fade room-modal"
+    id="categoryModal_<%= category.id %>"
+    tabindex="-1"
+    aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h5 class="modal-title"><%= category.name %></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <div class="room-container">
+
+          <!-- We select either the correct room image or a default -->
+          <% image_name = category.room_image.presence || "cat_room.png" %>
+          <%= image_tag image_name, class: "room-image", alt: category.name %>
+
+          <!-- Notice Board Hotspot linking to THIS category's notes -->
+          <%= link_to category_notes_path(category),
+                      data: { turbo_frame: "notice_board_content" }, #links to the ID on categories/index.html.erb
+                      # this next line is an inline Bootstrap API call that opens #noticeBoardModal on the same click
+                      # it is included because otherwise Bootstrap eats the click and Turbo never fires its HTTP request
+                      onclick: "bootstrap.Modal.getOrCreateInstance(document.getElementById('noticeBoardModal')).show()",
+                      class: "mural" do %>
+            <span class="hotspot-label">Notice Board</span>
+          <% end %>
+
+        </div>
+
+        <!-- Dynamic Turbo Frame Target for THIS category -->
+        <turbo-frame id="notes_postits_<%= category.id %>">
+          <!-- Notes for this category will load here when the hotspot is clicked -->
+        </turbo-frame>
+      </div>
+
+    </div>
+  </div>
+</div>

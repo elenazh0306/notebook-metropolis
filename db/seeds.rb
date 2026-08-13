@@ -9,7 +9,30 @@
 #   end
 puts "deleting old seeds"
 User.destroy_all
-# puts "creating a new user"
-# user = User.create(name: "user", email:"email@email.com", password: "111111")
-# user.save!
-# puts "new user created!"
+
+puts "creating a new user"
+user = User.create!(name: "user", email: "email@email.com", password: "111111")
+user.tile_map = [
+                  ["grass", "grass", "grass", "grass", "grass", "grass"], 
+                  ["grass", "base", "grass", "grass", "grass", "grass"],
+                  ["grass", "grass", "grass", "grass", "grass", "grass"],
+                  ["grass", "grass", "grass", "grass", "grass", "grass"],
+                  ["grass", "grass", "grass", "grass", "grass", "grass"],
+                  ["grass", "grass", "grass", "grass", "grass", "grass"]
+                ]
+user.save!
+
+category = user.categories.create!(
+  name: "Cozy Study",
+  sprite_image: "default.png",
+  room_image: "cat_room.png",
+  x: 1,
+  y: 1
+)
+
+category.notes.create!(
+  title: "First Study Note",
+  content: "Rooms and Modals and Notes and Turbo Frames documentation!"
+)
+
+puts "New user, category, and note seeded successfully!"

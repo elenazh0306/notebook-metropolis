@@ -1,0 +1,42 @@
+<!-- Turbo Frame ID *matches* the receiver ID in _room_modal.html.erb -->
+<turbo-frame id="notice_board_content">
+  <!-- The container from notes/index.html.erb, ensuring the note overlays perfectly -->
+  <div class="corkboard-container p-3">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h5 class="m-0">✏️ Edit Post-It Note</h5>
+      <!-- Cancel button just in case we regret our edits -->
+      <%= link_to "Cancel", category_note_path(@category, @note),
+                  data: { turbo_frame: "notice_board_content" }, # hello ID from categories/index.html.erb
+                  class: "btn btn-outline-secondary btn-sm" %>
+    </div>
+
+    <!-- Pre-filled Form Container -->
+    <div class="card border-0 shadow-sm p-3 style-postit-detail">
+      <%= form_with(model: [@category, @note],
+                    data: { turbo_frame: "notice_board_content" }) do |f| %> <!-- once again, the ID from categories/index.html.erb -->
+
+        <div class="mb-3">
+          <%= f.label :title, "Post-It Title", class: "form-label fw-bold text-dark" %>
+          <%= f.text_field :title,
+                          class: "form-control",
+                          required: true %>
+        </div>
+
+        <div class="mb-3">
+          <%= f.label :content, "Note Details", class: "form-label fw-bold text-dark" %>
+          <%= f.text_area :content,
+                          rows: 4,
+                          class: "form-control",
+                          required: true %>
+        </div>
+
+        <div class="d-grid">
+          <%= f.submit "💾 Save Changes", class: "btn btn-dark fw-bold" %>
+        </div>
+
+      <% end %>
+    </div>
+
+  </div>
+</turbo-frame>
