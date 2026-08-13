@@ -12,7 +12,14 @@ User.destroy_all
 
 puts "creating a new user"
 user = User.create!(name: "user", email: "email@email.com", password: "111111")
-user.tile_map = [["grass", "grass"], ["path", "base"]]
+user.tile_map = [
+                  ["grass", "grass", "grass", "grass", "grass", "grass"], 
+                  ["grass", "base", "grass", "grass", "grass", "grass"],
+                  ["grass", "grass", "grass", "grass", "grass", "grass"],
+                  ["grass", "grass", "grass", "grass", "grass", "grass"],
+                  ["grass", "grass", "grass", "grass", "grass", "grass"],
+                  ["grass", "grass", "grass", "grass", "grass", "grass"]
+                ]
 user.save!
 
 category = user.categories.create!(
