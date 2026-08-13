@@ -3,16 +3,37 @@
   <!-- We keep the exact same container as notes/index.html.erb so the note overlays perfectly -->
   <div class="corkboard-container p-3">
 
-    <!-- Header with a Back Link to notice board on notes/index.html.erb -->
+    <!-- Header with Edit Button, Delete Button and Back Link -->
     <div class="mb-3">
+      <!-- Link back to notice board on notes/index.html.erb -->
       <%= link_to category_notes_path(@category),
                   data: { turbo_frame: "notice_board_content" }, # the ID that connects us to categories/index.html.erb
                   class: "btn btn-outline-secondary btn-sm mb-2" do %>
         ⬅️ Back to Board
       <% end %>
+
+      <div class="d-flex gap-2">
+        <!-- Edit Button -->
+        <%= link_to edit_category_note_path(@category, @note),
+                    data: { turbo_frame: "notice_board_content" }, # the ID that connects to categories/index.html.erb
+                    class: "btn btn-outline-warning btn-sm fw-bold text-dark" do %>
+          ✏️ Edit Note
+        <% end %>
+
+      <!-- Delete Button -->
+        <%= button_to category_note_path(@category, @note),
+                      method: :delete,
+                      data: {
+                      turbo_frame: "notice_board_content", # the ID that connects to categories/index.html.erb
+                      turbo_confirm: "Are you sure you want to unpin this note?"
+                      },
+                      class: "btn btn-outline-danger btn-sm" do %>
+          🗑️ Unpin Note
+        <% end %>
+      </div>
     </div>
 
-    <!-- The Full Note Displayed as an Expanded Post-It -->
+    <!-- The Full Note Displayed as an expanded note -->
     <div class="card shadow-sm border-0 my-3 style-postit-detail">
       <div class="card-body p-4">
         <h4 class="card-title fw-bold text-dark border-bottom pb-2 mb-3">

@@ -1,0 +1,39 @@
+<!-- When the form from views/notes/new.html.erb submits,
+NotesController#create looks for a view matching
+create.turbo_stream.erb. So we make that file here. -->
+
+<!-- What this code does: Here Turbo replaces the form frame
+from views/notes/new.html.erb with the freshly
+updated notes/index view containing the newly created note -->
+
+<!-- We replace the #notice_board_content with the updated index board view -->
+<turbo-stream action="replace" target="notice_board_content">
+  <template>
+    <%= render template: "notes/index", formats: [:html] %> <!-- See note below -->
+  </template>
+</turbo-stream>
+
+<!-- When Rails processes 'create.turbo_stream.erb',
+it searches for a template named 'notes/index' that explicitly
+supports the :turbo_stream format.
+
+But the 'app/views/notes/index.html.erb' file is saved with
+the .html.erb extension.
+
+Because Rails is currently inside a Turbo Stream request context,
+it skips index.html.erb (it can't naturally read this file)
+and then complains that 'notes/index.turbo_stream.erb' doesn't exist.
+
+The solution: Add 'formats: [:html]' to the template -->
+
+<!-- Changes to NotesController#create -->
+
+<!-- We need to re-fetch @notes in NotesController#create,
+because when the form submits, it hits NotesController#create.
+Inside that create action, Rails instantiated @note = @category.notes.build(...),
+but it no longer has access to @notes.
+
+So when create.turbo_stream.erb tries to render template: "notes/index",
+Rails evaluates notes/index.html.erb inside the context of
+NotesController#create where @notes is nil.a
+This triggers an 'undefined method 'any?' for nil' error. -->
