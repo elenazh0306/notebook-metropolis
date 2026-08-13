@@ -1,5 +1,5 @@
 class CategoriesController < ApplicationController
-   def index
+  def index
     @categories = policy_scope(Category)
   end
 
