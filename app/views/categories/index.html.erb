@@ -1,20 +1,29 @@
 <h3><%= current_user.name %></h3>
-<%= current_user.tile_map%>
 
-<div class="board">
+<div data-controller="board" data-board-editing-value="false">
+  <button type="button"
+          class="btn btn-primary btn-sm"
+          data-board-target="editBtn"
+          data-action="click->board#edit">
+    ✏️ Edit Map
+  </button>
 
-  <% rows = 2 %>
-  <% columns = 2 %>
+  <button type="button"
+          class="btn btn-success btn-sm d-none"
+          data-board-target="saveBtn"
+          data-action="click->board#save">
+    💾 Save Changes
+  </button>
 
-  <% tile_order = User::TILE_TYPES.keys.map(&:to_s)%>
-  <% rows.times do |y| %>
-    <div class="d-flex">
-    <% columns.times do |x| %>
-      <%= render "tile_maps/tile", x: x, y: y, tile_map: current_user.tile_map %>
+  <div class="board">
+    <% @row.times do |y| %>
+      <div class="d-flex">
+        <% @column.times do |x| %>
+          <%= render "tile_maps/tile", x: x, y: y, tile_map: current_user.tile_map %>
+        <% end %>
+      </div>
     <% end %>
-    </div>
-  <% end %>
-
+  </div>
 </div>
 
 <!-- Render the Modal Partial for this Category -->
@@ -41,4 +50,4 @@
 
     </div>
   </div>
-</div>
+</div> 

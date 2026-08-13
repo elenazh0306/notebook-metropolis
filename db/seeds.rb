@@ -9,9 +9,10 @@
 #   end
 puts "deleting old seeds"
 User.destroy_all
+
 puts "creating a new user"
-user = User.create(name: "user", email:"email@email.com", password: "111111")
-user.tile_map = [["grass", "grass"],["path", "base"]]
+user = User.create!(name: "user", email: "email@email.com", password: "111111")
+user.tile_map = [["grass", "grass"], ["path", "base"]]
 user.save!
 
 category = user.categories.create!(
@@ -27,4 +28,4 @@ category.notes.create!(
   content: "Rooms and Modals and Notes and Turbo Frames documentation!"
 )
 
-puts "new user created!"
+puts "New user, category, and note seeded successfully!"

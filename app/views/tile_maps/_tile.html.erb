@@ -1,46 +1,43 @@
-<% current_type = tile_map[y][x].to_s %>
-<% tile = User::TILE_TYPES[current_type.to_sym] %>
-<% tile_order = User::TILE_TYPES.keys.map(&:to_s) %>
-<% category_on_tile = @categories.find { |c| c.x == x && c.y == y } %>
+<%
+  current_type = current_user.tile_map[y][x].to_s
+  tile = User::TILE_TYPES[current_type.to_sym] || { name: 'unknown' }
+  tile_order = User::TILE_TYPES.keys.map(&:to_s)
+  category_on_tile = current_user.categories.find { |c| c.x == x && c.y == y }
+%>
 
 <div id="tile_<%= x %>_<%= y %>"
-      class="tile"
+      class="<%= tile[:name] %>"
       data-controller="tile"
       data-tile-x-value="<%= x %>"
       data-tile-y-value="<%= y %>"
       data-tile-current-value="<%= current_type %>"
-      data-tile-types-value="<%= tile_order.to_json %>"
-      data-action="click->tile#cycleForward">
-  <%= tile[:name] %>
 
-  <% case tile[:name] %>
-    <% when 'base' %>
+data-tile-types-value="<%= tile_order.to_json %>">
+  <select data-board-target="tileDropdown"
+          data-action="change->tile#selectType"
+          class="tile-dropdown">
+    <% User::TILE_TYPES.each do |key, data| %>
+      <option value="<%= key %>" <%= 'selected' if key.to_s == current_type %>>
+        <%= data[:name].titleize %>
+      </option>
+    <% end %>
+  </select>
 
-      <% if category_on_tile %>
-        <!-- The Building Sprite and the Modal Trigger -->
-        <!-- We make the modal target dynamic, based on the category id -->
-        <button type="button"
-          class="building-btn"
-          data-bs-toggle="modal"
-          data-bs-target="#categoryModal_<%= category_on_tile.id %>">
-          <% image_name = category_on_tile.sprite_image.presence || "default.png" %>
-          <%= image_tag image_name, class: "sprite-image", alt: category_on_tile.name %>
-          <%= category_on_tile.name %>
-        </button>
-
-      <% else %>
-        <!-- No building yet: We show the '+' build-link -->
-        <%= link_to "+", new_category_path(x: x, y: y), class: "add-btn", title: "Build here" %>
-      <% end %>
-
-    <% when 'path' %>
-      <span class="tile-symbol">🛣️</span>
-
-    <% when 'grass' %>
-      <span class="tile-symbol">🌱</span>
-
-    <% else %>
-      <span class="tile-symbol">❓</span>
+  <% if category_on_tile %>
+    <!-- The Building Sprite and the Modal Trigger -->
+    <!-- We make the modal target dynamic, based on the category id -->
+    <button type="button"
+            class="building-btn"
+            data-bs-toggle="modal"
+            data-bs-target="#categoryModal_<%= category_on_tile.id %>">
+      <% image_name = category_on_tile.sprite_image.presence || "default.png" %>
+      <%= image_tag image_name, class: "sprite-image", alt: category_on_tile.name %>
+      <%= category_on_tile.name %>
+    </button>
+  
+  <% elsif tile[:buildable] %>
+    <!-- Tile is buildable but empty: Show '+' build button -->
+    <%= link_to "+", new_category_path(x: x, y: y), class: "add-btn", title: "Build here" %>
   <% end %>
-
-</div>
+  
+</div> 
