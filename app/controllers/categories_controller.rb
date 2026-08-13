@@ -11,7 +11,6 @@ class CategoriesController < ApplicationController
     @tile_order = User::TILE_TYPES.keys.map(&:to_s)
     @category_on_tile = @categories.find { |c| c.x == x && c.y == y }
 
-
   end
 
   def show
@@ -61,6 +60,6 @@ class CategoriesController < ApplicationController
   private
 
   def category_params
-    params.require(:category).permit(:name)
+    params.require(:category).permit(:name, :sprite_image)
   end
 end
