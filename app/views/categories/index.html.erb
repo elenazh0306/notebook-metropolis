@@ -26,7 +26,9 @@
   </div>
 </div>
 
+<!-- Render this sliding menu to select buildings to build -->
 <%= render "form" %>
+
 <!-- Render the Modal Partial for this Category -->
 <% @categories.each do |category| %>
   <%= render "categories/room_modal", category: category %>
