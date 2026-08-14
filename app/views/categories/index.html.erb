@@ -1,19 +1,20 @@
 <h3><%= current_user.name %></h3>
 
-<div data-controller="board" data-board-editing-value="false">
-  <button type="button"
-          class="btn btn-primary btn-sm"
-          data-board-target="editBtn"
-          data-action="click->board#edit">
-    ✏️ Edit Map
-  </button>
+  <div data-controller="board" data-board-editing-value="false">
+    <button type="button"
+            class="btn btn-primary btn-sm"
+            data-board-target="editBtn"
+            data-action="click->board#edit">
+      ✏️ Edit Map
+    </button>
 
-  <button type="button"
-          class="btn btn-success btn-sm d-none"
-          data-board-target="saveBtn"
-          data-action="click->board#save">
-    💾 Save Changes
-  </button>
+    <button type="button"
+            class="btn btn-success btn-sm d-none"
+            data-board-target="saveBtn"
+            data-action="click->board#save">
+      💾 Save Changes
+    </button>
+
 
   <div class="board">
     <% @row.times do |y| %>
@@ -25,11 +26,11 @@
     <% end %>
   </div>
 </div>
+ <%= render "form_new_category" %>
 
-<!-- Render this sliding menu to select buildings to build -->
-<%= render "form" %>
 
 <!-- Render the Modal Partial for this Category -->
+
 <% @categories.each do |category| %>
   <%= render "categories/room_modal", category: category %>
 <% end %>

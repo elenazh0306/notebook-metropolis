@@ -67,4 +67,18 @@ export default class extends Controller {
     .then(response => response.text())
     .then(html => Turbo.renderStreamMessage(html))
   }
+
+  buildForm(event) {
+    const x = event.params.x
+    const y = event.params.y
+
+    const xInput = document.getElementById("category_x_input")
+    const yInput = document.getElementById("category_y_input")
+
+    xInput.value = x
+    yInput.value = y
+  }
+
+
+
 }

@@ -65,7 +65,24 @@
 
   }
 
+
 }
+.house-tile {
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    width: 100%;
+    height: auto;
+    max-height: 140%;
+    transform: translateX(-50%)
+               rotate3d(-3, 3, 0, -60deg)
+               rotate(-45deg)
+               scaleY(3.0);
+    object-fit: contain;
+    pointer-events: none;
+    user-select: none;
+
+  }
 
 .building-block {
   position: absolute;

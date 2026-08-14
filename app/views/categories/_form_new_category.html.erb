@@ -1,0 +1,31 @@
+
+
+<div class = "new-category-menu">
+
+  <div class = "offcanvas offcanvas-end" style = "width: 25vw" id = "new-category-menu" >
+    <div class = "offcanvas-header">
+      <h3>Create a New Building</h3>
+      <button
+              type = "button"
+              class = "btn-close"
+              data-bs-dismiss = "offcanvas"
+              aria-label = "Close">
+      </button>
+    </div>
+    <div class = "offcanvas-body">
+      <%= simple_form_for Category.new do |f| %>
+        <%= f.input :name, label: "Building Name", placeholder: "Enter a building name" %>
+        <%= f.hidden_field :x, id: "category_x_input" %>
+        <%= f.hidden_field :y, id: "category_y_input" %>
+        <%= f.input :sprite_image,
+            as: :select,
+            collection: ['default.png', 'red-roof.png', 'blue-house.png'],
+            prompt: "Choose a building" %>
+        <%= f.button :submit, "Create Building", class: "btn btn-primary", data: { "bs-dismiss": "offcanvas" } %>
+
+      <% end %>
+    </div>
+  </div>
+
+</div>
+</turbo-frame>
