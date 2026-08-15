@@ -21,6 +21,8 @@ class User < ApplicationRecord
     'large'  => { rows: 15, columns: 15 }
   }
 
+  BUILDINGS = ['default.png', 'red-roof.png', 'blue-house.png']
+
   private
 
   def set_default_map
