@@ -19,7 +19,7 @@
         <%= f.hidden_field :y, id: "category_y_input" %>
         <%= f.input :sprite_image,
             as: :select,
-            collection: ['default.png', 'red-roof.png', 'blue-house.png'],
+            collection: User::BUILDINGS,
             prompt: "Choose a building" %>
         <%= f.button :submit, "Create Building", class: "btn btn-primary", data: { "bs-dismiss": "offcanvas" } %>
 
