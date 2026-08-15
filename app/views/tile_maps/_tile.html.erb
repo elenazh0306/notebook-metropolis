@@ -11,8 +11,7 @@
       data-tile-x-value="<%= x %>"
       data-tile-y-value="<%= y %>"
       data-tile-current-value="<%= current_type %>"
-
-data-tile-types-value="<%= tile_order.to_json %>">
+      data-tile-types-value="<%= tile_order.to_json %>">
   <select data-board-target="tileDropdown"
           data-action="change->tile#selectType"
           class="tile-dropdown">
@@ -25,20 +24,27 @@ data-tile-types-value="<%= tile_order.to_json %>">
 
   <% if category_on_tile %>
     <!-- The Building Sprite and the Modal Trigger -->
-
-
     <!-- We make the modal target dynamic, based on the category id -->
     <button type="button"
             class="building-btn"
             data-bs-toggle="modal"
             data-bs-target="#categoryModal_<%= category_on_tile.id %>">
-
-      <%= image_tag category_on_tile.building_sprite, class: "sprite-image", alt: category_on_tile.name %>
+      <%= image_tag category_on_tile.building_sprite, class: "house-tile", alt: category_on_tile.name %>
       <%= category_on_tile.name %>
     </button>
 
   <% elsif tile[:buildable] %>
     <!-- Tile is buildable but empty: Show '+' build button -->
-    <%= link_to "+", new_category_path(x: x, y: y), class: "add-btn", title: "Build here" %>
+    <button type="button"
+          class="btn btn-primary"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#new-category-menu"
+          data-action="click->tile#buildForm"
+          data-tile-x-param="<%= x %>"
+          data-tile-y-param="<%= y %>"
+          title="Build here">
+    +
+  </button>
   <% end %>
-</div>
+
+  </div>

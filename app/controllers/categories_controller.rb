@@ -29,7 +29,10 @@ class CategoriesController < ApplicationController
     authorize @category
 
     if @category.save
-      redirect_to category_path(@category)
+      respond_to do |format|
+        format.turbo_stream { render turbo_stream: turbo_stream.refresh(request_id: nil) }
+        format.html { redirect_to categories_path }
+      end
     else
       render :new, status: :unprocessable_entity
     end
@@ -60,6 +63,6 @@ class CategoriesController < ApplicationController
   private
 
   def category_params
-    params.require(:category).permit(:name, :sprite_image)
+    params.require(:category).permit(:name, :sprite_image, :x, :y)
   end
 end
