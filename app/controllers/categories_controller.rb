@@ -1,16 +1,8 @@
 class CategoriesController < ApplicationController
   def index
     @categories = policy_scope(Category)
-    x = params[:x].to_i
-    y = params[:y].to_i
-    @row = current_user.tile_map.length
-
-    @column = current_user.tile_map[0].length
-    @current_type = current_user.tile_map[y][x].to_s
-    @tile = User::TILE_TYPES[@current_type.to_sym]
-    @tile_order = User::TILE_TYPES.keys.map(&:to_s)
-    @category_on_tile = @categories.find { |c| c.x == x && c.y == y }
-
+    create_map
+    @category = Category.new
   end
 
   def show
@@ -34,7 +26,20 @@ class CategoriesController < ApplicationController
         format.html { redirect_to categories_path }
       end
     else
-      render :new, status: :unprocessable_entity
+      respond_to do |format|
+        format.html {
+          @categories = Category.all
+          create_map
+          render :index, status: :unprocessable_entity
+        }
+        format.turbo_stream {
+          render turbo_stream: turbo_stream.append(
+            "category_new_form",
+            partial: "shared/errors",
+            locals: { object: @category }
+          ), status: :unprocessable_entity
+        }
+      end
     end
   end
 
@@ -64,5 +69,16 @@ class CategoriesController < ApplicationController
 
   def category_params
     params.require(:category).permit(:name, :sprite_image, :x, :y)
+  end
+
+  def create_map
+    x = params[:x].to_i
+    y = params[:y].to_i
+    @row = current_user.tile_map.length
+    @column = current_user.tile_map[0].length
+     @current_type = current_user.tile_map[y][x].to_s
+    @tile = User::TILE_TYPES[@current_type.to_sym]
+    @tile_order = User::TILE_TYPES.keys.map(&:to_s)
+    @category_on_tile = @categories.find { |c| c.x == x && c.y == y }
   end
 end

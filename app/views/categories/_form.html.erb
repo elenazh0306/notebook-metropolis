@@ -1,0 +1,12 @@
+      <%= simple_form_for category do |f| %>
+        <%= render "shared/errors", object: category %>
+        <%= f.input :name, label: "Building Name", placeholder: "Enter a building name" %>
+        <%= f.hidden_field :x, id: "category_x_input" %>
+        <%= f.hidden_field :y, id: "category_y_input" %>
+        <%= f.input :sprite_image,
+            as: :select,
+            collection: User::BUILDINGS,
+            prompt: "Choose a building" %>
+        <%= f.button :submit, "Create Building", class: "btn btn-primary", data: { "bs-dismiss": "offcanvas" } %>
+
+      <% end %>
