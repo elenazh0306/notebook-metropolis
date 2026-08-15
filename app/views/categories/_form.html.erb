@@ -1,4 +1,8 @@
-      <%= simple_form_for category do |f| %>
+      <%= simple_form_for category,
+          data: {
+            controller: "offcanvas",
+            action: "turbo:submit-end->offcanvas#closeOnSuccess"
+          } do |f| %>
         <%= render "shared/errors", object: category %>
         <%= f.input :name, label: "Building Name", placeholder: "Enter a building name" %>
         <%= f.hidden_field :x, id: "category_x_input" %>
@@ -7,6 +11,6 @@
             as: :select,
             collection: User::BUILDINGS,
             prompt: "Choose a building" %>
-        <%= f.button :submit, "Create Building", class: "btn btn-primary", data: { "bs-dismiss": "offcanvas" } %>
+        <%= f.button :submit, "Create Building", class: "btn btn-primary" %>
 
       <% end %>

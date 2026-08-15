@@ -1,10 +1,10 @@
 <% if object&.errors.any? %>
   <div id="error_messages">
-    <h2><%= pluralize(object.errors.count, "error") %> prohibited this form from being saved:</h2>
-    <ul>
-      <% object.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+    <h3>Oh no, something went wrong!</h3>
+
+      <% object.errors.each do |error| %>
+        <%= error.message %>
       <% end %>
-    </ul>
+
   </div>
 <% end %>
