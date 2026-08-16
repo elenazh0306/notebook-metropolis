@@ -12,15 +12,17 @@
       data-tile-y-value="<%= y %>"
       data-tile-current-value="<%= current_type %>"
       data-tile-types-value="<%= tile_order.to_json %>">
-  <select data-board-target="tileDropdown"
-          data-action="change->tile#selectType"
-          class="tile-dropdown">
-    <% User::TILE_TYPES.each do |key, data| %>
-      <option value="<%= key %>" <%= 'selected' if key.to_s == current_type %>>
-        <%= data[:name].titleize %>
-      </option>
-    <% end %>
-  </select>
+  <% if !category_on_tile %>
+    <select data-board-target="tileDropdown"
+            data-action="change->tile#selectType"
+            class="tile-dropdown">
+      <% User::TILE_TYPES.each do |key, data| %>
+        <option value="<%= key %>" <%= 'selected' if key.to_s == current_type %>>
+          <%= data[:name].titleize %>
+        </option>
+      <% end %>
+    </select>
+  <% end %>
 
   <% if category_on_tile %>
     <!-- The Building Sprite and the Modal Trigger -->
