@@ -10,14 +10,9 @@
       object-fit: contain;
     }
 
-    // Hotspot positioning over the isometric mural / notice board
+    // Shared base style for ALL room hotspots (isometric perspective & hover states)
     .mural {
       position: absolute;
-      top: 29%;
-      left: 16%;
-      width: 15%;
-      height: 21%;
-      transform: skewY(-24deg);
       background-color: transparent;
       border: 2px solid transparent; // Prevents layout shift on hover
       transition: 0.2s ease-in-out;
@@ -32,11 +27,29 @@
       &:hover {
         background-color: whitesmoke;
         border-color: red;
-        opacity: .8;
+        opacity: 0.8;
 
         .hotspot-label {
-        opacity: 1;
+          opacity: 1;
         }
+      }
+
+      // Hotspot 1: Notice Board
+      &.hotspot-noticeboard {
+        top: 29%;
+        left: 16%;
+        width: 15%;
+        height: 21%;
+        transform: skewY(-24deg);
+      }
+
+      // Hotspot 2: Bookcase
+      &.hotspot-bookcase {
+        top: 20%;
+        left: 46.5%;
+        width: 14%;
+        height: 39%;
+        transform: skewY(24deg);
       }
     }
   }

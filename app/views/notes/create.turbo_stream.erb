@@ -7,7 +7,7 @@ from views/notes/new.html.erb with the freshly
 updated notes/index view containing the newly created note -->
 
 <!-- We replace the #notice_board_content with the updated index board view -->
-<turbo-stream action="replace" target="notice_board_content">
+<turbo-stream action="replace" target="room_hotspot_content">
   <template>
     <%= render template: "notes/index", formats: [:html] %> <!-- See note below -->
   </template>

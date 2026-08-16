@@ -19,22 +19,25 @@
           <% image_name = category.room_image.presence || "cat_room.png" %>
           <%= image_tag image_name, class: "room-image", alt: category.name %>
 
-          <!-- Notice Board Hotspot linking to THIS category's notes -->
-          <%= link_to category_notes_path(category),
-                      data: { turbo_frame: "notice_board_content" }, #links to the ID on categories/index.html.erb
+          <!-- Notice Board Hotspot -->
+          <%= link_to category_notes_path(category, subfolder: "notice_board"), # passes subfolder filter parameter, leading us to the correct hotspot
+                      data: { turbo_frame: "room_hotspot_content" }, # targets the static turbo-frame inside #roomHotspotModal in categories/index.html.erb
                       # this next line is an inline Bootstrap API call that opens #noticeBoardModal on the same click
                       # it is included because otherwise Bootstrap eats the click and Turbo never fires its HTTP request
-                      onclick: "bootstrap.Modal.getOrCreateInstance(document.getElementById('noticeBoardModal')).show()",
-                      class: "mural" do %>
+                      onclick: "bootstrap.Modal.getOrCreateInstance(document.getElementById('roomHotspotModal')).show()",
+                      class: "mural hotspot-noticeboard" do %>
             <span class="hotspot-label">Notice Board</span>
           <% end %>
 
-        </div>
+          <!-- Bookcase Hotspot (See Notice Board Hotspot for code details) -->
+          <%= link_to category_notes_path(category, subfolder: "bookcase"), # passes subfolder filter parameter
+                      data: { turbo_frame: "room_hotspot_content" }, # targets the same static turbo-frame inside #roomHotspotModal in categories/index.html.erb
+                      onclick: "bootstrap.Modal.getOrCreateInstance(document.getElementById('roomHotspotModal')).show()",
+                      class: "mural hotspot-bookcase" do %>
+            <span class="hotspot-label">Bookcase</span>
+          <% end %>
 
-        <!-- Dynamic Turbo Frame Target for THIS category -->
-        <turbo-frame id="notes_postits_<%= category.id %>">
-          <!-- Notes for this category will load here when the hotspot is clicked -->
-        </turbo-frame>
+        </div>
       </div>
 
     </div>

@@ -1,0 +1,32 @@
+<div class="corkboard-container p-3">
+  <!-- Header with Category Title & New Note Button -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="m-0">📌 <%= @category.name %> Notes</h4>
+
+    <!-- New Notice Board Link (passes subfolder: "notice_board") -->
+    <%= link_to new_category_note_path(@category, subfolder: "notice_board"),
+                data: { turbo_frame: "room_hotspot_content" }, # once again, linking with the correct id
+                class: "btn btn-warning btn-sm fw-bold shadow-sm" do %>
+      ✏️ + New Note
+    <% end %>
+  </div>
+
+  <% if @notes.any? %>
+    <div class="postit-grid">
+      <% @notes.each do |note| %>
+        <%= link_to category_note_path(@category, note),
+                    data: { turbo_frame: "room_hotspot_content" },
+                    class: "postit-card-link" do %>
+          <div class="postit-card">
+            <span class="pin">📍</span>
+            <h6 class="postit-title"><%= note.title %></h6>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="text-center py-5">
+      <p class="text-muted">You have no notes on this board yet!</p>
+    </div>
+  <% end %>
+</div>

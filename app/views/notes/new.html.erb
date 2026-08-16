@@ -1,24 +1,35 @@
-<!-- Turbo Frame ID *matches* the receiver ID in _room_modal.html.erb -->
-<turbo-frame id="notice_board_content">
+<!-- Turbo Frame ID *matches* the receiver ID in app/views/categories/index.html.erb -->
+<turbo-frame id="room_hotspot_content">
   <div class="corkboard-container p-3">
 
+  <!-- All the code below hardcodes that we only have two subfolders ...
+  alas, I could not figure out how to set this up for any number of potential subfolders -->
+
     <div class="d-flex justify-content-between align-items-center mb-3">
-      <h5 class="m-0">✏️ Write a New Post-It</h5>
-      <%= link_to "Cancel", category_notes_path(@category), # If the user doesn't want to save the new note
-                  data: { turbo_frame: "notice_board_content" },
+      <h5 class="m-0">
+        <%= @note.subfolder == "bookcase" ? "📖 Write a New Book Note" : "✏️ Write a New Post-It" %>
+      </h5>
+      <%= link_to "Cancel", category_notes_path(@category, subfolder: @note.subfolder), # If the user doesn't want to save the new note
+                  data: { turbo_frame: "room_hotspot_content" },
                   class: "btn btn-outline-secondary btn-sm" %>
     </div>
 
     <!-- Here with make the new note with a styled post-it Form Container -->
     <div class="card border-0 shadow-sm p-3 style-postit-detail">
       <%= form_with(model: [@category, @note],
-                    data: { turbo_frame: "notice_board_content" }) do |f| %> <!-- Turbo Frame ID links to _room_modal.html.erb -->
+                    data: { turbo_frame: "room_hotspot_content" }) do |f| %> <!-- Turbo Frame ID links to app/views/categories/index.html.erb -->
+
+        <!-- Hidden Field: Ensures the note is saved into the correct subfolder/hotspot
+        The user doesn't give the note a sub-folder, this happens automatically - if they save
+        the note on the notice board, that is the subfolder, if they save it in the bookshelf,
+        that is the sub-folder -->
+        <%= f.hidden_field :subfolder %>
 
         <div class="mb-3">
-          <%= f.label :title, "Post-It Title", class: "form-label fw-bold text-dark" %>
+          <%= f.label :title, (@note.subfolder == "bookcase" ? "Book Title" : "Post-It Title"), class: "form-label fw-bold text-dark" %>
           <%= f.text_field :title,
                           class: "form-control",
-                          placeholder: "Today's Coding Documentation",
+                          placeholder: (@note.subfolder == "bookcase" ? "The Pragmatic Programmer" : "Today's Coding Documentation"),
                           required: true %>
         </div>
 
@@ -32,7 +43,7 @@
         </div>
 
         <div class="d-grid">
-          <%= f.submit "📌 Pin to Board", class: "btn btn-dark fw-bold" %>
+          <%= f.submit (@note.subfolder == "bookcase" ? "📖 Add to Shelf" : "📌 Pin to Board"), class: "btn btn-dark fw-bold" %>
         </div>
 
       <% end %>
