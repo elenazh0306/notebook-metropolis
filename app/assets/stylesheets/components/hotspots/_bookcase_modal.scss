@@ -1,0 +1,124 @@
+/* The Wooden Shelf Surface */
+.bookshelf-container {
+  background: #fdfbf7;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+/* Shelf Row with Wooden Plank Base */
+.bookshelf-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.75rem;
+  padding-bottom: 0.5rem;
+  margin-bottom: 2rem;
+  margin-top: 2.5rem;
+  position: relative;
+
+  /* The Wooden Shelf Plank above the books */
+  &::before {
+    content: "";
+    position: absolute;
+    top: -24px;
+    left: -1rem;
+    right: -1rem;
+    height: 14px;
+    background: linear-gradient(to bottom, #8b5a2b, #5c3a17);
+    border-radius: 2px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  /* The Wooden Shelf Plank underneath the books */
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -12px;
+    left: -1rem;
+    right: -1rem;
+    height: 14px;
+    background: linear-gradient(to bottom, #8b5a2b, #5c3a17);
+    border-radius: 2px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* Clickable Book Link */
+.book-spine-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+
+  &:hover .book-spine {
+    /* Pulls the book out of the shelf towards the reader! */
+    transform: translateY(-14px) scale(1.04);
+    box-shadow: -6px 12px 20px rgba(0, 0, 0, 0.35);
+    filter: brightness(1.08);
+  }
+}
+
+/* Individual Book Spine */
+.book-spine {
+  position: relative;
+  width: 48px;                     /* Slim, distinct spine width */
+  height: 180px;                    /* Tall book spine height */
+  padding: 0.75rem 0.25rem;
+  border-radius: 3px 6px 6px 3px;   /* Rounded right edge for page curve */
+  background-color: #2b4c7e;        /* Default Deep Navy Leather */
+  box-shadow: -3px 4px 8px rgba(0, 0, 0, 0.25);
+  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+
+  /* Realistic Left Spine Crease Shader */
+  &::before {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: rgba(0, 0, 0, 0.15);
+    box-shadow: inset 1px 0 2px rgba(255, 255, 255, 0.2);
+  }
+
+  /* Gold Foil Accent Bands at Top & Bottom */
+  &::after {
+    content: "";
+    position: absolute;
+    top: 12px;
+    bottom: 12px;
+    left: 8px;
+    right: 8px;
+    border-top: 2px solid rgba(212, 175, 55, 0.7);    /* Gold top band */
+    border-bottom: 2px solid rgba(212, 175, 55, 0.7); /* Gold bottom band */
+    pointer-events: none;
+  }
+
+  /* Vertical Title Text running down the spine */
+  .book-title {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    font-family: "Georgia", serif;  /* Elegant literary serif font */
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #f8f9fa;
+    letter-spacing: 1px;
+    margin: auto 0;
+    max-height: 130px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* Color Varieties for the Books (Assigned dynamically or via CSS nth-child) */
+.book-spine-link:nth-child(5n+1) .book-spine { background-color: #8b263e; } /* Crimson */
+.book-spine-link:nth-child(5n+2) .book-spine { background-color: #1b4931; } /* Forest Green */
+.book-spine-link:nth-child(5n+3) .book-spine { background-color: #2b4c7e; } /* Deep Navy */
+.book-spine-link:nth-child(5n+4) .book-spine { background-color: #d4a373; } /* Antique Amber */
+.book-spine-link:nth-child(5n+5) .book-spine { background-color: #4a3e3d; } /* Dark Leather */

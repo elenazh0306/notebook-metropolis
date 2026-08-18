@@ -20,7 +20,6 @@
       💾 Save Changes
     </button>
 
-
   <div class="board">
     <% @row.times do |y| %>
       <div class="d-flex">
@@ -31,8 +30,8 @@
     <% end %>
   </div>
 </div>
-<div class = "new-category-menu">
 
+<div class = "new-category-menu">
   <div class = "offcanvas offcanvas-end" style = "width: 25vw" id = "new-category-menu" >
     <div class = "offcanvas-header">
       <h3>Create a New Building</h3>
@@ -44,22 +43,24 @@
       </button>
     </div>
     <div class = "offcanvas-body" id="category_new_form">
-
       <%= render "form", category: @category %>
     </div>
   </div>
-
 </div>
 
+<<<<<<< HEAD
+=======
+<!-- Render the Modal for creating new Buildings (Categories) -->
+<%= render "form_new_category" %>
+>>>>>>> master
 
 <!-- Render the Modal Partial for this Category -->
-
 <% @categories.each do |category| %>
   <%= render "categories/room_modal", category: category %>
 <% end %>
 
 <!-- A Resuable Modal for all Notes 'Notice Boards'-->
-<div class="modal fade" id="noticeBoardModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="roomHotspotModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content notice-board-background">
       <div class="modal-header">
@@ -68,9 +69,9 @@
       </div>
 
       <div class="modal-body">
-        <!-- Turbo Frame target: This is where the list of notes will load -->
-        <turbo-frame id="notice_board_content">
-          <p class="text-center text-muted my-4">Loading notice board...</p>
+        <!-- Static Frame ID that receives all hotspot content -->
+        <turbo-frame id="room_hotspot_content">
+          <p class="text-center text-muted my-4">Loading notes in hotspot...</p>
         </turbo-frame>
       </div>
     </div>
