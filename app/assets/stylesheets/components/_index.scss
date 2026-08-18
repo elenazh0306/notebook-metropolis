@@ -4,12 +4,15 @@
 @import "form_legend_clear";
 @import "navbar";
 @import "test_css";
+
 // City and Room partials
 @import "tile_map";
-@import "room_modal";
 
-// Notes Notice Board
-@import "corkboard_modal";
+// Rooms & Room Modal Shells
+@import "components/rooms/room_modal";
 
-// Notes Bookcase
-@import "bookcase_modal";
+// Hotspot UI Components
+@import "components/hotspots/corkboard_modal";
+@import "components/hotspots/bookcase_modal";
+@import "components/hotspots/laptop_modal";
+@import "components/hotspots/posters_modal";

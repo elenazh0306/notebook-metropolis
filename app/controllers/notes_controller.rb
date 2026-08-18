@@ -6,37 +6,37 @@ class NotesController < ApplicationController
     @notes = @category.notes
 
     # Filter notes by subfolder
-    @subfolder = params[:subfolder] || "notice_board" # Set notice_board as default just in case
+    @hotspot_type = params[:hotspot_type] || "notice_board" # Set notice_board as default just in case
     # We re-fetch remaining notes (based on the subfolder) so Turbo can render index.html.erb
-    @notes = @category.notes.where(subfolder: @subfolder)
-    @note = Note.new(subfolder: @subfolder)
+    @notes = @category.notes.where(hotspot_type: @hotspot_type)
+    @note = Note.new(hotspot_type: @hotspot_type)
   end
 
   def show
   end
 
 def new
-  # Reads params[:subfolder] from the link (e.g. "bookcase")
+  # Reads params[:hotspot_type] from the link (e.g. "bookcase")
   # If none is passed, it falls back to "notice_board"
   # This repeats through a lot of actions here, but I didn't make
   # a before_action, because keeping the code explicit makes it easier to understand
-  subfolder_param = params[:subfolder].presence || "notice_board"
+  hotspot_type_param = params[:hotspot_type].presence || "notice_board"
 
-  @note = @category.notes.build(subfolder: subfolder_param)
+  @note = @category.notes.build(hotspot_type: hotspot_type_param)
 end
 
   def create
     @note = @category.notes.build(note_params)
-    @subfolder = @note.subfolder || "notice_board"
+    @hotspot_type = @note.hotspot_type || "notice_board"
 
     if @note.save
-      # This line fetches the updated collection for THIS subfolder, so index.html.erb has @notes
+      # This line fetches the updated collection for THIS hotspot_type, so index.html.erb has @notes
       # See annotated comments in create.turbo_stream.erb for details
-      @notes = @category.notes.where(subfolder: @subfolder).order(created_at: :desc)
+      @notes = @category.notes.where(hotspot_type: @hotspot_type).order(created_at: :desc)
 
       respond_to do |format|
-        # This is the HTML fallback if Turbo is turned off (and it preserves subfolder context)
-        format.html { redirect_to category_notes_path(@category, subfolder: @subfolder) }
+        # This is the HTML fallback if Turbo is turned off (and it preserves hotspot_type context)
+        format.html { redirect_to category_notes_path(@category, hotspot_type: @hotspot_type) }
         # Turbo Stream appends the new note or renders index frame
         format.turbo_stream
       end
@@ -50,13 +50,13 @@ end
 
   def update
     if @note.update(note_params)
-      # Capture the subfolder and re-fetch notes for this specific hotspot view
-      @subfolder = @note.subfolder || "notice_board"
-      @notes = @category.notes.where(subfolder: @subfolder).order(created_at: :desc)
+      # Capture the hotspot_type and re-fetch notes for this specific hotspot view
+      @hotspot_type = @note.hotspot_type || "notice_board"
+      @notes = @category.notes.where(hotspot_type: @hotspot_type).order(created_at: :desc)
 
       respond_to do |format|
-        # HTML fallback if Turbo is turned off (and again preserves subfolder context)
-        format.html { redirect_to category_notes_path(@category, subfolder: @subfolder) }
+        # HTML fallback if Turbo is turned off (and again preserves hotspot_type context)
+        format.html { redirect_to category_notes_path(@category, hotspot_type: @hotspot_type) }
         # Turbo Stream renders the index frame sans the deleted note
         format.turbo_stream
       end
@@ -66,17 +66,17 @@ end
   end
 
   def destroy
-    # Capture the subfolder BEFORE destroying the note record! If we don't,
-    # @subfolder is set to nil when we use it to define @notes a few lines down
-    @subfolder = @note.subfolder || "notice_board"
+    # Capture the hotspot_type BEFORE destroying the note record! If we don't,
+    # @hotspot_type is set to nil when we use it to define @notes a few lines down
+    @hotspot_type = @note.hotspot_type || "notice_board"
     @note.destroy
 
-    # We re-fetch remaining notes (based on the subfolder) so Turbo can render index.html.erb
-    @notes = @category.notes.where(subfolder: @subfolder)
+    # We re-fetch remaining notes (based on the hotspot_type) so Turbo can render index.html.erb
+    @notes = @category.notes.where(hotspot_type: @hotspot_type)
 
     respond_to do |format|
-      # HTML fallback if Turbo is turned off (and again preserves subfolder context)
-      format.html { redirect_to category_notes_path(@category, subfolder: @subfolder) }
+      # HTML fallback if Turbo is turned off (and again preserves hotspot_type context)
+      format.html { redirect_to category_notes_path(@category, hotspot_type: @hotspot_type) }
       # Turbo Stream renders the index frame sans the deleted note
       format.turbo_stream
     end
@@ -93,6 +93,6 @@ end
   end
 
   def note_params
-    params.require(:note).permit(:title, :content, :subfolder)
+    params.require(:note).permit(:title, :content, :hotspot_type)
   end
 end

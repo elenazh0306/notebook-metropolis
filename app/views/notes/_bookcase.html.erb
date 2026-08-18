@@ -3,8 +3,8 @@
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h4 class="m-0">📚 <%= @category.name %> Bookcase</h4>
 
-    <!-- New Bookcase Note Link (passes subfolder: "bookcase") -->
-    <%= link_to new_category_note_path(@category, subfolder: "bookcase"),
+    <!-- New Bookcase Note Link (passes hotspot_type: "bookcase") -->
+    <%= link_to new_category_note_path(@category, hotspot_type: "bookcase"),
                 data: { turbo_frame: "room_hotspot_content" }, # linking to the correct id!
                 class: "btn btn-warning btn-sm fw-bold shadow-sm" do %>
       📖 + Add Book Note

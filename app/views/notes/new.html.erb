@@ -2,34 +2,54 @@
 <turbo-frame id="room_hotspot_content">
   <div class="corkboard-container p-3">
 
-  <!-- All the code below hardcodes that we only have two subfolders ...
-  alas, I could not figure out how to set this up for any number of potential subfolders -->
-
     <div class="d-flex justify-content-between align-items-center mb-3">
       <h5 class="m-0">
-        <%= @note.subfolder == "bookcase" ? "📖 Write a New Book Note" : "✏️ Write a New Post-It" %>
+        <%= case @note.hotspot_type
+              when "bookcase" then "📖 Write a Book Note"
+              when "laptop" then "💻 Write a Coding Note"
+              when "posters" then "🖼️ Write a Picture Note"
+              else "📌 Write a Post-it Note"
+            end %>
       </h5>
-      <%= link_to "Cancel", category_notes_path(@category, subfolder: @note.subfolder), # If the user doesn't want to save the new note
+
+      <!-- Cancel button just in case we change our minds -->
+      <%= link_to "Cancel", category_notes_path(@category, hotspot_type: @note.hotspot_type), # If the user doesn't want to save the new note
                   data: { turbo_frame: "room_hotspot_content" },
                   class: "btn btn-outline-secondary btn-sm" %>
     </div>
 
-    <!-- Here with make the new note with a styled post-it Form Container -->
+    <!-- Here with make the new note with a styled Form Container -->
     <div class="card border-0 shadow-sm p-3 style-postit-detail">
       <%= form_with(model: [@category, @note],
                     data: { turbo_frame: "room_hotspot_content" }) do |f| %> <!-- Turbo Frame ID links to app/views/categories/index.html.erb -->
 
-        <!-- Hidden Field: Ensures the note is saved into the correct subfolder/hotspot
-        The user doesn't give the note a sub-folder, this happens automatically - if they save
-        the note on the notice board, that is the subfolder, if they save it in the bookshelf,
-        that is the sub-folder -->
-        <%= f.hidden_field :subfolder %>
+        <!-- Hidden Field: Ensures the note is saved into the correct hotspot_type
+        The user doesn't give the note a hotspot_type, this happens automatically - if they save
+        the note on the notice board, that is the hotspot_type, if they save it in the bookshelf,
+        that is the hotspot_type -->
+        <%= f.hidden_field :hotspot_type %>
 
         <div class="mb-3">
-          <%= f.label :title, (@note.subfolder == "bookcase" ? "Book Title" : "Post-It Title"), class: "form-label fw-bold text-dark" %>
+          <!-- I am not a super fan of all these hard-coded case-staments,
+          but what alternative? Also, how cool is it that you can used case
+          statements inside a form? -->
+          <%= f.label :title,
+                      (case @note.hotspot_type
+                        when "bookcase" then "Book Title"
+                        when "laptop" then "Project Title"
+                        when "posters" then "Poster Title"
+                        else "Post-It Title"
+                      end),
+                      class: "form-label fw-bold text-dark" %>
+
           <%= f.text_field :title,
                           class: "form-control",
-                          placeholder: (@note.subfolder == "bookcase" ? "The Pragmatic Programmer" : "Today's Coding Documentation"),
+                          placeholder: (case @note.hotspot_type
+                                          when "bookcase" then "Neuromancer"
+                                          when "laptop" then "Today's Coding Documentation"
+                                          when "posters" then "Cyberpunk City Map"
+                                          else "Remember to feed the cat"
+                                        end),
                           required: true %>
         </div>
 
@@ -43,7 +63,13 @@
         </div>
 
         <div class="d-grid">
-          <%= f.submit (@note.subfolder == "bookcase" ? "📖 Add to Shelf" : "📌 Pin to Board"), class: "btn btn-dark fw-bold" %>
+          <%= f.submit (case @note.hotspot_type
+                        when "bookcase" then "📖 Add to Shelf"
+                        when "laptop" then "💻 Save to Drive"
+                        when "posters" then "🖼️ Hang Poster"
+                        else "📌 Pin to Board"
+                        end),
+                      class: "btn btn-dark fw-bold" %>
         </div>
 
       <% end %>

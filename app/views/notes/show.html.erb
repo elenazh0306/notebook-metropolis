@@ -1,5 +1,5 @@
-  <!-- All the code below hardcodes that we only have two subfolders ...
-  alas, I could not figure out how to set this up for any number of potential subfolders -->
+<!-- All the code below hardcodes that we only have two subfolders ...
+alas, I could not figure out how to set this up for any number of potential subfolders -->
 
 <!-- Links to the ID on app/views/categories/index.html.erb -->
 <turbo-frame id="room_hotspot_content">
@@ -8,11 +8,11 @@
 
     <!-- Header with Edit Button, Delete Button and Back Link -->
     <div class="mb-3">
-      <!-- Link back to the active subfolder view on notes/index.html.erb -->
-      <%= link_to category_notes_path(@category, subfolder: @note.subfolder),
+      <!-- Link back to the active hotspot view on notes/index.html.erb -->
+      <%= link_to category_notes_path(@category, hotspot_type: @note.hotspot_type),
                   data: { turbo_frame: "room_hotspot_content" }, # the ID that connects us to app/views/categories/index.html.erb
                   class: "btn btn-outline-secondary btn-sm mb-2" do %>
-        ⬅️ <%= @note.subfolder == "bookcase" ? "Back to Shelf" : "Back to Board" %>
+        ⬅️ <%= @note.hotspot_type == "bookcase" ? "Back to Shelf" : "Back to Board" %>
       <% end %>
 
       <div class="d-flex gap-2">
@@ -20,7 +20,7 @@
         <%= link_to edit_category_note_path(@category, @note),
                     data: { turbo_frame: "room_hotspot_content" }, # the ID that connects to app/views/categories/index.html.erb
                     class: "btn btn-outline-warning btn-sm fw-bold text-dark" do %>
-          ✏️ <%= @note.subfolder == "bookcase" ? "Edit Book" : "Edit Note" %>
+          ✏️ <%= @note.hotspot_type == "bookcase" ? "Edit Book" : "Edit Note" %>
         <% end %>
 
         <!-- Delete Button -->
@@ -28,10 +28,10 @@
                       method: :delete,
                       data: {
                         turbo_frame: "room_hotspot_content", # the ID that connects to app/views/categories/index.html.erb
-                        turbo_confirm: (@note.subfolder == "bookcase" ? "Are you sure you want to remove this book?" : "Are you sure you want to unpin this note?")
+                        turbo_confirm: (@note.hotspot_type == "bookcase" ? "Are you sure you want to remove this book?" : "Are you sure you want to unpin this note?")
                       },
                       class: "btn btn-outline-danger btn-sm" do %>
-          🗑️ <%= @note.subfolder == "bookcase" ? "Remove Book" : "Unpin Note" %>
+          🗑️ <%= @note.hotspot_type == "bookcase" ? "Remove Book" : "Unpin Note" %>
         <% end %>
       </div>
     </div>
@@ -40,7 +40,7 @@
     <div class="card shadow-sm border-0 my-3 style-postit-detail">
       <div class="card-body p-4">
         <h4 class="card-title fw-bold text-dark border-bottom pb-2 mb-3">
-          <%= @note.subfolder == "bookcase" ? "📖" : "📌" %> <%= @note.title %>
+          <%= @note.hotspot_type == "bookcase" ? "📖" : "📌" %> <%= @note.title %>
         </h4>
         <p class="card-text text-dark fs-5" style="white-space: pre-line;">
           <%= @note.content %>

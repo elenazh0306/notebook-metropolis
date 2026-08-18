@@ -1,0 +1,77 @@
+/* Laptop Container & Grid */
+.laptop-container {
+  background-color: #181818; /* Dark IDE outer background */
+  border-radius: 8px;
+  min-height: 380px;
+}
+
+.laptop-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.25rem;
+}
+
+.laptop-card-link {
+  text-decoration: none;
+  color: inherit;
+
+  &:hover .laptop-card {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 255, 204, 0.2);
+    border-color: #00ffcc;
+  }
+}
+
+.laptop-card {
+  position: relative;
+  background-color: #252526; /* VS Code dark tab background */
+  border: 1px solid #3c3c3c;
+  width: 100%;
+  aspect-ratio: 16 / 10; /* Laptop screen proportion */
+  padding: 1.2rem 1rem 0.8rem 1rem;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  /* Simulated Window Control Dots (Red, Yellow, Green) */
+  &::before {
+    content: "•••";
+    position: absolute;
+    top: 3px;
+    left: 8px;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    color: #00ffcc;
+  }
+
+  .laptop-title {
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #569cd6; /* VS Code blue syntax highlight */
+    margin-top: 0.4rem;
+    margin-bottom: 0.2rem;
+    word-break: break-word;
+
+    &::before {
+      content: "> ";
+      color: #4ec9b0; /* Terminal prompt arrow */
+    }
+  }
+
+  .laptop-preview {
+    font-family: 'Courier New', monospace;
+    font-size: 0.78rem;
+    color: #ce9178; /* Code string highlight orange */
+    margin: 0;
+    line-height: 1.2;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+}

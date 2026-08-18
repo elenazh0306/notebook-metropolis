@@ -2,11 +2,11 @@ class Note < ApplicationRecord
   belongs_to :category
 
   # We ensures default subfolder is "notice_board"
-  after_initialize :set_default_subfolder, if: :new_record?
+  after_initialize :set_default_hotspot_type, if: :new_record?
 
   private
 
-  def set_default_subfolder
-    self.subfolder ||= "notice_board" # Conditional Assignment - to assign to "notice_board" if nil
+  def set_default_hotspot_type
+    self.hotspot_type ||= "notice_board" # Conditional Assignment - to assign to "notice_board" if nil
   end
 end

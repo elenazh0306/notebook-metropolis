@@ -1,10 +1,7 @@
 <!-- Friendly reminder to myself: Turbo Frame ID *must* match the receiver ID in app/views/categories/index.html.erb -->
 <turbo-frame id="room_hotspot_content">
 
-  <% if @subfolder == "bookcase" %>
-    <%= render "notes/bookcase" %>
-  <% else %>
-    <%= render "notes/notice_board" %>
-  <% end %>
+  <!-- here we render the notes dynamically based on the hotspot attatched to them -->
+  <%= render "notes/#{@hotspot_type}" %>
 
 </turbo-frame>
