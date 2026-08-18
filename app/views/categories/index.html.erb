@@ -43,9 +43,6 @@
   </div>
 </div>
 
-<!-- Render the Modal for creating new Buildings (Categories) -->
-<%= render "form_new_category" %>
-
 <!-- Render the Modal Partial for this Category -->
 <% @categories.each do |category| %>
   <%= render "categories/room_modal", category: category %>
