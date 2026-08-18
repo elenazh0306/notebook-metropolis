@@ -5,11 +5,11 @@ default: &default
 
 development:
   <<: *default
-  database: rails_watch_list_development
+  database: notebook_metropolis_development
 
 test:
   <<: *default
-  database: rails_watch_list_test
+  database: notebook_metropolis_test
 
 production:
   primary:
