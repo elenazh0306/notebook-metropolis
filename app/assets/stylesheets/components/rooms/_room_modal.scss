@@ -1,0 +1,74 @@
+.room-modal {
+  .room-container {
+    position: relative;
+    width: 100%;
+
+    .room-image {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+    }
+
+    // Shared base style for ALL room hotspots (isometric perspective & hover states)
+    .mural {
+      position: absolute;
+      background-color: transparent;
+      border: 2px solid transparent; // Prevents layout shift on hover
+      transition: 0.2s ease-in-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .hotspot-label {
+        opacity: 0;
+      }
+
+      &:hover {
+        background-color: whitesmoke;
+        border-color: red;
+        opacity: 0.8;
+
+        .hotspot-label {
+          opacity: 1;
+        }
+      }
+
+      // Hotspot 1: Notice Board
+      &.hotspot-noticeboard {
+        top: 29%;
+        left: 16%;
+        width: 15%;
+        height: 21%;
+        transform: skewY(-24deg);
+      }
+
+      // Hotspot 2: Bookcase
+      &.hotspot-bookcase {
+        top: 20%;
+        left: 46.5%;
+        width: 14%;
+        height: 39%;
+        transform: skewY(24deg);
+      }
+
+      // Hotspot 2: Laptop
+      &.hotspot-laptop {
+        top: 50%;
+        left: 24%;
+        width: 5.5%;
+        height: 8%;
+        transform: skewY(-24deg) skewX(8deg);
+      }
+
+      // Hotspot 4: Posters
+      &.hotspot-posters {
+        top: 27.5%;
+        left: 67.5%;
+        width: 15.5%;
+        height: 21%;
+        transform: skewY(24deg);
+      }
+    }
+  }
+}

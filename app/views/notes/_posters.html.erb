@@ -1,0 +1,33 @@
+<div class="posters-container p-3">
+  <!-- Header with Category Title & New Poster Note Button -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="m-0 fw-bold">🖼️ <%= @category.name %> Gallery Wall</h4>
+
+    <!-- New Poster Note Link (passes hotspot_type: "posters") -->
+    <%= link_to new_category_note_path(@category, hotspot_type: "posters"),
+                data: { turbo_frame: "room_hotspot_content" },
+                class: "btn btn-danger btn-sm fw-bold shadow-sm text-white" do %>
+      🎨 + Hang Poster
+    <% end %>
+  </div>
+
+  <% if @notes.any? %>
+    <div class="posters-grid">
+      <% @notes.each do |note| %>
+        <%= link_to category_note_path(@category, note),
+                    data: { turbo_frame: "room_hotspot_content" },
+                    class: "posters-card-link" do %>
+          <div class="posters-card">
+            <div class="tape-corner"></div> <!-- Styled masking tape on corner! -->
+            <h6 class="posters-title"><%= note.title %></h6>
+            <p class="posters-preview"><%= truncate(note.content, length: 40) %></p>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="text-center py-5">
+      <p class="text-muted">No posters hung on this wall yet!</p>
+    </div>
+  <% end %>
+</div>
