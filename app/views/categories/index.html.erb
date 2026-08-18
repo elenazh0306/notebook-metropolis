@@ -26,6 +26,23 @@
   </div>
 </div>
 
+<div class = "new-category-menu">
+  <div class = "offcanvas offcanvas-end" style = "width: 25vw" id = "new-category-menu" >
+    <div class = "offcanvas-header">
+      <h3>Create a New Building</h3>
+      <button
+              type = "button"
+              class = "btn-close"
+              data-bs-dismiss = "offcanvas"
+              aria-label = "Close">
+      </button>
+    </div>
+    <div class = "offcanvas-body" id="category_new_form">
+      <%= render "form", category: @category %>
+    </div>
+  </div>
+</div>
+
 <!-- Render the Modal for creating new Buildings (Categories) -->
 <%= render "form_new_category" %>
 

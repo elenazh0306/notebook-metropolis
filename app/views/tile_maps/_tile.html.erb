@@ -12,38 +12,55 @@
       data-tile-y-value="<%= y %>"
       data-tile-current-value="<%= current_type %>"
       data-tile-types-value="<%= tile_order.to_json %>">
-  <select data-board-target="tileDropdown"
-          data-action="change->tile#selectType"
-          class="tile-dropdown">
-    <% User::TILE_TYPES.each do |key, data| %>
-      <option value="<%= key %>" <%= 'selected' if key.to_s == current_type %>>
-        <%= data[:name].titleize %>
-      </option>
-    <% end %>
-  </select>
+  <% if !category_on_tile %>
+    <select data-board-target="tileDropdown"
+            data-action="change->tile#selectType"
+            class="tile-dropdown">
+      <% User::TILE_TYPES.each do |key, data| %>
+        <option value="<%= key %>" <%= 'selected' if key.to_s == current_type %>>
+          <%= data[:name].titleize %>
+        </option>
+      <% end %>
+    </select>
+  <% end %>
 
   <% if category_on_tile %>
     <!-- The Building Sprite and the Modal Trigger -->
     <!-- We make the modal target dynamic, based on the category id -->
-    <button type="button"
-            class="building-btn"
-            data-bs-toggle="modal"
-            data-bs-target="#categoryModal_<%= category_on_tile.id %>">
+    <div>
       <%= image_tag category_on_tile.building_sprite, class: "house-tile", alt: category_on_tile.name %>
-      <%= category_on_tile.name %>
-    </button>
+      <div class="house-name"> <%= category_on_tile.name %></div>
+    </div>
+    <div class='btn-container'>
+      <div class='building-btn'>
+        <button type="button"
+                class="building-btn"
+                data-bs-toggle="modal"
+                data-bs-target="#categoryModal_<%= category_on_tile.id %>">
+                  <div> Visit house 🗝️</div>
+                </button>
+      </div>
+
+        <%= button_to category_path(category_on_tile),
+        method: :delete,
+        data: { turbo_confirm: "Are you sure you want to demolish this building?"},
+        class: "btn btn-outline-danger btn-sm" do %>
+          ❌
+          <% end %>
+
+    </div>
 
   <% elsif tile[:buildable] %>
     <!-- Tile is buildable but empty: Show '+' build button -->
     <button type="button"
-          class="btn btn-primary"
+          class="btn btn-light btn-lg"
           data-bs-toggle="offcanvas"
           data-bs-target="#new-category-menu"
           data-action="click->tile#buildForm"
           data-tile-x-param="<%= x %>"
           data-tile-y-param="<%= y %>"
           title="Build here">
-    +
+    🏗️
   </button>
   <% end %>
 
