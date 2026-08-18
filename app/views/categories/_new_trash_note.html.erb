@@ -1,0 +1,40 @@
+<turbo-frame id="trash_notes_content">
+  <div class="corkboard-container p-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h5 class="m-0">✏️ Write a New Post-It</h5>
+      <%= link_to "Cancel", categories_path, # If the user doesn't want to save the new note
+                  data: { turbo_frame: "notice_board_content" },
+                  class: "btn btn-outline-secondary btn-sm" %>
+    </div>
+
+    <!-- Here with make the new note with a styled post-it Form Container -->
+    <div class="card border-0 shadow-sm p-3 style-postit-detail">
+      <%= form_with(model: [@category, @note],
+                    data: { turbo_frame: "notice_board_content" }) do |f| %> <!-- Turbo Frame ID links to _room_modal.html.erb -->
+
+        <div class="mb-3">
+          <%= f.label :title, "Trash note", class: "form-label fw-bold text-dark" %>
+          <%= f.text_field :title,
+                          class: "form-control",
+                          placeholder: "Today's Coding Documentation",
+                          required: true %>
+        </div>
+
+        <div class="mb-3">
+          <%= f.label :content, "Note Details", class: "form-label fw-bold text-dark" %>
+          <%= f.text_area :content,
+                          rows: 4,
+                          class: "form-control",
+                          placeholder: "Write your thoughts or tasks here...",
+                          required: true %>
+        </div>
+
+        <div class="d-grid">
+          <%= f.submit "Throw on the street", class: "btn btn-dark fw-bold" %>
+        </div>
+
+      <% end %>
+    </div>
+
+  </div>
+</turbo-frame>

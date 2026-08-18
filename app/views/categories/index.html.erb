@@ -1,4 +1,9 @@
 <h3><%= current_user.name %></h3>
+  <button type="button"
+          class="btn btn-primary btn-sm">
+    Random thoughts
+    <render "new_trash_note">
+  </button>
 
   <div data-controller="board" data-board-editing-value="false">
     <button type="button"
@@ -45,7 +50,6 @@
   </div>
 
 </div>
-
 
 
 <!-- Render the Modal Partial for this Category -->

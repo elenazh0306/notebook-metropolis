@@ -3,6 +3,7 @@ class CategoriesController < ApplicationController
     @categories = policy_scope(Category)
     create_map
     @category = Category.new
+    @note = Note.new
   end
 
   def show
