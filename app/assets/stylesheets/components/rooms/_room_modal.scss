@@ -69,6 +69,16 @@
         height: 21%;
         transform: skewY(24deg);
       }
+
+      // Hotspot 5: AI-assistant
+      &.hotspot-ai-assistant {
+        top: 59%;
+        left: 66.5%;
+        width: 11%;
+        height: 15%;
+        transform: skewY(7deg);
+        border-radius: 50%;
+      }
     }
   }
 }
