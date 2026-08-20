@@ -55,6 +55,14 @@
             <span class="hotspot-label">Posters</span>
           <% end %>
 
+          <!-- AI Hotspot -->
+          <%= link_to category_notes_path(category, hotspot_type: "ai_assistant"),
+                      data: { turbo_frame: "room_hotspot_content" },
+                      onclick: "bootstrap.Modal.getOrCreateInstance(document.getElementById('roomHotspotModal')).show()",
+                      class: "mural hotspot-ai-assistant" do %>
+            <span class="hotspot-label">AI Assistant</span>
+          <% end %>
+
         </div>
       </div>
 

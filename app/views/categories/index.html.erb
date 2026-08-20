@@ -52,14 +52,12 @@
   </div>
 </div>
 
-
 <!-- Render the Modal Partial for this Category -->
 <% @categories.each do |category| %>
   <% if category.name != "trash"%>
-    <%= render "room_modal", category: category %>
+    <%= render "/rooms/room_modal", category: category %>
   <% else %>
     <%= render "note_modal", category: category, note: category.notes[0]%>
-
   <% end %>
 <% end %>
 
@@ -68,7 +66,7 @@
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content notice-board-background">
       <div class="modal-header">
-        <h5 class="modal-title">Corkboard Notes</h5>
+        <h5 class="modal-title">Notebook Metropolis</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
