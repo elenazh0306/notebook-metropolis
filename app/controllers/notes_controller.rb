@@ -29,19 +29,30 @@ class NotesController < ApplicationController
     @note = @category.notes.build(note_params)
     @hotspot_type = @note.hotspot_type || "notice_board"
 
-    if @note.save
-      # This line fetches the updated collection for THIS hotspot_type, so index.html.erb has @notes
-      # See annotated comments in create.turbo_stream.erb for details
-      @notes = @category.notes.where(hotspot_type: @hotspot_type).order(created_at: :desc)
+    if @hotspot_type == 'street'
 
-      respond_to do |format|
-        # This is the HTML fallback if Turbo is turned off (and it preserves hotspot_type context)
-        format.html { redirect_to category_notes_path(@category, hotspot_type: @hotspot_type) }
-        # Turbo Stream appends the new note or renders index frame
-        format.turbo_stream
+      categories = Category.all
+      if @note.save
+        respond_to do |format|
+          format.turbo_stream { render turbo_stream: turbo_stream.refresh(request_id: nil) }
+          format.html { redirect_to categories_path }
+        end
       end
     else
-      render :new, status: :unprocessable_entity
+      if @note.save
+        # This line fetches the updated collection for THIS hotspot_type, so index.html.erb has @notes
+        # See annotated comments in create.turbo_stream.erb for details
+        @notes = @category.notes.where(hotspot_type: @hotspot_type).order(created_at: :desc)
+
+        respond_to do |format|
+          # This is the HTML fallback if Turbo is turned off (and it preserves hotspot_type context)
+          format.html { redirect_to category_notes_path(@category, hotspot_type: @hotspot_type) }
+          # Turbo Stream appends the new note or renders index frame
+          format.turbo_stream
+        end
+      else
+        render :new, status: :unprocessable_entity
+      end
     end
   end
 
