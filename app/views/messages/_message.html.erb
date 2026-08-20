@@ -1,0 +1,21 @@
+<% if message.role == "user" %>
+  <div id = "<%= dom_id(message) %>" class = "d-flex align-items-end justify-content-end gap-2">
+    <div class = "bg-secondary text-white p-3 rounded-3 shadow-sm max-w-75">
+      <small class = "fw-bold d-block mb-1 text-white-50">
+        You
+      </small>
+
+      <%= message.content %>
+    </div>
+  </div>
+<% elsif message.role == "assistant" %>
+  <div id = "<% dom_id(message) %>" class = "d-flex align-items-start gap-2">
+    <div class = "bg-primary text-white p-3 rounded-3 shadow-sm max-w-75">
+      <small class = "fw-bold d-block mb-1 text-white-50">
+        🐱 Room AI
+      </small>
+
+      <%= message.content %>
+    </div>
+  </div>
+<% end %>
