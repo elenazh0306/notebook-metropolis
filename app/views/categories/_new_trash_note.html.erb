@@ -1,0 +1,45 @@
+<turbo-frame id="trash_notes_content">
+  <div class="corkboard-container p-3">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h5 class="m-0">
+        What's on your mind?
+      </h5>
+      <%= link_to "Cancel", categories_path, class: "btn btn-outline-secondary btn-sm" %>
+    </div>
+
+    <div class="card border-0 shadow-sm p-3 style-postit-detail">
+      <%= form_with(model: [category, note],
+                    data: { turbo_frame: "trash_notes_content" }) do |f| %> <!-- Turbo Frame ID links to app/views/categories/index.html.erb -->
+
+        <%= f.hidden_field :hotspot_type, value: "street" %>
+
+        <div class="mb-3">
+          <%= f.label :title,
+                      class: "form-label fw-bold text-dark" %>
+
+          <%= f.text_field :title,
+                          class: "form-control",
+                          placeholder: "Write a best-seller",
+                          required: true %>
+        </div>
+
+        <div class="mb-3">
+          <%= f.label :content, "Note Details", class: "form-label fw-bold text-dark" %>
+          <%= f.text_area :content,
+                          rows: 4,
+                          class: "form-control",
+                          placeholder: "Write your thoughts or tasks here...",
+                          required: true %>
+        </div>
+
+        <div class="d-grid">
+          <%= f.submit "Throw on the streets for now",
+                      class: "btn btn-dark fw-bold" %>
+        </div>
+
+      <% end %>
+    </div>
+
+  </div>
+</turbo-frame>

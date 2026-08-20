@@ -1,0 +1,53 @@
+
+<div class="modal fade room-modal"
+    id="noteModal_<%= note.id %>"
+    tabindex="-1"
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+
+      <div class="corkboard-container p-3">
+
+        <div class="mb-3">
+          <!-- Link back to the active hotspot view on notes/index.html.erb -->
+          <%= link_to categories_path, class: "btn btn-outline-secondary btn-sm mb-2" do %>
+            ⬅️ Back to the map
+          <% end %>
+
+          <div class="d-flex gap-2">
+            <!-- Edit Button -->
+            <%= link_to edit_category_note_path(category, note),
+                        data: { turbo_frame: "room_hotspot_content" }, # the ID that connects to app/views/categories/index.html.erb
+                        class: "btn btn-outline-warning btn-sm fw-bold text-dark" do %>
+              ✏️ Edit note
+            <% end %>
+
+            <!-- Delete Button -->
+            <%= button_to category_note_path(category, note),
+                          method: :delete,
+                          data: {
+                            turbo_frame: "room_hotspot_content", # the ID that connects to app/views/categories/index.html.erb
+                            turbo_confirm: ("Throw this away forever?")
+                          },
+                          class: "btn btn-outline-danger btn-sm" do %>
+              🗑️ Throw away
+            <% end %>
+          </div>
+        </div>
+
+        <!-- The Full Note Displayed as an expanded note -->
+        <div class="card shadow-sm border-0 my-3 style-postit-detail">
+          <div class="card-body p-4">
+            <h4 class="card-title fw-bold text-dark border-bottom pb-2 mb-3">
+              <%= note.title %>
+            </h4>
+            <p class="card-text text-dark fs-5" style="white-space: pre-line;">
+              <%= note.content %>
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

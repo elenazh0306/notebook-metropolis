@@ -11,8 +11,11 @@
       data-tile-x-value="<%= x %>"
       data-tile-y-value="<%= y %>"
       data-tile-current-value="<%= current_type %>"
-      data-tile-types-value="<%= tile_order.to_json %>">
+      data-tile-types-value="<%= tile_order.to_json %>"
+      data-action="dragstart->drag-drop#drag dragend->drag-drop#drop dragover->drag-drop#over">
   <% if !category_on_tile %>
+
+  <div data-drag-drop-target='empty'>
     <select data-board-target="tileDropdown"
             data-action="change->tile#selectType"
             class="tile-dropdown">
@@ -22,33 +25,58 @@
         </option>
       <% end %>
     </select>
+    </div>
+
   <% end %>
 
   <% if category_on_tile %>
     <!-- The Building Sprite and the Modal Trigger -->
     <!-- We make the modal target dynamic, based on the category id -->
-    <div>
-      <%= image_tag category_on_tile.building_sprite, class: "house-tile", alt: category_on_tile.name %>
-      <div class="house-name"> <%= category_on_tile.name %></div>
-    </div>
-    <div class='btn-container'>
-      <div class='building-btn'>
-        <button type="button"
-                class="building-btn"
-                data-bs-toggle="modal"
-                data-bs-target="#categoryModal_<%= category_on_tile.id %>">
-                  <div> Visit house 🗝️</div>
-                </button>
+    <% if category_on_tile.name != 'trash' %>
+      <div>
+        <%= image_tag category_on_tile.building_sprite, class: "house-tile", alt: category_on_tile.name %>
+        <div class="house-name"> <%= category_on_tile.name %></div>
       </div>
+      <div class='btn-container'>
+            <div>
+              <button type="button"
+                      class="building-btn"
+                      data-bs-toggle="modal"
+                      data-bs-target="#categoryModal_<%= category_on_tile.id %>">
+                        <div> Visit house 🗝️</div>
+                      </button>
+            </div>
+      </div>
+    <% else %>
+        <div
+          class='draggable'
+          draggable="true"
+          data-drag-drop-target='trash'
+          data-category-id="<%= category_on_tile.id %>"
+          data-category-x="<%= category_on_tile.x %>"
+          data-category-y="<%= category_on_tile.y %>">
+          <%= image_tag category_on_tile.building_sprite, class: "house-tile", alt: category_on_tile.name %>
+          <div class="house-name"> <%= category_on_tile.name %></div>
+        </div>
+        <% note = category_on_tile.notes[0] %>
+        <div class="building-btn">
+          <button type="button"
+                  class="btn btn-danger"
+                  data-bs-toggle="modal"
+                  data-bs-target="#noteModal_<%= note.id %>">
+                    <div> View the note  🗝️</div>
+                  </button>
+        </div>
 
-        <%= button_to category_path(category_on_tile),
-        method: :delete,
-        data: { turbo_confirm: "Are you sure you want to demolish this building?"},
-        class: "btn btn-outline-danger btn-sm" do %>
-          ❌
-          <% end %>
+    <% end %>
 
-    </div>
+          <%= button_to category_path(category_on_tile),
+          method: :delete,
+          data: { turbo_confirm: "Are you sure you want to demolish this building?"},
+          class: "btn btn-outline-danger btn-sm" do %>
+            ❌
+            <% end %>
+
 
   <% elsif tile[:buildable] %>
     <!-- Tile is buildable but empty: Show '+' build button -->
@@ -61,7 +89,7 @@
           data-tile-y-param="<%= y %>"
           title="Build here">
     🏗️
-  </button>
+    </button>
   <% end %>
 
-  </div>
+</div>
