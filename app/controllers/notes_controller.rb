@@ -1,6 +1,6 @@
 class NotesController < ApplicationController
   before_action :set_category
-  before_action :set_note, only: [:show, :edit, :update, :destroy]
+  before_action :set_note, only: %i[show edit update destroy]
 
   def index
     @notes = @category.notes
@@ -15,15 +15,15 @@ class NotesController < ApplicationController
   def show
   end
 
-def new
-  # Reads params[:hotspot_type] from the link (e.g. "bookcase")
-  # If none is passed, it falls back to "notice_board"
-  # This repeats through a lot of actions here, but I didn't make
-  # a before_action, because keeping the code explicit makes it easier to understand
-  hotspot_type_param = params[:hotspot_type].presence || "notice_board"
+  def new
+    # Reads params[:hotspot_type] from the link (e.g. "bookcase")
+    # If none is passed, it falls back to "notice_board"
+    # This repeats through a lot of actions here, but I didn't make
+    # a before_action, because keeping the code explicit makes it easier to understand
+    hotspot_type_param = params[:hotspot_type].presence || "notice_board"
 
-  @note = @category.notes.build(hotspot_type: hotspot_type_param)
-end
+    @note = @category.notes.build(hotspot_type: hotspot_type_param)
+  end
 
   def create
     @note = @category.notes.build(note_params)
