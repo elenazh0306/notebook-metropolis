@@ -3,7 +3,15 @@ class CategoriesController < ApplicationController
     @categories = policy_scope(Category)
     create_map
     @category = Category.new
-    @note = Note.new
+
+    @indexed_tiles = current_user.tile_map.each_with_index.map do |sub_array, index|
+                      sub_array.each_with_index.map do |item, sub_index|
+                        next if item == "base"
+                        { tile: item, row: index, column: sub_index }
+                      end.compact
+                    end.flatten
+
+
   end
 
   def show
@@ -19,29 +27,42 @@ class CategoriesController < ApplicationController
   def create
     @category = Category.new(category_params)
     @category.user = current_user
+    @note = Note.new
     authorize @category
 
-    if @category.save
-      respond_to do |format|
-        format.turbo_stream { render turbo_stream: turbo_stream.refresh(request_id: nil) }
-        format.html { redirect_to categories_path }
+    if @category.name == "trash"
+      if @category.save
+        respond_to do |format|
+          format.html { redirect_to categories_path }
+          format.turbo_stream
+        end
       end
+
     else
-      respond_to do |format|
-        format.html {
-          @categories = Category.all
-          create_map
-          render :index, status: :unprocessable_entity
-        }
-        format.turbo_stream {
-          render turbo_stream: turbo_stream.append(
-            "category_new_form",
-            partial: "shared/errors",
-            locals: { object: @category }
-          ), status: :unprocessable_entity
-        }
+      if @category.save
+        respond_to do |format|
+          format.turbo_stream { render turbo_stream: turbo_stream.refresh(request_id: nil) }
+          format.html { redirect_to categories_path }
+        end
+      else
+        respond_to do |format|
+          format.html {
+            @categories = Category.all
+            create_map
+            render :index, status: :unprocessable_entity
+          }
+          format.turbo_stream {
+            render turbo_stream: turbo_stream.append(
+              "category_new_form",
+              partial: "shared/errors",
+              locals: { object: @category }
+            ), status: :unprocessable_entity
+          }
+        end
       end
     end
+
+
   end
 
   def edit
@@ -77,7 +98,7 @@ class CategoriesController < ApplicationController
     y = params[:y].to_i
     @row = current_user.tile_map.length
     @column = current_user.tile_map[0].length
-     @current_type = current_user.tile_map[y][x].to_s
+    @current_type = current_user.tile_map[y][x].to_s
     @tile = User::TILE_TYPES[@current_type.to_sym]
     @tile_order = User::TILE_TYPES.keys.map(&:to_s)
     @category_on_tile = @categories.find { |c| c.x == x && c.y == y }

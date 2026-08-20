@@ -32,21 +32,33 @@
       <div class="house-name"> <%= category_on_tile.name %></div>
     </div>
     <div class='btn-container'>
-      <div class='building-btn'>
-        <button type="button"
-                class="building-btn"
-                data-bs-toggle="modal"
-                data-bs-target="#categoryModal_<%= category_on_tile.id %>">
-                  <div> Visit house 🗝️</div>
-                </button>
-      </div>
+      <% if category_on_tile.name != 'trash' %>
+          <div class='building-btn'>
+            <button type="button"
+                    class="building-btn"
+                    data-bs-toggle="modal"
+                    data-bs-target="#categoryModal_<%= category_on_tile.id %>">
+                      <div> Visit house 🗝️</div>
+                    </button>
+          </div>
+        <% else %>
+          <% note = category_on_tile.notes[0] %>
+          <div class='building-btn'>
+            <button type="button"
+                    class="btn btn-danger"
+                    data-bs-toggle="modal"
+                    data-bs-target="#noteModal_<%= note.id %>">
+                      <div> View the note  🗝️</div>
+                    </button>
+          </div>
+        <% end %>
 
-        <%= button_to category_path(category_on_tile),
-        method: :delete,
-        data: { turbo_confirm: "Are you sure you want to demolish this building?"},
-        class: "btn btn-outline-danger btn-sm" do %>
-          ❌
-          <% end %>
+          <%= button_to category_path(category_on_tile),
+          method: :delete,
+          data: { turbo_confirm: "Are you sure you want to demolish this building?"},
+          class: "btn btn-outline-danger btn-sm" do %>
+            ❌
+            <% end %>
 
     </div>
 

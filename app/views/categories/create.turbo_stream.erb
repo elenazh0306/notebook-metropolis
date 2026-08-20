@@ -1,5 +1,3 @@
-<turbo-stream action="replace" target="trash_notes_content">
-  <template>
-    <%= render template: "notes/index", formats: [:html] %> <!-- See note below -->
-  </template>
-</turbo-stream>
+<%= turbo_stream.replace "trash_notes_content" do %>
+  <%= render "new_trash_note", category: @category, note: @note %>
+<% end %>

@@ -1,9 +1,13 @@
 <h3><%= current_user.name %></h3>
-  <button type="button"
-          class="btn btn-primary btn-sm">
-    Random thoughts
-    <render "new_trash_note">
-  </button>
+
+
+  <%= button_to "Random thoughts",
+      categories_path(category: { name: "trash", x: @indexed_tiles.sample[:row], y:@indexed_tiles.sample[:column] , sprite_image: "trash.png" }),
+      method: :post,
+      class: "btn btn-primary btn-sm" %>
+
+  <div id="trash_notes_content">
+  </div>
 
   <div data-controller="board" data-board-editing-value="false">
     <button type="button"
@@ -48,15 +52,15 @@
   </div>
 </div>
 
-<<<<<<< HEAD
-=======
-<!-- Render the Modal for creating new Buildings (Categories) -->
-<%= render "form_new_category" %>
->>>>>>> master
 
 <!-- Render the Modal Partial for this Category -->
 <% @categories.each do |category| %>
-  <%= render "categories/room_modal", category: category %>
+  <% if category.name != "trash"%>
+    <%= render "room_modal", category: category %>
+  <% else %>
+    <%= render "note_modal", category: category, note: category.notes[0]%>
+
+  <% end %>
 <% end %>
 
 <!-- A Resuable Modal for all Notes 'Notice Boards'-->
