@@ -1,5 +1,14 @@
 <h3><%= current_user.name %></h3>
 
+
+  <%= button_to "Random thoughts",
+      categories_path(category: { name: "trash", x: @indexed_tiles.sample[:row], y:@indexed_tiles.sample[:column] , sprite_image: "trash.png" }),
+      method: :post,
+      class: "btn btn-primary btn-sm" %>
+
+  <div id="trash_notes_content">
+  </div>
+
   <div data-controller="board" data-board-editing-value="false">
     <button type="button"
             class="btn btn-primary btn-sm"
@@ -15,7 +24,7 @@
       💾 Save Changes
     </button>
 
-  <div class="board">
+  <div class="board" data-controller="drag-drop">
     <% @row.times do |y| %>
       <div class="d-flex">
         <% @column.times do |x| %>
@@ -43,10 +52,14 @@
   </div>
 </div>
 
-<!-- Render the Room Modal Partial for this Category -->
+<!-- Render the Modal Partial for this Category -->
 <!-- '.select(&:persisted?)' is a guard clause that ensures unsaved objects don't crash the loop -->
 <% @categories.select(&:persisted?).each do |category| %>
-  <%= render "categories/rooms/room_modal", category: category %>
+  <% if category.name != "trash" %>
+    <%= render "categories/rooms/room_modal", category: category %>
+  <% else %>
+    <%= render "note_modal", category: category, note: category.notes[0] %>
+  <% end %>
 <% end %>
 
 <!-- A Resuable Modal for all Notes 'Bookcases, Notice Boards, Laptops, etc.' -->

@@ -1,3 +1,6 @@
+<% citizen = Citizen.find_by(category_id: @category.id) %>
+<%= turbo_stream_from citizen %>
+
 <div class="ai-assistant-container p-3">
 
   <!-- Header with Category (Room) Title & Status Badge -->
@@ -25,18 +28,16 @@
         </div>
       </div>
 
-      <!-- Sample User Response Bubble (Where your past prompts are posted) -->
-      <div class="d-flex align-items-end justify-content-end gap-2">
-        <div class="bg-secondary text-white p-3 rounded-3 shadow-sm max-w-75">
-          <small class="fw-bold d-block mb-1 text-white-50">You</small>
-          Can you summarize the notes in this room for me?
-        </div>
-      </div>
-
       <!-- Dynamic chat messages will be appended inside THIS div (.chat-field) via Turbo Stream -->
       <!-- Don't worry about the Turbo Stream part: I will help you with that -->
 
-      <div class="chat-field d-flex flex-column gap-3">
+      <div id = "chat-field" class = "chat-field d-flex flex-column gap-3">
+        <% if citizen.present? %>
+          <% citizen.messages.order(:created_at).each do |message| %>
+            <%= render "messages/message", message: message %>
+          <% end %>
+        <% end %>
+      </div>
         <!--
           When you set up the backend (or when Turbo Stream appends new messages),
           this empty div serves as the ANCHOR TARGET (class="chat-field").
@@ -45,15 +46,14 @@
           (just like the ones above) and insert it inside this .chat-field container.
         -->
       </div>
-
     </div>
   </div>
 
   <!-- THIS IS WHERE YOU RESPOND IN THE CHAT -->
   <div>
     <!-- Replace 'url: "#"' with your actual LLM Messages controller path -->
-    <%= form_with(url: "#", method: :post, class: "d-flex gap-2") do |f| %>
-      <%= f.text_field :message,
+    <%= form_with(url: citizen_messages_path(citizen, format: :turbo_stream), scope: :message, method: :post, class: "d-flex gap-2") do |f| %>
+      <%= f.text_field :content,
                       placeholder: "Type a message to the AI...",
                       class: "form-control shadow-sm",
                       autocomplete: "off" %>

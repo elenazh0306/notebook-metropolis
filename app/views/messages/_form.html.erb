@@ -1,0 +1,6 @@
+<%= form_with model: [citizen, message] do |f| %>
+  <div class = "mb-3">
+    <%= f.text_area :content, class: "form-control", placeholder: "Ask the AI about your notes...", rows: 3 %>
+  </div>
+  <%= f.submit "Send", class: "btn btn-primary" %>
+<% end %>

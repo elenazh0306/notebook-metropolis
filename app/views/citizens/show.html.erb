@@ -1,0 +1,14 @@
+<%= turbo_stream_from @citizen %>
+<div class = "container py-4">
+  <div class = "chat-title-container">
+    <h1 id = "chat_title" class = "chat-title">Chat Title</h1>
+  </div>
+    <div class = "chat-page">
+      <div id = "messages">
+        <%= render @messages %>
+      </div>
+      <div id = "new_message_container">
+        <%= render "messages/form", citizen: @citizen, message: @message %>
+      </div>
+    </div>
+</div>

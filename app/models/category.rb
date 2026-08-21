@@ -1,7 +1,7 @@
 class Category < ApplicationRecord
   belongs_to :user
   has_many :notes, dependent: :destroy
-  validates :name, uniqueness: { message: "You already have this category!"}
+  validates :name, uniqueness: { message: "You already have this category!"}, unless: :system_category?
   validates :name, presence: { message: "You forgot the name!"}
   validates :sprite_image, presence: { message: "Pick a building!"}
 
@@ -23,5 +23,11 @@ class Category < ApplicationRecord
   # handles the animation type fallback (default to continuous loops)
   def animation_schedule
     building_animation_type.presence || "continuous"
+  end
+
+  private
+
+  def system_category?
+    name.downcase == "trash" # Skips uniqueness validation if the name is "trash"
   end
 end
