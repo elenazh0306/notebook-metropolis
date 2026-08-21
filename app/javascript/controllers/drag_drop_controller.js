@@ -38,6 +38,9 @@ export default class extends Controller {
       const newY = targetTile.dataset.tileYValue
 
       // updating DOM
+      targetTile.appendChild(this.draggedElement)
+
+      // update dataset
       this.draggedElement.dataset.categoryX = newX
       this.draggedElement.dataset.categoryY = newY
 

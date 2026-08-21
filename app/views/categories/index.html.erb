@@ -1,4 +1,4 @@
-<h3><%= current_user.name %></h3>
+<h3>Hello <%= current_user.name %>!</h3>
 
 
   <%= button_to "Random thoughts",
@@ -24,7 +24,7 @@
       💾 Save Changes
     </button>
 
-  <div class="board" data-controller="sortable">
+  <div class="board" data-controller="drag-drop">
     <% @row.times do |y| %>
       <div class="d-flex">
         <% @column.times do |x| %>
