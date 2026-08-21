@@ -1,0 +1,41 @@
+<!-- Notice Board Hotspot -->
+<%= link_to category_notes_path(category, hotspot_type: "notice_board"), # passes hotspot filter parameter, leading us to the correct hotspot
+            data: { turbo_frame: "room_hotspot_content" }, # targets the static turbo-frame inside #roomHotspotModal in categories/index.html.erb
+            # this next line is an inline Bootstrap API call that opens #noticeBoardModal on the same click
+            # it is included because otherwise Bootstrap eats the click and Turbo never fires its HTTP request
+            onclick: "bootstrap.Modal.getOrCreateInstance(document.getElementById('roomHotspotModal')).show()",
+            class: "mural hotspot-noticeboard" do %>
+  <span class="hotspot-label">Notice Board</span>
+<% end %>
+
+<!-- Bookcase Hotspot -->
+<%= link_to category_notes_path(category, hotspot_type: "bookcase"),
+            data: { turbo_frame: "room_hotspot_content" },
+            onclick: "bootstrap.Modal.getOrCreateInstance(document.getElementById('roomHotspotModal')).show()",
+            class: "mural hotspot-bookcase" do %>
+  <span class="hotspot-label">Bookcase</span>
+<% end %>
+
+<!-- Laptop Hotspot -->
+<%= link_to category_notes_path(category, hotspot_type: "laptop"),
+            data: { turbo_frame: "room_hotspot_content" },
+            onclick: "bootstrap.Modal.getOrCreateInstance(document.getElementById('roomHotspotModal')).show()",
+            class: "mural hotspot-laptop" do %>
+  <span class="hotspot-label">Laptop</span>
+<% end %>
+
+<!-- Posters Hotspot -->
+<%= link_to category_notes_path(category, hotspot_type: "posters"),
+            data: { turbo_frame: "room_hotspot_content" },
+            onclick: "bootstrap.Modal.getOrCreateInstance(document.getElementById('roomHotspotModal')).show()",
+            class: "mural hotspot-posters" do %>
+  <span class="hotspot-label">Posters</span>
+<% end %>
+
+<!-- AI Hotspot -->
+<%= link_to category_notes_path(category, hotspot_type: "ai_assistant"),
+            data: { turbo_frame: "room_hotspot_content" },
+            onclick: "bootstrap.Modal.getOrCreateInstance(document.getElementById('roomHotspotModal')).show()",
+            class: "mural hotspot-ai-assistant" do %>
+  <span class="hotspot-label">AI Assistant</span>
+<% end %>

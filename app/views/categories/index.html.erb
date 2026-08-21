@@ -43,12 +43,13 @@
   </div>
 </div>
 
-<!-- Render the Modal Partial for this Category -->
-<% @categories.each do |category| %>
+<!-- Render the Room Modal Partial for this Category -->
+<!-- '.select(&:persisted?)' is a guard clause that ensures unsaved objects don't crash the loop -->
+<% @categories.select(&:persisted?).each do |category| %>
   <%= render "categories/rooms/room_modal", category: category %>
 <% end %>
 
-<!-- A Resuable Modal for all Notes 'Notice Boards'-->
+<!-- A Resuable Modal for all Notes 'Bookcases, Notice Boards, Laptops, etc.' -->
 <div class="modal fade" id="roomHotspotModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content notice-board-background">
