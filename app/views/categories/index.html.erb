@@ -58,8 +58,16 @@
     <%= render "categories/rooms/room_modal", category: category %>
   <% else %>
     <%= render "note_modal", category: category, note: category.notes[0]%>
+    <!-- edit trash note-->
+    <turbo-frame id="trash_note_edit">
+
+      <!-- here we render the notes dynamically based on the hotspot attatched to them -->
+      <%= render "edit_trash", category: category, note: category.notes[0] %>
+
+    </turbo-frame>
   <% end %>
 <% end %>
+
 
 <!-- A Resuable Modal for all Notes 'Notice Boards'-->
 <div class="modal fade" id="roomHotspotModal" tabindex="-1" aria-hidden="true">

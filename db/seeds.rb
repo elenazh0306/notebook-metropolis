@@ -24,7 +24,7 @@ user.save!
 
 category = user.categories.create!(
   name: "Cozy Study",
-  sprite_image: "default.png",
+  sprite_image: "red-roof.png",
   room_image: "cat_room.png",
   x: 1,
   y: 1
