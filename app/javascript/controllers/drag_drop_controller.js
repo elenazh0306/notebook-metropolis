@@ -8,7 +8,7 @@ export default class extends Controller {
   }
 
   connect() {
-    this.updateMap()
+
   }
 
   drag(event) {
@@ -30,7 +30,7 @@ export default class extends Controller {
     event.preventDefault()
 
 
-    const targetTile = event.currentTarget.closest('[data-tile-x-value]')
+    const targetTile = event.currentTarget
     if (targetTile && this.draggedElement) {
 
       // collecting new coord
@@ -42,7 +42,7 @@ export default class extends Controller {
       this.draggedElement.dataset.categoryY = newY
 
       // save changes at backend
-      // this.updateBackend(this.categoryId, newX, newY)
+      this.updateBackend(this.categoryId, newX, newY)
 
       // clean up reference
       this.draggedElement.classList.remove('dragging')
@@ -56,18 +56,18 @@ export default class extends Controller {
     event.preventDefault()
   }
 
-  // updateBackend(categoryId, x, y) {
+  updateBackend(categoryId, x, y) {
 
-  //   fetch(`/categories/${categoryId}`, {
-  //     method: "PATCH",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       "Accept": "application/json",
-  //       "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content
-  //     },
-  //     body: JSON.stringify({ category: { x: x, y: y } })
-  //   })
-  // }
+    fetch(`/categories/${categoryId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content
+      },
+      body: JSON.stringify({ category: { x: x, y: y } })
+    })
+  }
 
 
 }

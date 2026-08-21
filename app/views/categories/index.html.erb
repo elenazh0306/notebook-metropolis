@@ -24,7 +24,7 @@
       💾 Save Changes
     </button>
 
-  <div class="board" data-controller="drag-drop">
+  <div class="board" data-controller="sortable">
     <% @row.times do |y| %>
       <div class="d-flex">
         <% @column.times do |x| %>
@@ -55,7 +55,7 @@
 <!-- Render the Modal Partial for this Category -->
 <% @categories.each do |category| %>
   <% if category.name != "trash"%>
-    <%= render "/rooms/room_modal", category: category %>
+    <%= render "categories/rooms/room_modal", category: category %>
   <% else %>
     <%= render "note_modal", category: category, note: category.notes[0]%>
   <% end %>

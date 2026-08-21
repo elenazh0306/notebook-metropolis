@@ -12,7 +12,7 @@
       data-tile-y-value="<%= y %>"
       data-tile-current-value="<%= current_type %>"
       data-tile-types-value="<%= tile_order.to_json %>"
-      data-action="dragstart->drag-drop#drag dragend->drag-drop#drop dragover->drag-drop#over">
+      data-action="dragend->drag-drop#drop dragover->drag-drop#over">
   <% if !category_on_tile %>
 
   <div data-drag-drop-target='empty'>
@@ -54,7 +54,8 @@
           data-drag-drop-target='trash'
           data-category-id="<%= category_on_tile.id %>"
           data-category-x="<%= category_on_tile.x %>"
-          data-category-y="<%= category_on_tile.y %>">
+          data-category-y="<%= category_on_tile.y %>"
+          data-action="dragstart->drag-drop#drag">
           <%= image_tag category_on_tile.building_sprite, class: "house-tile", alt: category_on_tile.name %>
           <div class="house-name"> <%= category_on_tile.name %></div>
         </div>
