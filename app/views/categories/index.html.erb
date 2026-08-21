@@ -55,7 +55,7 @@
 <!-- Render the Modal Partial for this Category -->
 <% @categories.each do |category| %>
   <% if category.name != "trash"%>
-    <%= render "/rooms/room_modal", category: category %>
+    <%= render "categories/rooms/room_modal", category: category %>
   <% else %>
     <%= render "note_modal", category: category, note: category.notes[0]%>
   <% end %>

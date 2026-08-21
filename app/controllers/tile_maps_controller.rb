@@ -1,7 +1,5 @@
 class TileMapsController < ApplicationController
   def update
-
-
     @categories = current_user.categories
     x = params[:x].to_i
     y = params[:y].to_i
@@ -24,5 +22,9 @@ class TileMapsController < ApplicationController
       end
       format.html { redirect_back fallback_location: root_path }
     end
+  end
+
+  def swap
+
   end
 end
