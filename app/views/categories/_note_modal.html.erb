@@ -17,21 +17,14 @@
           <div class="d-flex gap-2">
             <!-- Edit Button -->
             <%= link_to edit_category_note_path(category, note),
-                        data: { turbo_frame: "room_hotspot_content" }, # the ID that connects to app/views/categories/index.html.erb
                         class: "btn btn-outline-warning btn-sm fw-bold text-dark" do %>
               ✏️ Edit note
             <% end %>
 
             <!-- Delete Button -->
-            <%= button_to category_note_path(category, note),
-                          method: :delete,
-                          data: {
-                            turbo_frame: "room_hotspot_content", # the ID that connects to app/views/categories/index.html.erb
-                            turbo_confirm: ("Throw this away forever?")
-                          },
-                          class: "btn btn-outline-danger btn-sm" do %>
-              🗑️ Throw away
-            <% end %>
+            <!-- deleting of a trash note is only rendered through the map view,
+            because it is basically one category with one note -->
+
           </div>
         </div>
 
