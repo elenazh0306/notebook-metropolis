@@ -1,0 +1,41 @@
+<!-- Gothic Library Hotspots Overlay -->
+
+<!-- Notice Board / Parchment Scroll Hotspot -->
+<%= link_to category_notes_path(category, hotspot_type: "notice_board"),
+            data: { turbo_frame: "room_hotspot_content" },
+            onclick: "bootstrap.Modal.getOrCreateInstance(document.getElementById('roomHotspotModal')).show()",
+            class: "mural hotspot-gothic-noticeboard" do %>
+  <span class="hotspot-label">Scroll Board</span>
+<% end %>
+
+<!-- Bookcase / Spellbook Shelf Hotspot -->
+<%= link_to category_notes_path(category, hotspot_type: "bookcase"),
+            data: { turbo_frame: "room_hotspot_content" },
+            onclick: "bootstrap.Modal.getOrCreateInstance(document.getElementById('roomHotspotModal')).show()",
+            class: "mural hotspot-grimoire-shelf" do %>
+  <span class="hotspot-label">Grimoire Shelf</span>
+<% end %>
+
+<!-- Dragon Book Hotspot -->
+<%= link_to category_notes_path(category, hotspot_type: "laptop"),
+            data: { turbo_frame: "room_hotspot_content" },
+            onclick: "bootstrap.Modal.getOrCreateInstance(document.getElementById('roomHotspotModal')).show()",
+            class: "mural hotspot-dragon-book" do %>
+  <span class="hotspot-label">Book of Dragons</span>
+<% end %>
+
+<!-- Star Chart Hotspot -->
+<%= link_to category_notes_path(category, hotspot_type: "posters"),
+            data: { turbo_frame: "room_hotspot_content" },
+            onclick: "bootstrap.Modal.getOrCreateInstance(document.getElementById('roomHotspotModal')).show()",
+            class: "mural hotspot-star-chart" do %>
+  <span class="hotspot-label">Star Chart</span>
+<% end %>
+
+<!-- AI Assistant / Gargoyle Hotspot -->
+<%= link_to category_notes_path(category, hotspot_type: "ai_assistant"),
+            data: { turbo_frame: "room_hotspot_content" },
+            onclick: "bootstrap.Modal.getOrCreateInstance(document.getElementById('roomHotspotModal')).show()",
+            class: "mural hotspot-gothic-ai" do %>
+  <span class="hotspot-label">AI Companion</span>
+<% end %>

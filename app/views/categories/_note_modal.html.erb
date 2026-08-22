@@ -17,7 +17,6 @@
           <div class="d-flex gap-2">
             <!-- Edit Button -->
             <%= link_to edit_category_note_path(category, note),
-                        data: { turbo_frame: "trash_note_edit" }, # the ID that connects to app/views/categories/index.html.erb
                         class: "btn btn-outline-warning btn-sm fw-bold text-dark" do %>
               ✏️ Edit note
             <% end %>

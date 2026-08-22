@@ -27,6 +27,19 @@
       </select>
       </div>
 
+    <% else %>
+        <div
+          class='draggable'
+          draggable="true"
+          data-drag-drop-target='trash'
+          data-category-id="<%= category_on_tile.id %>"
+          data-category-x="<%= category_on_tile.x %>"
+          data-category-y="<%= category_on_tile.y %>">
+          <%= image_tag category_on_tile.building_sprite, class: "house-tile", alt: category_on_tile.name %>
+          <div class="house-name"> <%= category_on_tile.name %></div>
+        </div>
+
+
     <% end %>
 
     <% if category_on_tile %>

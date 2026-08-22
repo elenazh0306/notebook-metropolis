@@ -53,23 +53,16 @@
 </div>
 
 <!-- Render the Modal Partial for this Category -->
-<% @categories.each do |category| %>
-  <% if category.name != "trash"%>
+<!-- '.select(&:persisted?)' is a guard clause that ensures unsaved objects don't crash the loop -->
+<% @categories.select(&:persisted?).each do |category| %>
+  <% if category.name != "trash" %>
     <%= render "categories/rooms/room_modal", category: category %>
   <% else %>
-    <%= render "note_modal", category: category, note: category.notes[0]%>
-    <!-- edit trash note-->
-    <turbo-frame id="trash_note_edit">
-
-      <!-- here we render the notes dynamically based on the hotspot attatched to them -->
-      <%= render "edit_trash", category: category, note: category.notes[0] %>
-
-    </turbo-frame>
+    <%= render "note_modal", category: category, note: category.notes[0] %>
   <% end %>
 <% end %>
 
-
-<!-- A Resuable Modal for all Notes 'Notice Boards'-->
+<!-- A Resuable Modal for all Notes 'Bookcases, Notice Boards, Laptops, etc.' -->
 <div class="modal fade" id="roomHotspotModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content notice-board-background">

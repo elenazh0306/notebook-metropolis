@@ -60,20 +60,39 @@ class NotesController < ApplicationController
   end
 
   def update
-    if @note.update(note_params)
-      # Capture the hotspot_type and re-fetch notes for this specific hotspot view
-      @hotspot_type = @note.hotspot_type || "notice_board"
-      @notes = @category.notes.where(hotspot_type: @hotspot_type).order(created_at: :desc)
+    original_hotspot_type = @note.hotspot_type
+    trash_category = @note.category
 
-      respond_to do |format|
-        # HTML fallback if Turbo is turned off (and again preserves hotspot_type context)
-        format.html { redirect_to category_notes_path(@category, hotspot_type: @hotspot_type) }
-        # Turbo Stream renders the index frame sans the deleted note
-        format.turbo_stream
+    if @note.update(note_params)
+      if trash_category != @note.category && trash_category.notes.empty?
+        trash_category.destroy
+      end
+      @category = @note.category
+
+      if original_hotspot_type == "street"
+
+        respond_to do |format|
+
+          format.html { redirect_to categories_path, status: :see_other }
+          format.turbo_stream { redirect_to categories_path }
+        end
+
+
+      else
+        @hotspot_type = @note.hotspot_type || "notice_board"
+        @notes = @category.notes.where(hotspot_type: @hotspot_type).order(created_at: :desc)
+
+        respond_to do |format|
+          # HTML fallback if Turbo is turned off (and again preserves hotspot_type context)
+          format.html { redirect_to category_notes_path(@category, hotspot_type: @hotspot_type) }
+          # Turbo Stream renders the index frame sans the deleted note
+          format.turbo_stream
+        end
       end
     else
       render :edit, status: :unprocessable_entity
     end
+
   end
 
   def destroy
@@ -104,6 +123,6 @@ class NotesController < ApplicationController
   end
 
   def note_params
-    params.require(:note).permit(:title, :content, :hotspot_type)
+    params.require(:note).permit(:title, :content, :hotspot_type, :category_id)
   end
 end
