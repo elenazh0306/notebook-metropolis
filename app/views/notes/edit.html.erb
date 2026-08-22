@@ -9,51 +9,108 @@
               when "bookcase" then "📖 Edit a Book Note"
               when "laptop" then "💻 Edit a Coding Note"
               when "posters" then "🖼️ Edit a Picture Note"
+              when "street" then "🖼️ Edit a Note"
               else "📌 Edit a Post-it Note"
             end %>
 
       <!-- Cancel button just in case we regret our edits -->
-      <%= link_to "Cancel", category_note_path(@category, @note),
-                  data: { turbo_frame: "room_hotspot_content" }, # hello ID from app/views/categories/index.html.erb
+      <% if @note.hotspot_type == "street" %>
+        <%= link_to "Cancel", categories_path,
                   class: "btn btn-outline-secondary btn-sm" %>
+      <% else %>
+        <%= link_to "Cancel", category_note_path(@category, @note),
+                    data: { turbo_frame: "room_hotspot_content" }, # hello ID from app/views/categories/index.html.erb
+                    class: "btn btn-outline-secondary btn-sm" %>
+      <% end %>
     </div>
 
     <!-- Pre-filled Form Container -->
-    <div class="card border-0 shadow-sm p-3 style-postit-detail">
-      <%= form_with(model: [@category, @note],
-                    data: { turbo_frame: "room_hotspot_content" }) do |f| %> <!-- once again, the ID from app/views/categories/index.html.erb -->
+    <% if @note.hotspot_type == "street" %>
+      <div class="card border-0 shadow-sm p-3 style-postit-detail">
+        <%= form_with(model: [@category, @note],
+                      data: { turbo_frame: "_top" }) do |f| %>
+          <div class="mb-3">
+            <%= f.label :category_id, "Category", class: "form-label fw-bold text-dark" %>
+            <%= f.collection_select :category_id,
+                              Category.all,
+                              :id,
+                              :name,
+                              { selected: @category.id },
+                              { class: "form-select", required: true } %>
+          </div>
+          <div class="mb-3">
+          <%= f.label :hotspot_type, "Pick where to pin", class: "form-label fw-bold text-dark" %>
 
-        <!-- Preserves which hotspot_type this note belongs to -->
-        <%= f.hidden_field :hotspot_type %>
+          <%= f.select :hotspot_type,
+                ["bookcase", "laptop", "posters", "notice_board"],
+                { prompt: "Select a spot" },
+                { class: "form-select", required: true } %>
+          </div>
+          <div class="mb-3">
+            <%= f.label :title,
+                        (case @note.hotspot_type
+                          when "bookcase" then "Book Title"
+                          when "laptop" then "Project Title"
+                          when "posters" then "Poster Title"
+                          else "Post-It Title"
+                        end),
+                        class: "form-label fw-bold text-dark" %>
+            <%= f.text_field :title,
+                            class: "form-control",
+                            required: true %>
+          </div>
 
-        <div class="mb-3">
-          <%= f.label :title,
-                      (case @note.hotspot_type
-                        when "bookcase" then "Book Title"
-                        when "laptop" then "Project Title"
-                        when "posters" then "Poster Title"
-                        else "Post-It Title"
-                      end),
-                      class: "form-label fw-bold text-dark" %>
-          <%= f.text_field :title,
-                          class: "form-control",
-                          required: true %>
-        </div>
+          <div class="mb-3">
+            <%= f.label :content, "Note Details", class: "form-label fw-bold text-dark" %>
+            <%= f.text_area :content,
+                            rows: 4,
+                            class: "form-control",
+                            required: true %>
+          </div>
 
-        <div class="mb-3">
-          <%= f.label :content, "Note Details", class: "form-label fw-bold text-dark" %>
-          <%= f.text_area :content,
-                          rows: 4,
-                          class: "form-control",
-                          required: true %>
-        </div>
+          <div class="d-grid">
+            <%= f.submit "💾 Save Changes", class: "btn btn-dark fw-bold" %>
+          </div>
 
-        <div class="d-grid">
-          <%= f.submit "💾 Save Changes", class: "btn btn-dark fw-bold" %>
-        </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="card border-0 shadow-sm p-3 style-postit-detail">
+        <%= form_with(model: [@category, @note],
+                      data: { turbo_frame: "room_hotspot_content" }) do |f| %> <!-- once again, the ID from app/views/categories/index.html.erb -->
 
-      <% end %>
-    </div>
+          <!-- Preserves which hotspot_type this note belongs to -->
+          <%= f.hidden_field :hotspot_type %>
+
+          <div class="mb-3">
+            <%= f.label :title,
+                        (case @note.hotspot_type
+                          when "bookcase" then "Book Title"
+                          when "laptop" then "Project Title"
+                          when "posters" then "Poster Title"
+                          else "Post-It Title"
+                        end),
+                        class: "form-label fw-bold text-dark" %>
+            <%= f.text_field :title,
+                            class: "form-control",
+                            required: true %>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :content, "Note Details", class: "form-label fw-bold text-dark" %>
+            <%= f.text_area :content,
+                            rows: 4,
+                            class: "form-control",
+                            required: true %>
+          </div>
+
+          <div class="d-grid">
+            <%= f.submit "💾 Save Changes", class: "btn btn-dark fw-bold" %>
+          </div>
+
+        <% end %>
+      </div>
+    <% end %>
 
   </div>
 </turbo-frame>
