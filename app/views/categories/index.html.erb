@@ -24,15 +24,20 @@
       💾 Save Changes
     </button>
 
-  <div class="board" data-controller="muuri-grid">
-    <% @row.times do |y| %>
-      <div class="d-flex">
-        <% @column.times do |x| %>
-          <%= render "tile_maps/tile", x: x, y: y, tile_map: current_user.tile_map %>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
+    <div class="board" >
+      <% @row.times do |y| %>
+        <div class="d-flex">
+
+            <% @column.times do |x| %>
+
+              <%= render "tile_maps/tile", x: x, y: y, tile_map: current_user.tile_map %>
+
+            <% end %>
+        </div>
+
+      <% end %>
+    </div>
+
 </div>
 
 <div class = "new-category-menu">

@@ -2,7 +2,6 @@
 
 .board {
   width: fit-content;
-  position: relative;
   display: grid;
   gap: 2px;
   margin: 0 auto;
@@ -146,4 +145,18 @@
 .row {
   display: flex;
   gap: 2px;
+}
+.tile {
+  user-select: none;
+  cursor: grab;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+  &.dragging {
+    opacity: 0.4;
+  }
+
+  &.drag-over {
+    outline: 2px dashed #00ffcc;
+    background-color: rgba(0, 255, 204, 0.2);
+  }
 }
