@@ -1,22 +1,34 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static values = { x: Number, y: Number, url: String }
+  static values = { x: Number, y: Number, icon: String }
+
+  connect() {
+    // preload icon
+    this.customIcon = new Image()
+    this.customIcon.src = this.iconValue
+    this.customIcon.width = 4;
+    this.customIcon.height = 4;
+
+  }
 
   dragStart(event) {
-    // Store source tile coordinates in dataTransfer
+
     event.dataTransfer.setData("text/plain", JSON.stringify({
       x: this.xValue,
-      y: this.yValue
+      y: this.yValue,
     }))
-    event.dataTransfer.effectAllowed = "move"
+
+    event.dataTransfer.setDragImage(this.customIcon, 2, 2);
     this.element.classList.add("dragging")
+
   }
 
   dragOver(event) {
     event.preventDefault() // Required to allow drop
     event.dataTransfer.dropEffect = "move"
     this.element.classList.add("drag-over")
+
   }
 
   dragLeave() {
@@ -27,14 +39,15 @@ export default class extends Controller {
     event.preventDefault()
     this.element.classList.remove("drag-over")
 
+
     const sourceData = JSON.parse(event.dataTransfer.getData("text/plain"))
     const targetData = { x: this.xValue, y: this.yValue }
 
     // Avoid swapping a tile with itself
     if (sourceData.x === targetData.x && sourceData.y === targetData.y) return
 
-    // Trigger update request via Fetch API
-    fetch(this.urlValue, {
+    // Trigger update
+    fetch("/tile_map/swap", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

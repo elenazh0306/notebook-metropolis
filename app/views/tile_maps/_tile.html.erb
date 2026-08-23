@@ -6,16 +6,23 @@
 %>
 
 <div id="tile_<%= x %>_<%= y %>"
-      class=" <%= current_type %>"
+      class="<%= tile[:name] %>"
      draggable="true"
-     data-controller="swap"
+     data-controller="tile swap"
      data-swap-x-value="<%= x %>"
      data-swap-y-value="<%= y %>"
-     data-swap-url-value="<%= swap_tile_path %>"
+     data-swap-icon-value="<%= asset_path('trashIcon.ico')%>"
+
      data-action="dragstart->swap#dragStart
                   dragover->swap#dragOver
                   dragleave->swap#dragLeave
-                  drop->swap#drop">
+                  drop->swap#drop"
+
+      data-tile-x-value="<%= x %>"
+      data-tile-y-value="<%= y %>"
+      data-tile-current-value="<%= current_type %>"
+      data-tile-types-value="<%= tile_order.to_json %>"
+  >
 
 
     <% if !category_on_tile %>
