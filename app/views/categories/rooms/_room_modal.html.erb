@@ -9,7 +9,7 @@
       <div class="modal-header room-header position-relative">
         <div class="w-100 d-flex justify-content-center align-items-center gap-2">
           <span class="room-status-dot"></span>
-          <h5 class="modal-title room-title"><%= category.name %></h5>
+          <h5 class="modal-title room-title"><%= File.basename(category.room_image.to_s, '.*') %></h5>
         </div>
         <button type="button" class="btn-close btn-close-white position-absolute end-0 me-3" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
@@ -18,7 +18,7 @@
       <div class="modal-body">
         <!-- We attach the Stimulus Controller for Room to the container -->
         <!-- We use a room category slug for CSS scoping (e.g., room-cozy-study or gothic-library) -->
-        <div class="room-container room-<%= category.name.parameterize %>"
+        <div class="room-container room-<%= File.basename(category.room_image.to_s, '.*').parameterize %>"
           id="roomContainer_<%= category.id %>"
           data-controller="room">
 
@@ -39,7 +39,7 @@
             data-room-target="interactiveLayer">
 
             <!-- All Hotspot links within a Room are dynamically rendered based on Category Name -->
-            <%= render partial: "categories/rooms/hotspots/#{category.name.parameterize.underscore}", locals: { category: category } %>
+            <%= render partial: "categories/rooms/hotspots/#{File.basename(category.room_image.to_s, '.*').parameterize.underscore}", locals: { category: category } %>
 
           </div>
         </div>

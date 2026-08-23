@@ -3,6 +3,8 @@ class CategoriesController < ApplicationController
     @categories = policy_scope(Category)
     create_map
     @category = Category.new
+    @images = User::BUILDINGS
+    @rooms = User::ROOMS
 
     @indexed_tiles = current_user.tile_map.each_with_index.map do |sub_array, index|
                       sub_array.each_with_index.map do |item, sub_index|
@@ -22,12 +24,16 @@ class CategoriesController < ApplicationController
   def new
     @category = Category.new
     authorize @category
+    @images = User::BUILDINGS
   end
 
   def create
     @category = Category.new(category_params)
     @category.user = current_user
+    @category.room_video = User::ROOM_VIDEOS[params[:category][:room_image]]
+    @category.building_animation_type = "occasional"
     @note = Note.new
+    @images = User::BUILDINGS
     authorize @category
 
     if @category.name == "trash"
@@ -40,6 +46,7 @@ class CategoriesController < ApplicationController
 
     else
       if @category.save
+        hotspot(@category)
         respond_to do |format|
           format.turbo_stream { render turbo_stream: turbo_stream.refresh(request_id: nil) }
           format.html { redirect_to categories_path }
@@ -95,7 +102,7 @@ class CategoriesController < ApplicationController
   private
 
   def category_params
-    params.require(:category).permit(:name, :sprite_image, :x, :y)
+    params.require(:category).permit(:name, :sprite_image, :x, :y, :room_image)
   end
 
   def create_map
@@ -107,5 +114,37 @@ class CategoriesController < ApplicationController
     @tile = User::TILE_TYPES[@current_type.to_sym]
     @tile_order = User::TILE_TYPES.keys.map(&:to_s)
     @category_on_tile = @categories.find { |c| c.x == x && c.y == y }
+  end
+
+  def hotspot(category)
+    # Corkboard Hotspot
+    category.notes.create!(
+      title: "Corkboard introduction",
+      content: "📌 This is your corkboard! Start with your first post-it note right now!",
+      hotspot_type: "notice_board"
+    )
+
+    # Bookcase Hotspot
+    category.notes.create!(
+      title: "Library introduction",
+      content: "📚 This is your bookshelf! Do you know the best part? You are the author of all of them!",
+      hotspot_type: "bookcase"
+    )
+
+    # Laptop Hotspot
+    category.notes.create!(
+      title: "Terminal Workspace Logs",
+      content: "💾 Time to enter the matrix! Start your journey right now!",
+      hotspot_type: "laptop"
+    )
+
+    # Posters Hotspot
+    category.notes.create!(
+      title: "Inspirational Quote",
+      content: "🌠 Turn your pictures into motivational posts! Just! Do! It!",
+      hotspot_type: "posters"
+    )
+
+
   end
 end
