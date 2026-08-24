@@ -1,4 +1,4 @@
-<% citizen = Citizen.find_by(category_id: @category.id) %>
+<% citizen = Citizen.find_or_create_by!(category_id: @category.id) { |c| c.name = Citizen::DEFAULT_NAME } %>
 <%= turbo_stream_from citizen %>
 
 <div class="ai-assistant-container p-3">
@@ -10,12 +10,13 @@
     chat modal. Later, if we want, we can change its text to 'cogitating'
     and make it hum or glow while the AI thinks of its response -->
     <span class="badge bg-success shadow-sm px-3 py-2">Online</span>
+    <div id = "ai-note-save-notification-<%= @category.id %>"></div>
   </div>
 
   <!-- THE CHAT CONTAINER STARTS HERE -->
   <!-- This div holds the conversation. It also makes a scroll bar appear
   if the chat gets too long -->
-  <div class="border rounded-3 p-3 bg-light shadow-inner mb-3" style="height: 350px; overflow-y: auto;">
+  <div class="border rounded-3 p-3 bg-light shadow-inner mb-3" style="height: 350px; overflow-y: auto; visibility: hidden;" data-controller = "chat-scroll">
 
     <!-- THIS IS THE CONTAINER WHERE THE CHAT LOG RUNS -->
     <div class="d-flex flex-column gap-3">
@@ -31,7 +32,7 @@
       <!-- Dynamic chat messages will be appended inside THIS div (.chat-field) via Turbo Stream -->
       <!-- Don't worry about the Turbo Stream part: I will help you with that -->
 
-      <div id = "chat-field" class = "chat-field d-flex flex-column gap-3">
+      <div id = "chat-field-<%= citizen.id %>" class = "chat-field d-flex flex-column gap-3">
         <% if citizen.present? %>
           <% citizen.messages.order(:created_at).each do |message| %>
             <%= render "messages/message", message: message %>
@@ -45,14 +46,13 @@
           Whenever a user hits "Send", Rails will render a new speech bubble
           (just like the ones above) and insert it inside this .chat-field container.
         -->
-      </div>
     </div>
   </div>
 
   <!-- THIS IS WHERE YOU RESPOND IN THE CHAT -->
   <div>
     <!-- Replace 'url: "#"' with your actual LLM Messages controller path -->
-    <%= form_with(url: citizen_messages_path(citizen, format: :turbo_stream), scope: :message, method: :post, class: "d-flex gap-2") do |f| %>
+    <%= form_with(url: citizen_messages_path(citizen, format: :turbo_stream), scope: :message, method: :post, class: "d-flex gap-2", data: {controller: "reset-form", action: "turbo:submit-start->reset-form#reset"}) do |f| %>
       <%= f.text_field :content,
                       placeholder: "Type a message to the AI...",
                       class: "form-control shadow-sm",

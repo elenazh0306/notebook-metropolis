@@ -18,7 +18,7 @@
                     data: { turbo_frame: "room_hotspot_content" },
                     class: "book-spine-link" do %>
           <div class="book-spine">
-            <span class="book-title"><%= note.title %></span>
+            <span class="book-title"><%= raw(render_markdown(note.title)) %></span>
           </div>
         <% end %>
       <% end %>
