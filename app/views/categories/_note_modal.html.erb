@@ -1,46 +1,53 @@
+<% if note %>
+  <div class="modal fade room-modal"
+      id="noteModal_<%= note.id %>"
+      tabindex="-1"
+      aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content">
 
-<div class="modal fade room-modal"
-    id="noteModal_<%= note.id %>"
-    tabindex="-1"
-    aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-    <div class="modal-content">
+        <div class="corkboard-container p-3">
 
-      <div class="corkboard-container p-3">
+          <!-- Start of Turbo Frame for viewing and editing a trash note -->
+          <turbo-frame id="note_content_<%= note.id %>">
 
-        <div class="mb-3">
-          <!-- Link back to the active hotspot view on notes/index.html.erb -->
-          <%= link_to categories_path, class: "btn btn-outline-secondary btn-sm mb-2" do %>
-            ⬅️ Back to the map
-          <% end %>
+            <div class="mb-3">
+              <!-- Link back to the active hotspot view on notes/index.html.erb -->
+              <%= link_to categories_path, class: "btn btn-outline-secondary btn-sm mb-2" do %>
+                ⬅️ Back to the map
+              <% end %>
 
-          <div class="d-flex gap-2">
-            <!-- Edit Button -->
-            <%= link_to edit_category_note_path(category, note),
-                        class: "btn btn-outline-warning btn-sm fw-bold text-dark" do %>
-              ✏️ Edit note
-            <% end %>
+              <div class="d-flex gap-2">
+                <!-- Edit Button -->
+                <%= link_to edit_category_note_path(category, note),
+                            class: "btn btn-outline-warning btn-sm fw-bold text-dark" do %>
+                  ✏️ Edit note
+                <% end %>
 
-            <!-- Delete Button -->
-            <!-- deleting of a trash note is only rendered through the map view,
-            because it is basically one category with one note -->
+                <!-- Delete Button -->
+                <!-- deleting of a trash note is only rendered through the map view,
+                because it is basically one category with one note -->
 
-          </div>
+              </div>
+            </div>
+
+            <!-- The Full Note Displayed as an expanded note -->
+            <div class="card shadow-sm border-0 my-3 style-postit-detail">
+              <div class="card-body p-4">
+                <h4 class="card-title fw-bold text-dark border-bottom pb-2 mb-3">
+                  <%= note.title %>
+                </h4>
+                <p class="card-text text-dark fs-5" style="white-space: pre-line;">
+                  <%= note.content %>
+                </p>
+              </div>
+            </div>
+
+          </turbo-frame>
+          <!-- End of Turbo Frame for viewing and editing a trash note -->
+
         </div>
-
-        <!-- The Full Note Displayed as an expanded note -->
-        <div class="card shadow-sm border-0 my-3 style-postit-detail">
-          <div class="card-body p-4">
-            <h4 class="card-title fw-bold text-dark border-bottom pb-2 mb-3">
-              <%= note.title %>
-            </h4>
-            <p class="card-text text-dark fs-5" style="white-space: pre-line;">
-              <%= note.content %>
-            </p>
-          </div>
-        </div>
-
       </div>
     </div>
   </div>
-</div>
+<% end %>
