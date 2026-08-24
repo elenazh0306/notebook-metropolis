@@ -21,7 +21,29 @@ class User < ApplicationRecord
     'large'  => { rows: 15, columns: 15 }
   }
 
-  BUILDINGS = ['red-roof.png', 'blue-house.png']
+  BUILDINGS = [
+    { name: "Red house",
+      url: 'red-roof.png'},
+      { name: "Blue house",
+      url: 'blue-house.png'}
+  ]
+  ROOMS = [
+    { name: "cozy_study",
+      display: "Cozy study room",
+      url: 'rooms/cozy_study.jpeg'},
+    { name: "gothic_library",
+      display: "Gothic library",
+      url: 'rooms/gothic_library.jpeg'},
+    { name: "hackercat_room",
+      display: "Futuristic lab",
+      url: 'rooms/hackercat_room.jpeg'},
+    ]
+
+  ROOM_VIDEOS = {
+    "cozy_study" => "rooms/Cat_waking_up_on_couch.mp4",
+    "gothic_library" => "rooms/Gargoyle_cat_licking_paw.mp4",
+    "hackercat_room" => "rooms/Cat_paws_at_laptop_keyboard.mp4"
+  }.freeze
 
   private
 

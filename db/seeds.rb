@@ -1,12 +1,4 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+
 puts "Deleting old seeds..."
 User.destroy_all
 
@@ -22,8 +14,8 @@ user.tile_map = [
   ["grass", "grass", "grass", "grass", "grass", "grass"],
   ["grass", "base",  "grass", "grass", "grass", "grass"],
   ["grass", "grass", "grass", "grass", "grass", "grass"],
-  ["grass", "grass", "grass", "grass", "grass", "grass"],
-  ["grass", "grass", "grass", "grass", "grass", "grass"],
+  ["grass", "grass", "grass", "base", "grass", "grass"],
+  ["grass", "base", "grass", "grass", "grass", "grass"],
   ["grass", "grass", "grass", "grass", "grass", "grass"]
 ]
 user.save!
@@ -33,7 +25,7 @@ puts "Seeding Category 1: Cozy Study..."
 cozy_study = user.categories.create!(
   name: "Cozy Study",
   sprite_image: "blue-house.png",                           # Grid Map Sprite
-  room_image: "rooms/Cat_sleeping_in_cozy_room.jpeg",       # Static Modal Background
+  room_image: "rooms/cozy_study.jpeg",       # Static Modal Background
   room_video: "rooms/Cat_waking_up_on_couch.mp4",           # Intro Video Asset
   building_animation_type: "occasional",
   x: 1,
@@ -72,7 +64,7 @@ cozy_study.notes.create!(
 gothic_library = user.categories.create!(
   name: "Gothic Library",
   sprite_image: "red-roof.png",
-  room_image: "rooms/Gothic_arcane_library.jpeg",
+  room_image: "rooms/gothic_library.jpeg",
   room_video: "rooms/Gargoyle_cat_licking_paw.mp4",
   building_animation_type: "occasional",
   x: 3,
@@ -111,7 +103,7 @@ gothic_library.notes.create!(
 hackercat_room = user.categories.create!(
   name: "Hackercat Room",
   sprite_image: "blue-house.png",
-  room_image: "rooms/Robotic_cat_using_laptop.jpeg",
+  room_image: "rooms/hackercat_room.jpeg",
   room_video: "rooms/Cat_paws_at_laptop_keyboard.mp4",
   building_animation_type: "occasional",
   x: 1,
