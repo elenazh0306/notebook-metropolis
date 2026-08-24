@@ -7,13 +7,13 @@
 
 <div id="tile_<%= x %>_<%= y %>"
       class="<%= tile[:name] %>"
-     draggable="true"
-     data-controller="tile swap"
-     data-swap-x-value="<%= x %>"
-     data-swap-y-value="<%= y %>"
-     data-swap-icon-value="<%= asset_path('trashIcon.ico')%>"
+      draggable="true"
+      data-controller="tile swap"
+      data-swap-x-value="<%= x %>"
+      data-swap-y-value="<%= y %>"
+      data-swap-icon-value="<%= asset_path('trashIcon.ico')%>"
 
-     data-action="dragstart->swap#dragStart
+      data-action="dragstart->swap#dragStart
                   dragover->swap#dragOver
                   dragleave->swap#dragLeave
                   drop->swap#drop"
@@ -68,14 +68,16 @@
 
           </div>
           <% note = category_on_tile.notes[0] %>
-          <div class="building-btn">
-            <button type="button"
-                    class="building-btn"
-                    data-bs-toggle="modal"
-                    data-bs-target="#noteModal_<%= note.id %>">
-                      <div> View the note  🗝️</div>
-                    </button>
-          </div>
+          <% if note %>
+            <div class="building-btn">
+              <button type="button"
+                      class="building-btn"
+                      data-bs-toggle="modal"
+                      data-bs-target="#noteModal_<%= note.id %>">
+                        <div> View the note  🗝️</div>
+              </button>
+            </div>
+          <% end %>
 
       <% end %>
 

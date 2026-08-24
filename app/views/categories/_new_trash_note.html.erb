@@ -1,45 +1,50 @@
 <turbo-frame id="trash_notes_content">
-  <div class="corkboard-container p-3">
+  <!-- Modal Backdrop to dim the map -->
+  <div class="modal-backdrop fade show"></div>
 
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <h5 class="m-0">
-        What's on your mind?
-      </h5>
-      <%= link_to "Cancel", categories_path, class: "btn btn-outline-secondary btn-sm" %>
+  <!-- Centered Modal Box -->
+  <div class="modal fade show d-block" tabindex="-1" style="display: block;">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content corkboard-container p-4">
+
+        <div class="modal-header border-0 p-0 mb-3 d-flex justify-content-between align-items-center">
+          <h5 class="modal-title m-0 fw-bold">What's on your mind?</h5>
+          <%= link_to "Cancel", category_path(category), data: { turbo_method: :delete, turbo_frame: "_top" }, class: "btn btn-outline-secondary btn-sm" %>
+        </div>
+
+        <div class="modal-body p-0">
+          <div class="card border-0 shadow-sm p-3 style-postit-detail">
+            <%= form_with(model: [category, note], data: { turbo_frame: "trash_notes_content" }) do |f| %>
+
+              <%= f.hidden_field :hotspot_type, value: "street" %>
+
+              <div class="mb-3">
+                <%= f.label :title, class: "form-label fw-bold text-dark" %>
+                <%= f.text_field :title,
+                                class: "form-control",
+                                placeholder: "Write a best-seller",
+                                required: true,
+                                autofocus: true %>
+              </div>
+
+              <div class="mb-3">
+                <%= f.label :content, "Note Details", class: "form-label fw-bold text-dark" %>
+                <%= f.text_area :content,
+                                rows: 4,
+                                class: "form-control",
+                                placeholder: "Write your thoughts or tasks here...",
+                                required: true %>
+              </div>
+
+              <div class="d-grid">
+                <%= f.submit "Throw on the streets for now", class: "btn btn-dark fw-bold" %>
+              </div>
+
+            <% end %>
+          </div>
+        </div>
+
+      </div>
     </div>
-
-    <div class="card border-0 shadow-sm p-3 style-postit-detail">
-      <%= form_with(model: [category, note],
-                    data: { turbo_frame: "trash_notes_content" }) do |f| %> <!-- Turbo Frame ID links to app/views/categories/index.html.erb -->
-
-        <%= f.hidden_field :hotspot_type, value: "street" %>
-
-        <div class="mb-3">
-          <%= f.label :title,
-                      class: "form-label fw-bold text-dark" %>
-
-          <%= f.text_field :title,
-                          class: "form-control",
-                          placeholder: "Write a best-seller",
-                          required: true %>
-        </div>
-
-        <div class="mb-3">
-          <%= f.label :content, "Note Details", class: "form-label fw-bold text-dark" %>
-          <%= f.text_area :content,
-                          rows: 4,
-                          class: "form-control",
-                          placeholder: "Write your thoughts or tasks here...",
-                          required: true %>
-        </div>
-
-        <div class="d-grid">
-          <%= f.submit "Throw on the streets for now",
-                      class: "btn btn-dark fw-bold" %>
-        </div>
-
-      <% end %>
-    </div>
-
   </div>
 </turbo-frame>

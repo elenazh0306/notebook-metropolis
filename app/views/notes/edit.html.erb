@@ -1,5 +1,7 @@
-<!-- Turbo Frame ID *matches* the receiver ID in app/views/categories/index.html.erb -->
-<turbo-frame id="room_hotspot_content">
+<!-- Turbo Frame ID dynamically *matches* the receiver ID in app/views/categories/index.html.erb -->
+<% frame_id = @note.hotspot_type == "street" ? "note_content_#{@note.id}" : "room_hotspot_content" %>
+
+<turbo-frame id="<%= frame_id %>">
   <!-- The container from notes/index.html.erb, ensuring the note overlays perfectly -->
   <div class="corkboard-container p-3">
 
