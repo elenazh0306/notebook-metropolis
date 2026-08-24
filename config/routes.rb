@@ -22,5 +22,6 @@ Rails.application.routes.draw do
   end
 
   patch "tile_map/update", to: "tile_maps#update", as: :update_tile
+  patch "tile_map/swap", to: "tile_maps#swap", as: :swap_tile
 
 end
