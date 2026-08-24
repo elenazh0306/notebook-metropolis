@@ -79,16 +79,12 @@ class CategoriesController < ApplicationController
 
   def update
     @category = Category.find(params[:id])
-    respond_to do |format|
-      if @category.update(category_params)
-        authorize @category
-        format.json { render json: { status: :ok, category: @category } }
-        format.html { redirect_to categories_path }
-      else
-        format.json { render json: @category.errors, status: :unprocessable_entity }
-        format.html { render :edit, status: :unprocessable_entity }
-      end
+    if @category.update(category_params)
+      head :ok
+    else
+      render json: { errors: @category.errors.full_messages }, status: :unprocessable_entity
     end
+
   end
 
   def destroy

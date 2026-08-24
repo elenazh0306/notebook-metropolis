@@ -9,6 +9,7 @@ export default class extends Controller {
     types: Array
   }
 
+
   // change from a drop-down
 
   async selectType(event) {

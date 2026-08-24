@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "hammerjs": "^2.0.8",
+    "muuri": "^0.9.5",
+    "sortablejs": "^1.15.7",
+    "web-animations-js": "^2.3.2"
+  }
+}

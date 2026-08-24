@@ -19,7 +19,7 @@
                     class: "posters-card-link" do %>
           <div class="posters-card">
             <div class="tape-corner"></div> <!-- Styled masking tape on corner! -->
-            <h6 class="posters-title"><%= note.title %></h6>
+            <h6 class="posters-title"><%= raw(render_markdown(note.title)) %></h6>
             <p class="posters-preview"><%= truncate(note.content, length: 40) %></p>
           </div>
         <% end %>

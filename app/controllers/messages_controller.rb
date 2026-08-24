@@ -4,7 +4,6 @@ class MessagesController < ApplicationController
 
   Use the contents of these notes to answer the user's questions.
   "
-
   def create
     @citizen = Citizen.find(params[:citizen_id])
     @category = @citizen.category
@@ -19,6 +18,8 @@ class MessagesController < ApplicationController
       broadcast_append(@assistant_message)
       response = ask_llm
       @assistant_message.update(content: response.content)
+
+      broadcast_replace(@assistant_message)
 
       # for the corrent order of message display
       respond_to do |format|
@@ -58,7 +59,7 @@ class MessagesController < ApplicationController
   end
 
   def broadcast_append(message)
-    Turbo::StreamsChannel.broadcast_append_to(@citizen, target: "chat-field", partial: "messages/message",
+    Turbo::StreamsChannel.broadcast_append_to(@citizen, target: "chat-field-#{@citizen.id}", partial: "messages/message",
                                                         locals: { message: message })
   end
 

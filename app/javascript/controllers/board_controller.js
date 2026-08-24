@@ -4,8 +4,15 @@ export default class extends Controller {
   static targets = ["tileDropdown", "editBtn", "saveBtn"]
   static values = { editing: { type: Boolean, default: false } }
 
-  connect() {
+  // Runs automatically whenever this.editingValue changes
+  editingValueChanged() {
     this.updateMap()
+  }
+
+  // Automatically fires whenever a NEW tileDropdown is added to the DOM (including Turbo swaps)
+  tileDropdownTargetConnected(target) {
+    target.disabled = !this.editingValue
+    target.classList.toggle("d-none", !this.editingValue)
   }
 
   edit() {

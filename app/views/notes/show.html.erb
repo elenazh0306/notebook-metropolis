@@ -40,10 +40,13 @@ alas, I could not figure out how to set this up for any number of potential subf
     <div class="card shadow-sm border-0 my-3 style-postit-detail">
       <div class="card-body p-4">
         <h4 class="card-title fw-bold text-dark border-bottom pb-2 mb-3">
-          <%= @note.hotspot_type == "bookcase" ? "📖" : "📌" %> <%= @note.title %>
+          <%= @note.hotspot_type == "bookcase" ? "📖" : "📌" %> <%= raw(render_markdown(@note.title)) %>
         </h4>
+        <small>
+          Created <%= @note.created_at.strftime("%b %d, %Y・%I:%M %p") %>
+        </small>
         <p class="card-text text-dark fs-5" style="white-space: pre-line;">
-          <%= @note.content %>
+          <%= raw(render_markdown(@note.content)) %>
         </p>
       </div>
     </div>
