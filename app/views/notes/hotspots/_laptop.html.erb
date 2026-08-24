@@ -18,7 +18,7 @@
                     data: { turbo_frame: "room_hotspot_content" },
                     class: "laptop-card-link" do %>
           <div class="laptop-card">
-            <h6 class="laptop-title"><%= note.title %></h6>
+            <h6 class="laptop-title"><%= raw(render_markdown(note.title)) %></h6>
             <p class="laptop-preview"><%= truncate(note.content, length: 45) %></p>
           </div>
         <% end %>

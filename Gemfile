@@ -76,3 +76,4 @@ end
 gem "pundit"
 gem "ruby_llm"
 gem "kramdown"
+gem "redcarpet"

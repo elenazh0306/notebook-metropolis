@@ -2,6 +2,9 @@ class NotesController < ApplicationController
   before_action :set_category
   before_action :set_note, only: %i[show edit update destroy]
 
+  INSTRUCTIONS_FOR_AI_TITLE = "Generate a short descriptive title for the note.
+  Keep the title to a maximum of 6 words and only return the title."
+
   def index
     @notes = @category.notes
 
@@ -29,6 +32,8 @@ class NotesController < ApplicationController
     @note = @category.notes.build(note_params)
     @hotspot_type = @note.hotspot_type || "notice_board"
 
+    generate_ai_title if params[:ai_generated] == "true"
+
     if @hotspot_type == 'street'
 
       categories = Category.all
@@ -38,21 +43,19 @@ class NotesController < ApplicationController
           format.html { redirect_to categories_path }
         end
       end
-    else
-      if @note.save
-        # This line fetches the updated collection for THIS hotspot_type, so index.html.erb has @notes
-        # See annotated comments in create.turbo_stream.erb for details
-        @notes = @category.notes.where(hotspot_type: @hotspot_type).order(created_at: :desc)
+    elsif @note.save
+      @notes = @category.notes.where(hotspot_type: @hotspot_type).order(created_at: :desc)
 
-        respond_to do |format|
-          # This is the HTML fallback if Turbo is turned off (and it preserves hotspot_type context)
-          format.html { redirect_to category_notes_path(@category, hotspot_type: @hotspot_type) }
-          # Turbo Stream appends the new note or renders index frame
-          format.turbo_stream
-        end
-      else
-        render :new, status: :unprocessable_entity
+      respond_to do |format|
+        # This is the HTML fallback if Turbo is turned off (and it preserves hotspot_type context)
+        format.html { redirect_to category_notes_path(@category, hotspot_type: @hotspot_type) }
+        # Turbo Stream appends the new note or renders index frame
+        format.turbo_stream
       end
+    # This line fetches the updated collection for THIS hotspot_type, so index.html.erb has @notes
+    # See annotated comments in create.turbo_stream.erb for details
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -124,5 +127,13 @@ class NotesController < ApplicationController
 
   def note_params
     params.require(:note).permit(:title, :content, :hotspot_type, :category_id)
+  end
+
+  def generate_ai_title
+    @ruby_llm_chat = RubyLLM.chat
+
+    title = @ruby_llm_chat.with_instructions(INSTRUCTIONS_FOR_AI_TITLE).ask(@note.content)
+
+    @note.title = title.content.strip
   end
 end
