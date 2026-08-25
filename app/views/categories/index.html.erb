@@ -1,4 +1,67 @@
 <h3>Hello <%= current_user.name %>!</h3>
+<div class = "map-container">
+  <!-- Search Bar -->
+  <div class = "search-overlay">
+    <%= form_with(url: categories_path, method: :get, local: true, class: "global-search-form") do |form| %>
+      <%= form.text_field(:q, value: @query, placeholder: "Search your notes...", class: "global-search-input") %>
+      <button type = "submit" class = "global-search-button" aria-label = "Search" >
+        <svg viewBox = "0 0 24 24" aria-hidden = "true">
+          <circle cx = "11" cy = "11" r = "7">
+          </circle>
+          <line x1 = "16" y1 = "16" x2 = "21" y2 = "21">
+          </line>
+        </svg>
+      </button>
+    <% end %>
+  </div>
+  <!--Search Results-->
+  <% if @query.present? %>
+    <div class = "search-result">
+      <div class = "d-flex justify-content-between align-items-center mb-3">
+        <h5>
+          Search results for "<%= @query %>"
+        </h5>
+        <%= link_to "×", categories_path, class: "search-close" %>
+      </div>
+      <!--AI Response-->
+      <% if @ai_response.present? %>
+        <div class = "card mb-4">
+          <div class = "card-body">
+            <strong>🤖 City Assistant</strong>
+            <div class = "mt-2">
+              <%= raw(render_markdown(@ai_response)) %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+      <% if @search_results.any? %>
+        <% @search_results.each do |note| %>
+          <div class = "card mb-2">
+            <div class = "card-body">
+              <small class = "text-muted">
+                <%= note.category.name %>
+              </small>
+              <h5 class = "card-title mt-1">
+                <%= note.title %>
+              </h5>
+
+              <p class = "card-text">
+                <%= truncate(strip_tags(note.content.to_s), length: 150) %>
+              </p>
+
+              <%= link_to("Open Note", category_note_path(note.category, note), class: "btn btn-sm btn-outline-primary") %>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <p class = "text-muted">
+          No matches found.
+        </p>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
   <%= button_to "Random thoughts",
       categories_path(category: { name: "trash", x: @indexed_tiles.sample[:row], y:@indexed_tiles.sample[:column] , sprite_image: "trash.png" }),
       method: :post,

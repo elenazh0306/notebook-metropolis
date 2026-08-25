@@ -1,6 +1,21 @@
 class Note < ApplicationRecord
   belongs_to :category
 
+  include PgSearch::Model
+
+  pg_search_scope :search_by_title_and_content,
+                  against: {
+                    title: "A",
+                    content: "B"
+                  },
+                  using: {
+                    tsearch: {
+                      prefix: true,
+                      any_word: true,
+                      dictionary: "english"
+                    }
+                  }
+
   # We ensures default subfolder is "notice_board"
   after_initialize :set_default_hotspot_type, if: :new_record?
 
