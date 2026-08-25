@@ -7,13 +7,17 @@ class CategoriesController < ApplicationController
     @rooms = User::ROOMS
 
     @indexed_tiles = current_user.tile_map.each_with_index.map do |sub_array, index|
-                      sub_array.each_with_index.map do |item, sub_index|
-                        next if item == "base"
-                        { tile: item, row: index, column: sub_index }
-                      end.compact
-                    end.flatten
+      sub_array.each_with_index.map do |item, sub_index|
+        next if item == "base"
 
+        { tile: item, row: index, column: sub_index }
+      end.compact
+    end.flatten
 
+    @query = params[:q].to_s.strip
+    @search_results = search_notes
+
+    @ai_response = (generate_ai_response(@query, @search_results) if @query.present? && @search_results.any?)
   end
 
   def show
@@ -44,32 +48,28 @@ class CategoriesController < ApplicationController
         end
       end
 
+    elsif @category.save
+      hotspot(@category)
+      respond_to do |format|
+        format.turbo_stream { render turbo_stream: turbo_stream.refresh(request_id: nil) }
+        format.html { redirect_to categories_path }
+      end
     else
-      if @category.save
-        hotspot(@category)
-        respond_to do |format|
-          format.turbo_stream { render turbo_stream: turbo_stream.refresh(request_id: nil) }
-          format.html { redirect_to categories_path }
+      respond_to do |format|
+        format.html do
+          @categories = Category.all
+          create_map
+          render :index, status: :unprocessable_entity
         end
-      else
-        respond_to do |format|
-          format.html {
-            @categories = Category.all
-            create_map
-            render :index, status: :unprocessable_entity
-          }
-          format.turbo_stream {
-            render turbo_stream: turbo_stream.append(
-              "category_new_form",
-              partial: "shared/errors",
-              locals: { object: @category }
-            ), status: :unprocessable_entity
-          }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.append(
+            "category_new_form",
+            partial: "shared/errors",
+            locals: { object: @category }
+          ), status: :unprocessable_entity
         end
       end
     end
-
-
   end
 
   def edit
@@ -84,7 +84,6 @@ class CategoriesController < ApplicationController
     else
       render json: { errors: @category.errors.full_messages }, status: :unprocessable_entity
     end
-
   end
 
   def destroy
@@ -140,7 +139,37 @@ class CategoriesController < ApplicationController
       content: "🌠 Turn your pictures into motivational posts! Just! Do! It!",
       hotspot_type: "posters"
     )
+  end
 
+  def search_notes
+    return Note.none if @query.blank?
 
+    Note.includes(:category).joins(:category).merge(@categories).search_by_title_and_content(@query).limit(5)
+  end
+
+  def generate_ai_response(query, notes)
+    context = notes.map do |note|
+      <<~NOTE
+        Title: #{note.title}
+        Building: #{note.category.name}
+        #{note.content}
+      NOTE
+    end.join("\n\n---\n\n")
+
+    chat = RubyLLM.chat
+
+    chat.with_instructions <<~PROMPT
+      You are an AI search assistant of Notebook Metropolis.
+
+      Answer the user's questions or search query by only using existing notes in the city.
+    PROMPT
+
+    response = chat.ask <<~PROMPT
+      You: #{query}
+
+      Matching Notes: #{context}
+    PROMPT
+
+    response.content
   end
 end
