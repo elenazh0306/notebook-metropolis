@@ -1,19 +1,5 @@
 <h3>Hello <%= current_user.name %>!</h3>
 <div class = "map-container">
-  <!-- Search Bar -->
-  <div class = "search-overlay">
-    <%= form_with(url: categories_path, method: :get, local: true, class: "global-search-form") do |form| %>
-      <%= form.text_field(:q, value: @query, placeholder: "Search your notes...", class: "global-search-input") %>
-      <button type = "submit" class = "global-search-button" aria-label = "Search" >
-        <svg viewBox = "0 0 24 24" aria-hidden = "true">
-          <circle cx = "11" cy = "11" r = "7">
-          </circle>
-          <line x1 = "16" y1 = "16" x2 = "21" y2 = "21">
-          </line>
-        </svg>
-      </button>
-    <% end %>
-  </div>
   <!--Search Results-->
   <% if @query.present? %>
     <div class = "search-result">
@@ -67,30 +53,25 @@
     </div>
   <% end %>
 </div>
-
-  <%= button_to "Random thoughts",
-      categories_path(category: { name: "trash", x: @indexed_tiles.sample[:row], y:@indexed_tiles.sample[:column] , sprite_image: "trash.png" }),
-      method: :post,
-      class: "btn btn-primary btn-sm" %>
-
   <div id="trash_notes_content">
   </div>
 
-  <div data-controller="board" data-board-editing-value="false">
-    <button type="button"
-            class="btn btn-primary btn-sm"
-            data-board-target="editBtn"
-            data-action="click->board#edit">
-      ✏️ Edit Map
-    </button>
+  <div  class = "city-board-container" data-controller="board" data-board-editing-value="false">
+    <div class = "map-actions">
+      <button type="button"
+              class="map-edit-button"
+              data-board-target="editBtn"
+              data-action="click->board#edit">
+        ✏️ Edit Map
+      </button>
 
-    <button type="button"
-            class="btn btn-success btn-sm d-none"
-            data-board-target="saveBtn"
-            data-action="click->board#save">
-      💾 Save Changes
-    </button>
-
+      <button type="button"
+              class="map-save-button"
+              data-board-target="saveBtn"
+              data-action="click->board#save">
+        💾 Save Changes
+      </button>
+    </div>
     <div class="board" >
       <% @row.times do |y| %>
         <div class="d-flex">
