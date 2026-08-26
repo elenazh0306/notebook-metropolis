@@ -1,5 +1,3 @@
-
-
 .board {
   width: fit-content;
   display: grid;
@@ -12,7 +10,8 @@
     height: 100px;
     width: 100px;
     box-shadow: 0 0 0 0 rgba(0,0,0,.7);
-    background-color: #4ade80;
+    background-image: image-url('tiles/grass.png');
+    background-size: cover;
     border: 2px solid #22c55e;
     color: #14532d;
     border-radius: 4px;
@@ -24,19 +23,15 @@
         box-shadow: 8px 8px 0 0 rgba(0,0,0,.7);
         transition: .3s;
       }
-
-
-
-
   }
-
 
   .base {
     position: relative;
     height: 100px;
     width: 100px;
     box-shadow: 0 0 0 0 rgba(0,0,0,.7);
-    background-color: #fbd585;
+    background-image: image-url('tiles/cobblestone.png');
+    background-size: cover;
     border: 2px solid #f59e0b;
     color: #78350f;
     border-radius: 4px;
@@ -50,11 +45,10 @@
       }
   }
 
- .btn-container {
+  .btn-container {
     display: flex;
     align-content: flex-end;
     justify-content: space-between;
-
   }
 
   .building-btn {
@@ -68,39 +62,117 @@
     height: 100px;
     width: 100px;
     box-shadow: 0 0 0 0 rgba(0,0,0,.7);
-    background-color: #e2e8f0;
+    background-size: cover;
     border: 2px solid #cbd5e1;
     color: #334155;
     border-radius: 4px;
-      &:hover {
-        cursor: pointer;
-        background-color: #334155;
-        transform: translate(-8px, -8px);
-        outline: solid 2px white;
-        box-shadow: 8px 8px 0 0 rgba(0,0,0,.7);
-        transition: .3s;
-      }
 
+    /* Grass Roads */
+    &.grass-straight     { background-image: image-url('tiles/road_grass_straight.png'); }
+    &.grass-turn         { background-image: image-url('tiles/road_grass_turn.png'); }
+    &.grass-tcross       { background-image: image-url('tiles/road_grass_tcross.png'); }
+    &.grass-fullcross    { background-image: image-url('tiles/road_grass_fullcross.png'); }
+
+    /* City Roads */
+    &.city-straight      { background-image: image-url('tiles/road_city_straight.png'); }
+    &.city-turn          { background-image: image-url('tiles/road_city_turn.png'); }
+    &.city-tcross        { background-image: image-url('tiles/road_city_tcross.png'); }
+    &.city-fullcross     { background-image: image-url('tiles/road_city_fullcross.png'); }
+
+    /* Rotation Utilities */
+    &.rotate-90  { transform: rotate(90deg); }
+    &.rotate-180 { transform: rotate(180deg); }
+    &.rotate-270 { transform: rotate(270deg); }
+
+    &:hover {
+      cursor: pointer;
+      background-color: #334155;
+      outline: solid 2px white;
+      box-shadow: 8px 8px 0 0 rgba(0,0,0,.7);
+      transition: .3s;
+    }
   }
 
+  /* Decorative Tree Tile */
+  .tree-willow {
+    position: relative;
+    height: 100px;
+    width: 100px;
+    background-image: image-url('tiles/grass.png'); /* The floor ground texture */
+    background-size: cover;
+    border-radius: 4px;
 
+    &:hover {
+      cursor: pointer;
+      background-color: #14532d;
+      transform: translate(-8px, -8px);
+      outline: solid 2px white;
+      box-shadow: 8px 8px 0 0 rgba(0,0,0,.7);
+      transition: .3s;
+    }
+
+    /* The 3D Standing Willow Tree Sprite */
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 32px;
+      left: 16px;
+      width: 140%;
+      height: 120%;
+      transform-origin: center bottom;
+      transform: translateX(-10%)
+                rotate3d(-3, 3, 0, -60deg)
+                rotate(-45deg)
+                scaleY(3.0);
+      background-image: image-url('buildings/willow_tree.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center bottom;
+      pointer-events: none;
+    }
+  }
 }
+
 .house-tile {
     position: absolute;
-    bottom: 4px;
-    left: 50%;
-    width: 100%;
+    bottom: 10px;
+    left: 10px;
     height: auto;
     max-height: 140%;
     transform: translateX(-50%)
-               rotate3d(-3, 3, 0, -60deg)
-               rotate(-45deg)
-               scaleY(3.0);
+              rotate3d(-3, 3, 0, -60deg)
+              rotate(-45deg)
+              scaleY(3.0);
     object-fit: contain;
     pointer-events: none;
     user-select: none;
-
   }
+
+  /* Modifiers for different sprite footprints */
+.house-tile--wide {
+  bottom: 10px;
+  left: 12px;
+}
+
+.house-tile--medium {
+  bottom: 10px;
+  left: 25px;
+}
+
+.house-tile--narrow {
+  bottom: 3px;
+  left: 25px;
+}
+
+.house-tile--tall {
+  width: 140%;
+  max-height: 300%;
+  bottom: 10%;
+  transform: translate(-108%, -10%)
+            rotate3d(-3, 3, 0, -60deg)
+            rotate(-45deg)
+            scaleY(3.5);
+}
 
   .house-name {
     position: absolute;
