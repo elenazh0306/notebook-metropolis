@@ -16,8 +16,6 @@ class CategoriesController < ApplicationController
 
     @query = params[:q].to_s.strip
     @search_results = search_notes
-
-    @ai_response = (generate_ai_response(@query, @search_results) if @query.present? && @search_results.any?)
   end
 
   def show
@@ -144,32 +142,8 @@ class CategoriesController < ApplicationController
   def search_notes
     return Note.none if @query.blank?
 
-    Note.includes(:category).joins(:category).merge(@categories).search_by_title_and_content(@query).limit(5)
-  end
+    normalized_query = @query.downcase.split.map(&:singularize).join(" ")
 
-  def generate_ai_response(query, notes)
-    context = notes.map do |note|
-      <<~NOTE
-        Title: #{note.title}
-        Building: #{note.category.name}
-        #{note.content}
-      NOTE
-    end.join("\n\n---\n\n")
-
-    chat = RubyLLM.chat
-
-    chat.with_instructions <<~PROMPT
-      You are an AI search assistant of Notebook Metropolis.
-
-      Answer the user's questions or search query by only using existing notes in the city.
-    PROMPT
-
-    response = chat.ask <<~PROMPT
-      You: #{query}
-
-      Matching Notes: #{context}
-    PROMPT
-
-    response.content
+    Note.includes(:category).joins(:category).merge(@categories).search_by_title_and_content(normalized_query).limit(5)
   end
 end

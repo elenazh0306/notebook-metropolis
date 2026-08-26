@@ -49,7 +49,13 @@
                 <%= truncate(strip_tags(note.content.to_s), length: 150) %>
               </p>
 
-              <%= link_to("Open Note", category_note_path(note.category, note), class: "btn btn-sm btn-outline-primary") %>
+              <%= link_to("Open Note", category_note_path(note.category, note),
+              data: {turbo_frame: "room_hotspot_content"}, onclick: "
+              const roomElement = document.getElementById('categoryModal_#{note.category.id}');
+              const roomModal = bootstrap.Modal.getOrCreateInstance(roomElement);
+
+              roomElement.addEventListener('shown.bs.modal', function () {
+              bootstrap.Modal.getOrCreateInstance(document.getElementById('roomHotspotModal')).show();}, {once:true}); roomModal.show();", class: "btn btn-sm btn-outline-primary") %>
             </div>
           </div>
         <% end %>
