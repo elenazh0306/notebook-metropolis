@@ -1,6 +1,7 @@
 class Category < ApplicationRecord
   belongs_to :user
   has_many :notes, dependent: :destroy
+  has_many :citizens, dependent: :destroy
   validates :name, uniqueness: { message: "You already have this category!"}, unless: :system_category?
   validates :name, presence: { message: "You forgot the name!"}
   validates :sprite_image, presence: { message: "Pick a building!"}
@@ -12,12 +13,12 @@ class Category < ApplicationRecord
 
   # sets the static image inside the room modal
   def room_graphic
-    room_image.presence || "rooms/Cat_sleeping_in_cozy_room.jpeg"
+    room_image.presence || "rooms/cozy_study.jpeg"
   end
 
   # handles the room intro video fallback
   def intro_video
-    room_video.presence || "rooms/Cat_sleeping_in_cozy_room.jpeg"
+    room_video.presence || "rooms/Cat_waking_up_on_couch.mp4"
   end
 
   # handles the animation type fallback (default to continuous loops)
