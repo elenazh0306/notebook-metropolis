@@ -1,6 +1,14 @@
-<%= form_with model: [citizen, message] do |f| %>
-  <div class = "mb-3">
-    <%= f.text_area :content, class: "form-control", placeholder: "Ask the AI about your notes...", rows: 3 %>
+<% if message.errors.any? %>
+  <div class = "alert alert-warning mb-2">
+    <% message.errors.full_messages.each do |error| %>
+      <div><%= error %></div>
+    <% end %>
   </div>
-  <%= f.submit "Send", class: "btn btn-primary" %>
+<% end %>
+
+<%= form_with(url: citizen_messages_path(citizen, format: :turbo_stream), scope: :message, method: :post, class: "d-flex gap-2", data: {controller: "reset-form", action: "turbo:submit-start->reset-form#reset"}) do |f| %>
+  <%= f.text_field :content, placeholder: "Ask the AI about your notes...", class: "form-control shadow-sm", autocomplete: "off" %>
+  <%= f.button type: "submit", class: "btn btn-primary fw-bold px-4 shadow-sm d-flex align-items-center gap-1" do %>
+  Send
+  <% end %>
 <% end %>

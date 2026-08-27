@@ -50,19 +50,10 @@
   </div>
 
   <!-- THIS IS WHERE YOU RESPOND IN THE CHAT -->
-  <div>
+  <div id = "new-message-container">
     <!-- Replace 'url: "#"' with your actual LLM Messages controller path -->
-    <%= form_with(url: citizen_messages_path(citizen, format: :turbo_stream), scope: :message, method: :post, class: "d-flex gap-2", data: {controller: "reset-form", action: "turbo:submit-start->reset-form#reset"}) do |f| %>
-      <%= f.text_field :content,
-                      placeholder: "Type a message to the AI...",
-                      class: "form-control shadow-sm",
-                      autocomplete: "off" %>
-      <%= f.button type: "submit", class: "btn btn-primary fw-bold px-4 shadow-sm d-flex align-items-center gap-1" do %>
-        Send
-      <% end %>
-    <% end %>
+    <%= render "messages/form", citizen: citizen, message: Message.new %>
   </div>
-
 </div>
 
 <!-- PS: We don't need to include a "back to room" button,
