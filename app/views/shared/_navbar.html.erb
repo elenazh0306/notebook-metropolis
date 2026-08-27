@@ -24,7 +24,9 @@
           <% end %>
         </div>
         <div class = "metropolis-navbar-actions">
+          <% if controller_name == "categories" && action_name == "index" && @indexed_tiles.present? %>
             <%= button_to "💭 Random Thoughts", categories_path(category: { name: "trash", x: @indexed_tiles.sample[:row], y:@indexed_tiles.sample[:column] , sprite_image: "trash.png" }), method: :post, class: "random-thoughts-button" %>
+          <% end %>
           <div class = "nav-item dropdown">
             <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar", alt: "dropdown menu" %>

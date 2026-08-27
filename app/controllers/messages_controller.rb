@@ -19,8 +19,6 @@ class MessagesController < ApplicationController
       response = ask_llm
       @assistant_message.update(content: response.content)
 
-      broadcast_replace(@assistant_message)
-
       # for the corrent order of message display
       respond_to do |format|
         format.turbo_stream { head :ok }
