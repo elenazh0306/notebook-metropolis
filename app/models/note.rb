@@ -10,9 +10,8 @@ class Note < ApplicationRecord
                   },
                   using: {
                     tsearch: {
-                      prefix: true,
-                      any_word: true,
-                      dictionary: "english"
+                      prefix: false,
+                      dictionary: "simple"
                     }
                   }
 

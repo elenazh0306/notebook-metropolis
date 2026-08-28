@@ -4,20 +4,6 @@
 
   <h3>Hello <%= current_user.name %>!</h3>
   <div class = "map-container">
-    <!-- Search Bar -->
-    <div class = "search-overlay">
-      <%= form_with(url: categories_path, method: :get, local: true, class: "global-search-form") do |form| %>
-        <%= form.text_field(:q, value: @query, placeholder: "Search your notes...", class: "global-search-input") %>
-        <button type = "submit" class = "global-search-button" aria-label = "Search" >
-          <svg viewBox = "0 0 24 24" aria-hidden = "true">
-            <circle cx = "11" cy = "11" r = "7">
-            </circle>
-            <line x1 = "16" y1 = "16" x2 = "21" y2 = "21">
-            </line>
-          </svg>
-        </button>
-      <% end %>
-    </div>
     <!--Search Results-->
     <% if @query.present? %>
       <div class = "search-result">
@@ -38,9 +24,19 @@
             </div>
           </div>
         <% end %>
-        <% if @search_results.any? %>
-          <% @search_results.each do |note| %>
-            <div class = "card mb-2">
+      </div>
+      <!--Search Results-->
+      <% if @query.present? %>
+        <div class = "search-result">
+          <div class = "d-flex justify-content-between align-items-center mb-3">
+            <h5>
+              Search results for "<%= @query %>"
+            </h5>
+            <%= link_to "×", categories_path, class: "search-close" %>
+          </div>
+          <!--AI Response-->
+          <% if @ai_response.present? %>
+            <div class = "card mb-4">
               <div class = "card-body">
                 <small class = "text-muted">
                   <%= note.category.name %>
@@ -53,7 +49,13 @@
                   <%= truncate(strip_tags(note.content.to_s), length: 150) %>
                 </p>
 
-                <%= link_to("Open Note", category_note_path(note.category, note), class: "btn btn-sm btn-outline-primary") %>
+                <%= link_to("Open Note", category_note_path(note.category, note),
+                data: {turbo_frame: "room_hotspot_content"}, onclick: "
+                const roomElement = document.getElementById('categoryModal_#{note.category.id}');
+                const roomModal = bootstrap.Modal.getOrCreateInstance(roomElement);
+
+                roomElement.addEventListener('shown.bs.modal', function () {
+                bootstrap.Modal.getOrCreateInstance(document.getElementById('roomHotspotModal')).show();}, {once:true}); roomModal.show();", class: "btn btn-sm btn-outline-primary") %>
               </div>
             </div>
           <% end %>
@@ -65,89 +67,95 @@
       </div>
     <% end %>
   </div>
-
-    <%= button_to "Random thoughts",
-        categories_path(category: { name: "trash", x: @indexed_tiles.sample[:row], y:@indexed_tiles.sample[:column] , sprite_image: "trash.png" }),
-        method: :post,
-        class: "btn btn-primary btn-sm" %>
-
     <div id="trash_notes_content">
     </div>
 
-    <div data-controller="board" data-board-editing-value="false">
-      <button type="button"
-              class="btn btn-primary btn-sm"
-              data-board-target="editBtn"
-              data-action="click->board#edit">
-        ✏️ Edit Map
-      </button>
+    <div  class = "city-board-container" data-controller="board" data-board-editing-value="false">
+      <div class = "map-actions">
+        <button type="button"
+                class="map-edit-button"
+                data-board-target="editBtn"
+                data-action="click->board#edit">
+          ✏️ Edit Map
+        </button>
 
-      <button type="button"
-              class="btn btn-success btn-sm d-none"
-              data-board-target="saveBtn"
-              data-action="click->board#save">
-        💾 Save Changes
-      </button>
-
+        <button type="button"
+                class="map-save-button"
+                data-board-target="saveBtn"
+                data-action="click->board#save">
+          💾 Save Changes
+        </button>
+      </div>
       <div class="board" >
         <% @row.times do |y| %>
           <div class="d-flex">
 
-              <% @column.times do |x| %>
+        <button type="button"
+                class="btn btn-success btn-sm d-none"
+                data-board-target="saveBtn"
+                data-action="click->board#save">
+          💾 Save Changes
+        </button>
 
-                <%= render "tile_maps/tile", x: x, y: y, tile_map: current_user.tile_map %>
+        <div class="board" >
+          <% @row.times do |y| %>
+            <div class="d-flex">
 
-              <% end %>
+                <% @column.times do |x| %>
+
+                  <%= render "tile_maps/tile", x: x, y: y, tile_map: current_user.tile_map %>
+
+                <% end %>
+            </div>
+
+          <% end %>
+        </div>
+
+    </div>
+
+    <div class = "new-category-menu">
+      <div class = "offcanvas offcanvas-end" style = "width: 25vw" id = "new-category-menu" >
+        <div class = "offcanvas-header">
+          <h3>Create a New Building</h3>
+          <button
+                  type = "button"
+                  class = "btn-close"
+                  data-bs-dismiss = "offcanvas"
+                  aria-label = "Close">
+          </button>
+        </div>
+        <div class = "offcanvas-body" id="category_new_form">
+          <%= render "form", category: @category %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Render the Modal Partial for this Category -->
+    <!-- '.select(&:persisted?)' is a guard clause that ensures unsaved objects don't crash the loop -->
+    <% @categories.select(&:persisted?).each do |category| %>
+      <% if category.name != "trash" %>
+        <%= render "categories/rooms/room_modal", category: category %>
+      <% else %>
+        <%= render "note_modal", category: category, note: category.notes[0] %>
+      <% end %>
+    <% end %>
+
+    <!-- A Resuable Modal for all Notes 'Bookcases, Notice Boards, Laptops, etc.' -->
+    <div class="modal fade" id="roomHotspotModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content notice-board-background">
+          <div class="modal-header">
+            <h5 class="modal-title">Notebook Metropolis</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
 
-        <% end %>
-      </div>
-
-  </div>
-
-  <div class = "new-category-menu">
-    <div class = "offcanvas offcanvas-end" style = "width: 25vw" id = "new-category-menu" >
-      <div class = "offcanvas-header">
-        <h3>Create a New Building</h3>
-        <button
-                type = "button"
-                class = "btn-close"
-                data-bs-dismiss = "offcanvas"
-                aria-label = "Close">
-        </button>
-      </div>
-      <div class = "offcanvas-body" id="category_new_form">
-        <%= render "form", category: @category %>
-      </div>
-    </div>
-  </div>
-
-  <!-- Render the Modal Partial for this Category -->
-  <!-- '.select(&:persisted?)' is a guard clause that ensures unsaved objects don't crash the loop -->
-  <% @categories.select(&:persisted?).each do |category| %>
-    <% if category.name != "trash" %>
-      <%= render "categories/rooms/room_modal", category: category %>
-    <% else %>
-      <%= render "note_modal", category: category, note: category.notes[0] %>
-    <% end %>
-  <% end %>
-
-  <!-- A Resuable Modal for all Notes 'Bookcases, Notice Boards, Laptops, etc.' -->
-  <div class="modal fade" id="roomHotspotModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content notice-board-background">
-        <div class="modal-header">
-          <h5 class="modal-title">Notebook Metropolis</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-
-        <div class="modal-body">
-          <!-- Static Frame ID that receives all hotspot content -->
-          <turbo-frame id="room_hotspot_content">
-            <p class="text-center text-muted my-4">Loading notes in hotspot...</p>
-          </turbo-frame>
+          <div class="modal-body">
+            <!-- Static Frame ID that receives all hotspot content -->
+            <turbo-frame id="room_hotspot_content">
+              <p class="text-center text-muted my-4">Loading notes in hotspot...</p>
+            </turbo-frame>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 <% end %>

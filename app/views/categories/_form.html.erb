@@ -15,7 +15,7 @@
       <% @images.each do |image| %>
         <%= f.radio_button :sprite_image, image[:url], class: "btn-check", id: "sprite_#{image[:url].parameterize}" %>
         <label class="btn btn-outline-secondary d-flex align-items-center gap-2" for="sprite_<%= image[:url].parameterize %>">
-          <%= image_tag(image[:url], class: "rounded-circle", width: 30, height: 30) %>
+          <%= image_tag("buildings/#{image[:url]}", class: "rounded-circle", width: 30, height: 30) %>
           <span><%= image[:name] %></span>
         </label>
       <% end %>

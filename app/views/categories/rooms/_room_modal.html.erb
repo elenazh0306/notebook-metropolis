@@ -39,7 +39,8 @@
             data-room-target="interactiveLayer">
 
             <!-- All Hotspot links within a Room are dynamically rendered based on Category Name -->
-            <%= render partial: "categories/rooms/hotspots/#{File.basename(category.room_image.to_s, '.*').parameterize.underscore}", locals: { category: category } %>
+            <!-- Change category.room_image.to_s to category.room_graphic.to_s -->
+            <%= render partial: "categories/rooms/hotspots/#{File.basename(category.room_graphic.to_s, '.*').parameterize.underscore}", locals: { category: category } %>
 
           </div>
         </div>

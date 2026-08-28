@@ -3,6 +3,8 @@
   tile = User::TILE_TYPES[current_type.to_sym] || { name: 'unknown' }
   tile_order = User::TILE_TYPES.keys.map(&:to_s)
   category_on_tile = current_user.categories.find { |c| c.x == x && c.y == y }
+  building_data = category_on_tile ? User::BUILDINGS.find { |b| b[:url] == category_on_tile.building_sprite } : nil
+  extra_class = building_data&.fetch(:css_class, "") || ""
 %>
 
 <div id="tile_<%= x %>_<%= y %>"
@@ -23,7 +25,6 @@
       data-tile-current-value="<%= current_type %>"
       data-tile-types-value="<%= tile_order.to_json %>"
   >
-
 
     <% if !category_on_tile %>
 
@@ -46,7 +47,7 @@
       <!-- We make the modal target dynamic, based on the category id -->
       <% if category_on_tile.name != 'trash' %>
         <div>
-          <%= image_tag category_on_tile.building_sprite, class: "house-tile", alt: category_on_tile.name %>
+          <%= image_tag "buildings/#{category_on_tile.building_sprite}", class: "house-tile #{extra_class}".strip, alt: category_on_tile.name %>
           <div class="house-name"> <%= category_on_tile.name %></div>
         </div>
         <div class='btn-container'>
@@ -62,22 +63,20 @@
       <% else %>
           <div>
 
-              <%= image_tag category_on_tile.building_sprite, class: "house-tile", alt: category_on_tile.name %>
+              <%= image_tag "buildings/#{category_on_tile.building_sprite}", class: "house-tile #{extra_class}".strip, alt: category_on_tile.name %>
 
               <div class="house-name"> <%= category_on_tile.name %></div>
 
           </div>
           <% note = category_on_tile.notes[0] %>
-          <% if note %>
-            <div class="building-btn">
-              <button type="button"
-                      class="building-btn"
-                      data-bs-toggle="modal"
-                      data-bs-target="#noteModal_<%= note.id %>">
-                        <div> View the note  🗝️</div>
-              </button>
-            </div>
-          <% end %>
+          <div class="building-btn">
+            <button type="button"
+                    class="building-btn"
+                    data-bs-toggle="modal"
+                    data-bs-target="#noteModal_<%= note.id %>">
+                      <div> View the note  🗝️</div>
+                    </button>
+          </div>
 
       <% end %>
 
