@@ -136,4 +136,6 @@ class NotesController < ApplicationController
 
     @note.title = title.content.strip
   end
+
+
 end

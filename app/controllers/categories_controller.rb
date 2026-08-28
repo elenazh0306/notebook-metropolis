@@ -5,6 +5,7 @@ class CategoriesController < ApplicationController
     @category = Category.new
     @images = User::BUILDINGS
     @rooms = User::ROOMS
+    @trash_notes = current_user.notes.joins(:category).where(categories: { name: "trash" })
 
     @indexed_tiles = current_user.tile_map.each_with_index.map do |sub_array, index|
       sub_array.each_with_index.map do |item, sub_index|
@@ -16,6 +17,10 @@ class CategoriesController < ApplicationController
 
     @query = params[:q].to_s.strip
     @search_results = search_notes
+
+    # quick fix for mobile
+    @note = Note.new
+
   end
 
   def show

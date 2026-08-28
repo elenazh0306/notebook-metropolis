@@ -9,6 +9,7 @@
     "web-animations-js": "^2.3.2"
   },
   "devDependencies": {
-    "@capacitor/cli": "^7.6.8"
+    "@capacitor/cli": "^7.6.8",
+    "typescript": "^7.0.2"
   }
 }

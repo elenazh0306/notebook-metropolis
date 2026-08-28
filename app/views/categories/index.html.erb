@@ -1,7 +1,6 @@
 <% if mobile_app? %>
-  <%= render "layouts/mobile_index" %>
+<%= render "layouts/mobile_index" %>
 <% else %>
-
   <h3>Hello <%= current_user.name %>!</h3>
   <div class = "map-container">
     <!--Search Results-->
@@ -143,5 +142,4 @@
         </div>
       </div>
     </div>
-
 <% end %>

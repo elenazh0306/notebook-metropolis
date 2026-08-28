@@ -28,11 +28,15 @@ class ApplicationController < ActionController::Base
   end
 
   def detect_mobile_app
-    @is_mobile_app = request.user_agent.to_s.include?("TurboNative") || request.headers["X-Mobile-App"].present?
+    user_agent = request.user_agent.to_s
+
+    @is_mobile_app = user_agent.include?("NotebookMetropolisNativeApp") ||
+                     user_agent.include?("TurboNative") ||
+                     request.headers["X-Mobile-App"].present?
   end
-  private
 
   def mobile_app?
-    request.user_agent&.include?("NotebookMetropolisNativeApp")
+    @is_mobile_app
   end
+
 end
