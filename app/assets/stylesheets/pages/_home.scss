@@ -1,4 +1,6 @@
 // Specific CSS for your home-page
 body {
   background-color: #E0F7FA;
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
 }

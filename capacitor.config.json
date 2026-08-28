@@ -1,0 +1,10 @@
+{
+  "appId": "com.elenazh0306.notebookmetropolis",
+  "appName": "Notebook Metropolis",
+  "webDir": "public",
+  "server": {
+    "url": "http://localhost:3000",
+    "cleartext": true
+  },
+    "overrideUserAgent": "NotebookMetropolisNativeApp"
+}

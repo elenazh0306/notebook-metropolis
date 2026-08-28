@@ -78,3 +78,5 @@ gem "ruby_llm"
 gem "kramdown"
 gem "redcarpet"
 gem "pg_search"
+# for mobile app
+gem 'rack-cors'
