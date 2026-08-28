@@ -67,19 +67,15 @@ class NotesController < ApplicationController
     trash_category = @note.category
 
     if @note.update(note_params)
-      if trash_category != @note.category && trash_category.notes.empty?
-        trash_category.destroy
-      end
+      trash_category.destroy if trash_category != @note.category && trash_category.notes.empty?
       @category = @note.category
 
       if original_hotspot_type == "street"
 
         respond_to do |format|
-
           format.html { redirect_to categories_path, status: :see_other }
           format.turbo_stream { redirect_to categories_path }
         end
-
 
       else
         @hotspot_type = @note.hotspot_type || "notice_board"
@@ -95,7 +91,6 @@ class NotesController < ApplicationController
     else
       render :edit, status: :unprocessable_entity
     end
-
   end
 
   def destroy
@@ -126,7 +121,7 @@ class NotesController < ApplicationController
   end
 
   def note_params
-    params.require(:note).permit(:title, :content, :hotspot_type, :category_id)
+    params.require(:note).permit(:title, :content, :hotspot_type, :category_id, :image)
   end
 
   def generate_ai_title

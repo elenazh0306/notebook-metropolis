@@ -1,5 +1,7 @@
 class Note < ApplicationRecord
   belongs_to :category
+  has_one_attached :image
+  validate :image_for_poster
 
   include PgSearch::Model
 
@@ -22,5 +24,12 @@ class Note < ApplicationRecord
 
   def set_default_hotspot_type
     self.hotspot_type ||= "notice_board" # Conditional Assignment - to assign to "notice_board" if nil
+  end
+
+  def image_for_poster
+    return unless image.attached?
+    return if hotspot_type == "posters"
+
+    errors.add(:image, "Images can only be uplodated to the Poster hotspot")
   end
 end

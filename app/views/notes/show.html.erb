@@ -39,6 +39,11 @@ alas, I could not figure out how to set this up for any number of potential subf
     <!-- The Full Note Displayed as an expanded note -->
     <div class="card shadow-sm border-0 my-3 style-postit-detail">
       <div class="card-body p-4">
+        <% if @note.image.attached? %>
+          <div class = "text-center mb-3">
+            <%= cl_image_tag @note.image.key, width: 600, height: 400, crop: :limit, class: "notes-image", alt: @note.title %>
+          </div>
+        <% end %>
         <h4 class="card-title fw-bold text-dark border-bottom pb-2 mb-3">
           <%= @note.hotspot_type == "bookcase" ? "📖" : "📌" %> <%= raw(render_markdown(@note.title)) %>
         </h4>
