@@ -1,5 +1,7 @@
-
 puts "Deleting old seeds..."
+Citizen.destroy_all
+Note.destroy_all
+Category.destroy_all
 User.destroy_all
 
 puts "Creating a new user..."
@@ -7,16 +9,25 @@ user = User.create!(
   name: "user",
   email: "email@email.com",
   password: "111111",
-  map_size: "small"
+  map_size: "large"
 )
 
 user.tile_map = [
-  ["grass", "grass", "grass", "grass", "grass", "grass"],
-  ["grass", "base",  "grass", "grass", "grass", "grass"],
-  ["grass", "grass", "grass", "grass", "grass", "grass"],
-  ["grass", "grass", "grass", "base", "grass", "grass"],
-  ["grass", "base", "grass", "grass", "grass", "grass"],
-  ["grass", "grass", "grass", "grass", "grass", "grass"]
+  ["grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass"],
+  ["grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass"],
+  ["grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass"],
+  ["grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass"],
+  ["grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass"],
+  ["grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass"],
+  ["grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass"],
+  ["grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass"],
+  ["grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass"],
+  ["grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass"],
+  ["grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass"],
+  ["grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass"],
+  ["grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass"],
+  ["grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass"],
+  ["grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass"]
 ]
 user.save!
 
@@ -24,9 +35,9 @@ user.save!
 puts "Seeding Category 1: Cozy Study..."
 cozy_study = user.categories.create!(
   name: "Cozy Study",
-  sprite_image: "blue-house.png",                           # Grid Map Sprite
-  room_image: "rooms/cozy_study.jpeg",       # Static Modal Background
-  room_video: "rooms/Cat_waking_up_on_couch.mp4",           # Intro Video Asset
+  sprite_image: "blue-house.png",                   # Grid Map Sprite
+  room_image: "rooms/cozy_study.jpeg",              # Static Modal Background
+  room_video: "rooms/Cat_waking_up_on_couch.mp4",   # Intro Video Asset
   building_animation_type: "occasional",
   x: 1,
   y: 1
