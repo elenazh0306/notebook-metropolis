@@ -26,8 +26,8 @@
         <% end %>
       </div>
       <!--Search Results-->
-      <% if @query.present? %>
-        <div class = "search-result">
+      <div class = "search-result">
+        <% if @query.present? %>
           <div class = "d-flex justify-content-between align-items-center mb-3">
             <h5>
               Search results for "<%= @query %>"
@@ -87,29 +87,14 @@
         </button>
       </div>
       <div class="board" >
-        <% @row.times do |y| %>
-          <div class="d-flex">
-
-        <button type="button"
-                class="btn btn-success btn-sm d-none"
-                data-board-target="saveBtn"
-                data-action="click->board#save">
-          💾 Save Changes
-        </button>
-
-        <div class="board" >
           <% @row.times do |y| %>
             <div class="d-flex">
-
                 <% @column.times do |x| %>
-
                   <%= render "tile_maps/tile", x: x, y: y, tile_map: current_user.tile_map %>
-
                 <% end %>
             </div>
-
           <% end %>
-        </div>
+      </div>
 
     </div>
 
@@ -158,4 +143,5 @@
         </div>
       </div>
     </div>
+
 <% end %>
