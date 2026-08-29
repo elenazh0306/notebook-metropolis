@@ -80,3 +80,4 @@ gem "redcarpet"
 gem "pg_search"
 # for mobile app
 gem 'rack-cors'
+gem "cloudinary"

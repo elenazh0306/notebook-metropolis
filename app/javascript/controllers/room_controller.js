@@ -54,8 +54,8 @@ export default class extends Controller {
   playVideo() {
     // DEV MODE: Remove comments around these two lines to force
     // the static room and hotspots to show immediately!
-    // this.interactiveLayerTarget.classList.remove('room-hidden')
-    // this.interactiveLayerTarget.classList.add('room-active')
+    this.interactiveLayerTarget.classList.remove('room-hidden')
+    this.interactiveLayerTarget.classList.add('room-active')
 
     if (this.hasVideoTarget) {
       this.videoTarget.play().catch(() => {})
