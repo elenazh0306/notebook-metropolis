@@ -35,7 +35,7 @@
         </div>
       <% end %>
       <div class="d-grid">
-        <%= f.submit "Throw on the streets for now", class: "btn btn-dark fw-bold" %>
+        <%= f.submit "Throw on the streets", class: "btn btn-dark fw-bold" %>
       </div>
 
     <% end %>
@@ -51,6 +51,12 @@
         <p class="card-text text-dark fs-5" style="white-space: pre-line;">
           <%= note.content %>
         </p>
+        <%= button_to category_path(note.category),
+            method: :delete,
+            data: { turbo_confirm: "Are you sure you want to throw it away?"},
+            class: "btn btn-outline-danger btn-sm" do %>
+              ❌
+              <% end %>
       </div>
     </div>
   <% end %>
