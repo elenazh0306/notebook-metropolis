@@ -20,11 +20,7 @@ class CategoriesController < ApplicationController
 
     # quick fix for mobile
     @note = Note.new
-    @trash = current_user.categories.find_or_initialize_by(name: "trash") do |c|
-      c.x = @indexed_tiles.sample[:row]
-      c.y = @indexed_tiles.sample[:column]
-      c.sprite_image = "trash.png"
-    end
+
 
   end
 
@@ -50,9 +46,13 @@ class CategoriesController < ApplicationController
 
     if @category.name == "trash"
       if @category.save
-        respond_to do |format|
-          format.html { redirect_to categories_path }
-          format.turbo_stream
+        if params[:source] == "mobile"
+          redirect_to categories_path, notice: "Note thrown on the street!"
+        else
+          respond_to do |format|
+            format.html { redirect_to categories_path }
+            format.turbo_stream
+          end
         end
       end
 
@@ -105,7 +105,7 @@ class CategoriesController < ApplicationController
   private
 
   def category_params
-    params.require(:category).permit(:name, :sprite_image, :x, :y, :room_image)
+    params.require(:category).permit(:name, :sprite_image, :x, :y, :room_image, notes_attributes: [:title, :content, :hotspot])
   end
 
   def create_map

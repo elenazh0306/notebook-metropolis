@@ -63,7 +63,7 @@
       <% else %>
           <div>
 
-              <%= image_tag "buildings/#{category_on_tile.building_sprite}", class: "house-tile #{extra_class}".strip, alt: category_on_tile.name %>
+              <%= image_tag "buildings/#{category_on_tile.building_sprite}", class: "house-tile trash-tile #{extra_class}".strip, alt: category_on_tile.name %>
 
               <div class="house-name"> <%= category_on_tile.name %></div>
 
@@ -80,7 +80,7 @@
 
       <% end %>
 
-            <%= button_to categories_path,
+            <%= button_to category_path(category_on_tile),
             method: :delete,
             data: { turbo_confirm: "Are you sure you want to demolish this building?"},
             class: "btn btn-outline-danger btn-sm" do %>

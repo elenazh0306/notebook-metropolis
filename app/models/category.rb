@@ -5,6 +5,7 @@ class Category < ApplicationRecord
   validates :name, uniqueness: { message: "You already have this category!"}, unless: :system_category?
   validates :name, presence: { message: "You forgot the name!"}
   validates :sprite_image, presence: { message: "Pick a building!"}
+  accepts_nested_attributes_for :notes
 
   # sets the building sprite on the map grid
   def building_sprite
