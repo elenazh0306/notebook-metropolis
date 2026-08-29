@@ -1,0 +1,11 @@
+{
+  "appId": "com.elenazh0306.notebookmetropolis",
+  "appName": "Notebook Metropolis",
+  "webDir": "public",
+  "overrideUserAgent": "NotebookMetropolisNativeApp",
+  "server": {
+    "url": "https://notebook-metropolis-9fc12d24fe20.herokuapp.com/",
+    "cleartext": true,
+    "allowNavigation": ["*"]
+  }
+}

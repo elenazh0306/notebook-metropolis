@@ -27,3 +27,5 @@
 #   # Report violations without enforcing the policy.
 #   # config.content_security_policy_report_only = true
 # end
+# Temporary check to see if CSP is the culprit
+Rails.application.config.content_security_policy_report_only = true

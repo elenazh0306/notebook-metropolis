@@ -1,8 +1,15 @@
 {
   "dependencies": {
+    "@capacitor/android": "^8.5.0",
+    "@capacitor/core": "^8.5.0",
+    "@capacitor/ios": "^8.5.0",
     "hammerjs": "^2.0.8",
     "muuri": "^0.9.5",
     "sortablejs": "^1.15.7",
     "web-animations-js": "^2.3.2"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.6.8",
+    "typescript": "^7.0.2"
   }
 }

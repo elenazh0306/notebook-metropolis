@@ -6,6 +6,7 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: { case_sensitive: false }, format: { with: URI::MailTo::EMAIL_REGEXP, message: "is not a valid email address" }
   before_create :set_default_map
   has_many :categories, dependent: :destroy
+  has_many :notes, through: :categories
   devise :database_authenticatable, :registerable,
         :recoverable, :rememberable, :validatable
 

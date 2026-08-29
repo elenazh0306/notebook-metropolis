@@ -5,6 +5,7 @@ class CategoriesController < ApplicationController
     @category = Category.new
     @images = User::BUILDINGS
     @rooms = User::ROOMS
+    @trash_notes = current_user.notes.joins(:category).where(categories: { name: "trash" })
 
     @indexed_tiles = current_user.tile_map.each_with_index.map do |sub_array, index|
       sub_array.each_with_index.map do |item, sub_index|
@@ -16,6 +17,11 @@ class CategoriesController < ApplicationController
 
     @query = params[:q].to_s.strip
     @search_results = search_notes
+
+    # quick fix for mobile
+    @note = Note.new
+
+
   end
 
   def show
@@ -40,9 +46,13 @@ class CategoriesController < ApplicationController
 
     if @category.name == "trash"
       if @category.save
-        respond_to do |format|
-          format.html { redirect_to categories_path }
-          format.turbo_stream
+        if params[:source] == "mobile"
+          redirect_to categories_path, notice: "Note thrown on the street!"
+        else
+          respond_to do |format|
+            format.html { redirect_to categories_path }
+            format.turbo_stream
+          end
         end
       end
 
@@ -95,7 +105,7 @@ class CategoriesController < ApplicationController
   private
 
   def category_params
-    params.require(:category).permit(:name, :sprite_image, :x, :y, :room_image)
+    params.require(:category).permit(:name, :sprite_image, :x, :y, :room_image, notes_attributes: [:title, :content, :hotspot])
   end
 
   def create_map
