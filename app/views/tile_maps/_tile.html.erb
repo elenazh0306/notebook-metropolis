@@ -80,7 +80,7 @@
 
       <% end %>
 
-            <%= button_to category_path(category_on_tile),
+            <%= button_to categories_path,
             method: :delete,
             data: { turbo_confirm: "Are you sure you want to demolish this building?"},
             class: "btn btn-outline-danger btn-sm" do %>

@@ -1,8 +1,8 @@
-<h2>This is mobile version</h2>
+<h2>Notebook Metropolis. </h2>
+<h3> Mobile version </h3>
 
 <div class="modal-body p-0">
   <div class="card border-0 shadow-sm p-3 style-postit-detail">
-  <%@trash = current_user.categories.find_or_create_by!(name: "trash", x: @indexed_tiles.sample[:row], y:@indexed_tiles.sample[:column] , sprite_image: "trash.png")%>
     <%= form_with(model: [@trash, @note]) do |f| %>
 
       <%= f.hidden_field :hotspot_type, value: "street" %>

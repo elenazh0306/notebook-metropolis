@@ -20,6 +20,11 @@ class CategoriesController < ApplicationController
 
     # quick fix for mobile
     @note = Note.new
+    @trash = current_user.categories.find_or_initialize_by(name: "trash") do |c|
+      c.x = @indexed_tiles.sample[:row]
+      c.y = @indexed_tiles.sample[:column]
+      c.sprite_image = "trash.png"
+    end
 
   end
 
