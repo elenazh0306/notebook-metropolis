@@ -72,4 +72,13 @@
     line-clamp: 2;
     -webkit-box-orient: vertical;
   }
+
+  .posters-image {
+    display: block;
+    width: 100%;
+    height: 140px;
+    object-fit: cover; // or "contain"
+    margin-bottom: 10px;
+    border-radius: 4px;
+  }
 }

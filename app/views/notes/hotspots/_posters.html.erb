@@ -19,6 +19,9 @@
                     class: "posters-card-link" do %>
           <div class="posters-card">
             <div class="tape-corner"></div> <!-- Styled masking tape on corner! -->
+            <% if note.image.attached? %>
+              <%= cl_image_tag note.image.key, height: 180, width: 120, crop: :fill, class: "posters-image", alt: note.title %>
+            <% end %>
             <h6 class="posters-title"><%= raw(render_markdown(note.title)) %></h6>
             <p class="posters-preview"><%= truncate(note.content, length: 40) %></p>
           </div>

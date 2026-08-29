@@ -62,6 +62,13 @@
                           required: true %>
         </div>
 
+        <% if @note.hotspot_type =="posters" %>
+          <div class = "mb-3">
+            <%= f.label :image, "Upload Image", class: "form-label fw-bold text-dark" %>
+            <%= f.file_field :image, accept: "image/png, image/jpeg", class: "form-control" %>
+          </div>
+        <% end %>
+
         <div class="d-grid">
           <%= f.submit (case @note.hotspot_type
                         when "bookcase" then "📖 Add to Shelf"

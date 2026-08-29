@@ -1,3 +1,11 @@
+<% hackercat_laptop = @category.name == "Hackercat Room" %>
+<% if hackercat_laptop %>
+  <div class = "hackercat-laptop-view">
+    <div class = "hackercat-laptop-shell">
+      <%= video_tag "hackercat-laptop-background.mp4", class: "hackercat-laptop-video", autoplay: true, muted: true, loop: true, playsinline: true %>
+      <div class = "hackercat-laptop-screen">
+<% end %>
+
 <div class="laptop-container p-3">
   <!-- Header with Category Title & New File Note Button -->
   <div class="d-flex justify-content-between align-items-center mb-4">
@@ -30,3 +38,9 @@
     </div>
   <% end %>
 </div>
+
+<% if hackercat_laptop %>
+      </div>
+    </div>
+  </div>
+<% end %>
