@@ -243,6 +243,17 @@
     user-select: none;
   }
 
+/* Modifier specifically for dropped trash notes */
+.house-tile.trash-tile {
+  max-height: 60%; /* Tames the overall size on the grid cell */
+  bottom: 15px;    /* Centers the note neatly within the tile footprint */
+  left: 35%;
+  transform: translateX(-50%)
+            rotate3d(-3, 3, 0, -50deg)
+            rotate(-45deg)
+            scaleY(2.5); /* Reduced vertical stretch so it lies flat */
+}
+
   /* Modifiers for different sprite footprints */
 .house-tile--wide {
   bottom: 15px;
@@ -250,7 +261,7 @@
   transform: translateX(-50%)
             rotate3d(-3, 3, 0, -55deg)
             rotate(-45deg)
-            scaleY(3.0);
+            scaleY(2.5);
 }
 
 .house-tile--xwide1 {
