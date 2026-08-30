@@ -4,7 +4,7 @@
   "webDir": "public",
   "overrideUserAgent": "NotebookMetropolisNativeApp",
   "server": {
-    "url": "https://notebook-metropolis-9fc12d24fe20.herokuapp.com/",
+    "url": "http://localhost:3000",
     "cleartext": true,
     "allowNavigation": ["*"]
   }
