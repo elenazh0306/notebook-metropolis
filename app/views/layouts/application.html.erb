@@ -19,11 +19,18 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Sniglet:wght@400;800&display=swap" rel="stylesheet">
+
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     </head>
 
-    <body><%= render "shared/navbar" %>
+    <body>
+    <% unless mobile_app? %>
+    <%= render "shared/navbar" %>
+    <% end %>
     <%= render "shared/flashes" %>
 
     <%= yield %>
