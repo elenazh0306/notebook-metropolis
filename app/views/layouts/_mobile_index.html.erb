@@ -1,7 +1,8 @@
 <div class="mobile-bg">
-  <h2>Notebook Metropolis. </h2>
-  <h3> Mobile version </h3>
+  <div class="mobile-header">
+    <h1>Notebook Metropolis </h1>
 
+  </div>
   <div class="mobile-trash-container">
 
 
@@ -19,10 +20,10 @@
             <%= nf.hidden_field :hotspot_type, value: "street" %>
 
             <div class="trash-title">
-              <%= nf.label :title, class: "form-label fw-bold text-dark" %>
+              <%= nf.label :title, class: "visually-hidden" %>
               <%= nf.text_field :title,
                               class: "form-control",
-                              placeholder: "Write a best-seller",
+                              placeholder: "Title",
                               required: true,
                               autofocus: true %>
             </div>
@@ -47,7 +48,9 @@
   </div>
 
   <div class="trash-list">
-  <h3> Thoughts for recycling </h3>
+    <div class="mobile-header">
+      <h3> Thoughts for recycling </h3>
+    </div>
     <% @trash_notes.each do |note|%>
       <% bg_classes = ["bg-note-napkin", "bg-note-paper", "bg-note-receipt"] %>
       <div class="trash-list-container <%= bg_classes.sample %>">

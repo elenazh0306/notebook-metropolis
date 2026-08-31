@@ -1,11 +1,43 @@
 .mobile-bg {
-  background-image: url("bg-clouds.jpg");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-attachment: fixed;
-  min-height: 100vh;
   margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  position: relative;
+  padding-top: 70px;
+
+  &::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100dvh;
+    z-index: -1;
+
+    background-image: url("bg-clouds.jpg");
+    background-size: cover; // 'cover' fills the entire screen; 'contain' leaves empty spaces
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+
+}
+
+.mobile-header {
+
+  h1 {
+    font-family: "Sniglet", system-ui;
+    font-weight: 800;
+    font-style: normal;
+    text-align: center;
+  }
+
+  h3 {
+    font-family: "Sniglet", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    text-align: center;
+  }
 }
 
 .mobile-trash-container {
@@ -17,13 +49,14 @@
   margin: 0 auto;
   padding: 15% 10%;
 
-  width: 500px;
+  width: 400px;
   height: auto;
 
   box-sizing: border-box;
 
   .trash-title {
     margin-left: 100px;
+    margin-top: 20px;
     width: 280px;
     .form-control {
       background: transparent;
@@ -80,7 +113,7 @@
     }
     &.bg-note-paper {
       background-image: url("torn-paper-note.png");
-      padding-top: 38px;
+      padding-top: 52px;
 
       .trash-list-content {
         text-align: center;
@@ -123,7 +156,7 @@
         width: 100%;
         max-width: 80%;
         font-family: "Caveat", cursive;
-        font-optical-sizing: auto;
+        font-optical-sizing: 2rem;
         font-style: normal;
       }
 
