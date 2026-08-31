@@ -1,59 +1,70 @@
 <% citizen = Citizen.find_or_create_by!(category_id: @category.id) { |c| c.name = Citizen::DEFAULT_NAME } %>
+
+<!-- Real-time ActionCable connection listener -->
 <%= turbo_stream_from citizen %>
 
-<div class="ai-assistant-container p-3">
+<%# --- WRAPPER FOR CHAT PANEL & COMPANION ANIMATION --- %>
+<div class="chat-interface-wrapper d-flex align-items-stretch gap-3 p-3"
+      data-controller="cat-avatar"
+      data-cat-avatar-idle-src-value="<%= asset_path('rooms/cyber_cat_idle.mp4') %>"
+      data-cat-avatar-talking-src-value="<%= asset_path('rooms/cyber_cat_speak.mp4') %>">
 
-  <!-- Header with Category (Room) Title & Status Badge -->
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h4 class="m-0 fw-bold">🐱 <%= @category.name %> AI Companion</h4>
-    <!-- This span is purely decorative and balances the top part of the
-    chat modal. Later, if we want, we can change its text to 'cogitating'
-    and make it hum or glow while the AI thinks of its response -->
-    <span class="badge bg-success shadow-sm px-3 py-2">Online</span>
-    <div id = "ai-note-save-notification-<%= @category.id %>"></div>
-  </div>
-
-  <!-- THE CHAT CONTAINER STARTS HERE -->
-  <!-- This div holds the conversation. It also makes a scroll bar appear
-  if the chat gets too long -->
-  <div class="border rounded-3 p-3 bg-light shadow-inner mb-3" style="height: 350px; overflow-y: auto; visibility: hidden;" data-controller = "chat-scroll">
-
-    <!-- THIS IS THE CONTAINER WHERE THE CHAT LOG RUNS -->
-    <div class="d-flex flex-column gap-3">
-
-      <!-- AI Message Bubble (The AI's responses are posted here) -->
-      <div class="d-flex align-items-start gap-2">
-        <div class="bg-primary text-white p-3 rounded-3 shadow-sm max-w-75">
-          <small class="fw-bold d-block mb-1 text-white-50">🐱 Room AI</small>
-          Hello! I am your AI assistant for <strong><%= @category.name %></strong>. How can I help you organize or analyze your notes today?
-        </div>
-      </div>
-
-      <!-- Dynamic chat messages will be appended inside THIS div (.chat-field) via Turbo Stream -->
-      <!-- Don't worry about the Turbo Stream part: I will help you with that -->
-
-      <div id = "chat-field-<%= citizen.id %>" class = "chat-field d-flex flex-column gap-3">
-        <% if citizen.present? %>
-          <% citizen.messages.order(:created_at).each do |message| %>
-            <%= render "messages/message", message: message %>
-          <% end %>
-        <% end %>
-      </div>
-        <!--
-          When you set up the backend (or when Turbo Stream appends new messages),
-          this empty div serves as the ANCHOR TARGET (class="chat-field").
-
-          Whenever a user hits "Send", Rails will render a new speech bubble
-          (just like the ones above) and insert it inside this .chat-field container.
-        -->
+  <%# --- STICKY COMPANION ANIMATION --- %>
+  <div class="avatar-column d-flex align-items-center justify-content-center flex-shrink-0"
+        data-cat-avatar-target="avatarColumn">
+    <div class="chat-companion-anchor">
+      <%= video_tag "rooms/cyber_cat_idle.mp4",
+                    autoplay: true,
+                    loop: true,
+                    muted: true,
+                    playsinline: true,
+                    controls: false,
+                    class: "companion-video",
+                    data: { cat_avatar_target: "video" } %>
     </div>
   </div>
 
-  <!-- THIS IS WHERE YOU RESPOND IN THE CHAT -->
-  <div id = "new-message-container">
-    <!-- Replace 'url: "#"' with your actual LLM Messages controller path -->
-    <%= render "messages/form", citizen: citizen, message: Message.new %>
+  <div class="ai-assistant-container flex-grow-1 d-flex flex-column min-w-0 p-0">
+
+    <!-- Header with Category (Room) Title & Status Badge -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h4 class="m-0 fw-bold">🐱 <%= @category.name %> AI Companion</h4>
+      <span class="badge bg-success shadow-sm px-3 py-2">Online</span>
+      <div id="ai-note-save-notification-<%= @category.id %>"></div>
+    </div>
+
+    <!-- THE CHAT CONTAINER STARTS HERE -->
+    <div class="border rounded-3 p-3 bg-light shadow-inner flex-grow-1 mb-3 overflow-auto" style="height: 350px; visibility: hidden;" data-controller="chat-scroll">
+
+      <!-- THIS IS THE CONTAINER WHERE THE CHAT LOG RUNS -->
+      <div class="d-flex flex-column gap-3">
+
+        <!-- AI Message Bubble (The AI's responses are posted here) -->
+        <div class="d-flex align-items-start gap-2">
+          <div class="bg-primary text-white p-3 rounded-3 shadow-sm max-w-75">
+            <small class="fw-bold d-block mb-1 text-white-50">🐱 Room AI</small>
+            Hello! I am your AI assistant for <strong><%= @category.name %></strong>. How can I help you organize or analyze your notes today?
+          </div>
+        </div>
+
+        <!-- Dynamic chat messages stream directly into this container -->
+        <div id="chat-field-<%= citizen.id %>" class="chat-field d-flex flex-column gap-3">
+          <% if citizen.present? %>
+            <% citizen.messages.order(:created_at).each do |message| %>
+              <%= render "messages/message", message: message %>
+            <% end %>
+          <% end %>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- THIS IS WHERE YOU RESPOND IN THE CHAT -->
+    <div id="new-message-container" data-action="turbo:submit-start->cat-avatar#startTalking">
+      <%= render "messages/form", citizen: citizen, message: Message.new %>
+    </div>
   </div>
+
 </div>
 
 <!-- PS: We don't need to include a "back to room" button,

@@ -3,33 +3,99 @@
   position: relative;
   max-width: 800px; /* Adjust to match your chat panel width */
   margin: 0 auto;
-  overflow: visible; /* Guarantees -140px left pull isn't cropped */
+  overflow: visible !important; /* Guarantees layout contents are not cropped */
+  border-radius: 8px;
+  background-color: #0c0d10; /* Dark backing to match the laptop frame theme */
+}
+
+/* Allow the cat to extend outside the Bootstrap modal bounds without clipping */
+#roomHotspotModal .modal-content,
+#roomHotspotModal .modal-body {
+  overflow: visible !important;
+}
+
+/* ⚡ NEON BREATHING KEYFRAME ANIMATION (IDLE STATE) */
+@keyframes cyberGlowPulse {
+  0% {
+    border-color: rgba(0, 240, 255, 0.4);
+    box-shadow: 0 0 8px 1px rgba(0, 240, 255, 0.15), inset 0 0 5px rgba(0, 240, 255, 0.1);
+  }
+  50% {
+    border-color: rgba(0, 240, 255, 0.8);
+    box-shadow: 0 0 20px 4px rgba(0, 240, 255, 0.35), inset 0 0 12px rgba(0, 240, 255, 0.2);
+  }
+  100% {
+    border-color: rgba(0, 240, 255, 0.4);
+    box-shadow: 0 0 8px 1px rgba(0, 240, 255, 0.15), inset 0 0 5px rgba(0, 240, 255, 0.1);
+  }
+}
+
+/* ⚡ NEON ACTIVE TALKING KEYFRAME ANIMATION (FAST + PHYSICALLY LARGER GLOW RADIUS) */
+@keyframes cyberGlowSpeaking {
+  0% {
+    border-color: rgba(0, 240, 255, 0.6);
+    box-shadow: 0 0 12px 2px rgba(0, 240, 255, 0.3), inset 0 0 8px rgba(0, 240, 255, 0.2);
+  }
+  50% {
+    border-color: rgba(0, 240, 255, 1);
+    /* 4th value (8px spread) physically expands the neon light halo outward without moving the div */
+    box-shadow: 0 0 35px 8px rgba(0, 240, 255, 0.75), inset 0 0 18px rgba(0, 240, 255, 0.4);
+  }
+  100% {
+    border-color: rgba(0, 240, 255, 0.6);
+    box-shadow: 0 0 12px 2px rgba(0, 240, 255, 0.3), inset 0 0 8px rgba(0, 240, 255, 0.2);
+  }
+}
+
+/* Dedicated left column container for the cat avatar */
+.avatar-column {
+  width: 220px; /* Width for the left avatar panel inside the joint box */
+  background-color: #000000; /* Matches the cat video background perfectly */
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+
+  /* ⚡ CYBERPUNK NEON GLOW BORDER (WITH BREATHING ANIMATION) */
+  border: 1px solid rgba(0, 240, 255, 0.6);
+  animation: cyberGlowPulse 3.5s ease-in-out infinite; /* Smooth 3.5-second breathing cycle */
+
+  /* Active state class added via Stimulus when AI is speaking */
+  &.is-speaking {
+    animation: cyberGlowSpeaking 0.8s ease-in-out infinite; /* Fast 0.8-second rapid transmission pulse */
+  }
 }
 
 /* Anchors the cat to the bottom corner, attached to the chat panel */
 .chat-companion-anchor {
-  position: absolute;
-  bottom: 0;
-  left: -300px; /* Pulls the cat just outside the left edge of the chat box */
-  width: 140px;
-  height: 140px;
-  z-index: 10;
+  position: relative; /* Positioned inside the left avatar column */
+  width: 100%;
+  height: 100%;
+  z-index: 1055; /* Higher than Bootstrap modal z-index to stay on top */
   pointer-events: none; /* Allows clicks to pass through to elements behind if needed */
 }
 
 .companion-video {
-  width: 200%;
-  height: 200%;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
-  /* Aligns the bottom of the cat graphic flush against the bottom edge */
-  object-position: bottom center;
+  /* Centers the cat graphic vertically and horizontally in its frame */
+  object-position: center center;
 }
 
 /* Optional: On smaller screens/mobile, shift it inside or hide it */
 @media (max-width: 992px) {
+  .chat-interface-wrapper {
+    flex-direction: column; /* Stacks the cat on top of the chat on mobile screens */
+  }
+
+  .avatar-column {
+    width: 100%;
+    height: 180px;
+  }
+
   .chat-companion-anchor {
-    left: 10px; /* Snaps inside the left edge on mobile viewports */
-    width: 100px;
-    height: 100px;
+    left: 0; /* Snaps inside the left edge on mobile viewports */
+    width: 100%;
+    height: 100%;
   }
 }
