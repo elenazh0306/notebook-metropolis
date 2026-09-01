@@ -53,17 +53,6 @@ class TileMapsController < ApplicationController
       end
     end
 
-    Rails.logger.info "SWAP #{src_x},#{src_y} -> #{tgt_x},#{tgt_y}"
-
-    source_category =
-      current_user.categories.find_by(x: src_x, y: src_y)
-
-    target_category =
-      current_user.categories.find_by(x: tgt_x, y: tgt_y)
-
-    Rails.logger.info "SOURCE: #{source_category&.attributes}"
-    Rails.logger.info "TARGET: #{target_category&.attributes}"
-
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
