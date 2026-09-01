@@ -1,6 +1,7 @@
 <% if mobile_app? %>
   <%= render "layouts/mobile_index" %>
 <% else %>
+  <%= render "shared/navbar" %>
   <h3>Hello <%= current_user.name %>!</h3>
   <div class = "map-container">
     <!--Search Results-->
