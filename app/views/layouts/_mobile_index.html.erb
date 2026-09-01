@@ -8,10 +8,10 @@
       <%= hidden_field_tag :source, "mobile" %>
 
       <%= f.hidden_field :name, value: "trash" %>
-      <%= f.hidden_field :x, value: tile[:row] %>
-      <%= f.hidden_field :y, value: tile[:column] %>
+      <%= f.hidden_field :x, value: tile[:column] %>
+      <%= f.hidden_field :y, value: tile[:row] %>
       <%= f.hidden_field :sprite_image, value: "trash.png" %>
-      <%= f.hidden_field :user_id, value: current_user %>
+
 
       <%= f.fields_for :notes, Note.new do |nf| %>
         <%= nf.hidden_field :hotspot_type, value: "street" %>

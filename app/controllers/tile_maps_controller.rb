@@ -34,7 +34,11 @@ class TileMapsController < ApplicationController
     tile_map = current_user.tile_map
 
     # Ensure coordinates are within grid bounds
-    return head :bad_request unless tile_map[src_y] && tile_map[tgt_y]
+    return head :bad_request unless
+      tile_map[src_y] &&
+      tile_map[tgt_y] &&
+      tile_map[src_y][src_x] &&
+      tile_map[tgt_y][tgt_x]
 
     ActiveRecord::Base.transaction do
 
@@ -49,23 +53,33 @@ class TileMapsController < ApplicationController
       end
     end
 
+    Rails.logger.info "SWAP #{src_x},#{src_y} -> #{tgt_x},#{tgt_y}"
+
+    source_category =
+      current_user.categories.find_by(x: src_x, y: src_y)
+
+    target_category =
+      current_user.categories.find_by(x: tgt_x, y: tgt_y)
+
+    Rails.logger.info "SOURCE: #{source_category&.attributes}"
+    Rails.logger.info "TARGET: #{target_category&.attributes}"
+
     respond_to do |format|
-    format.turbo_stream do
-      render turbo_stream: [
-        turbo_stream.replace(
-          "tile_#{src_x}_#{src_y}",
-          partial: "tile_maps/tile",
-          locals: { x: src_x, y: src_y, tile_map: current_user.tile_map }
-        ),
-        turbo_stream.replace(
-          "tile_#{tgt_x}_#{tgt_y}",
-          partial: "tile_maps/tile",
-          locals: { x: tgt_x, y: tgt_y, tile_map: current_user.tile_map }
-        )
-      ]
-    end
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.replace(
+            "tile_#{src_x}_#{src_y}",
+            partial: "tile_maps/tile",
+            locals: { x: src_x, y: src_y, tile_map: current_user.tile_map }
+          ),
+          turbo_stream.replace(
+            "tile_#{tgt_x}_#{tgt_y}",
+            partial: "tile_maps/tile",
+            locals: { x: tgt_x, y: tgt_y, tile_map: current_user.tile_map }
+          )
+        ]
+      end
       format.html { redirect_back fallback_location: root_path }
     end
   end
-
 end

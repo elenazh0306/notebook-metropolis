@@ -105,7 +105,7 @@ class CategoriesController < ApplicationController
   private
 
   def category_params
-    params.require(:category).permit(:name, :sprite_image, :x, :y, :room_image, notes_attributes: [:title, :content, :hotspot])
+    params.require(:category).permit(:name, :sprite_image, :x, :y, :room_image, notes_attributes: [:title, :content, :hotspot_type])
   end
 
   def create_map
