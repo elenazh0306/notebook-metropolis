@@ -316,3 +316,177 @@
     box-shadow: 0 0 7px rgba(206, 145, 120, 0.3);
   }
 }
+
+.hackercat-ai-container {
+  position: relative;
+  height: 380px;
+  width: 100%;
+  background: #181818;
+  border: 2px solid #3c3c3c;
+  border-radius: 6px;
+  overflow: hidden;
+  font-family: 'Fira Code', 'Courier New', monospace;
+}
+
+.hackercat-ai-container .chat-interface-wrapper {
+  width: 100%;
+  height: 100%;
+  padding: 0.75rem !important;
+  gap: 0.75rem !important;
+  background: transparent;
+}
+
+.hackercat-ai-container .ai-assistant-container {
+  height: 100%;
+  min-height: 0;
+}
+
+.hackercat-ai-header {
+  flex-shrink: 0;
+  min-height: 36px;
+  margin-bottom: 0.75rem;
+}
+
+.hackercat-chat-window {
+  min-height: 0;
+  padding: 0.85rem;
+  margin-bottom: 0.75rem;
+  background: #181818 !important;
+  border: 1px solid #53f5d2 !important;
+  border-radius: 4px;
+  overflow-y: auto;
+  box-shadow: inset 0 2px 7px rgba(0, 0, 0, 0.45);
+  scrollbar-width: thin;
+  scrollbar-color: #4ec9b0 #252526;
+}
+
+.hackercat-ai-title {
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.hackercat-ai-title::before {
+  content: "> ";
+  color: #4ec9b0;
+}
+
+.hackercat-ai-status {
+  background: #252526 !important;
+  color: #55ffb0 !important;
+  border: 1px solid #53f5d2;
+  border-radius: 3px;
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  box-shadow: 2px 2px 0 #ff4fc8;
+}
+
+.hackercat-ai-view .avatar-column {
+  width: 200px;
+}
+
+.hackercat-ai-view .chat-companion-anchor {
+  width: 100%;
+  height: 100%;
+}
+
+.hackercat-ai-view .companion-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.modal-content:has(.hackercat-ai-view) {
+  background: transparent;
+  border: none;
+  box-shadow:none;
+}
+
+.modal-content:has(.hackercat-ai-view) .modal-header {
+  display:none;
+}
+
+.modal-content:has(.hackercat-ai-view) .modal-body {
+  padding: 0;
+  background: transparent;
+}
+
+.hackercat-ai-view .bg-primary {
+  background: #252526 !important;
+  color: #ce9178 !important;
+  border: 1px solid #3c3c3c;
+  border-left: 3px solid #569cd6;
+  border-radius: 4px !important;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+.hackercat-ai-view .chat-field .bg-secondary {
+  background: #252526 !important;
+  color: #ce9178 !important;
+  background: #252526 !important;
+  color: #ce9178 !important;
+  border: 1px solid #3c3c3c;
+  border-right: 3px solid #4ec9b0;
+  border-radius: 4px !important;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+.hackercat-ai-view .bg-primary small {
+  color: #569cd6 !important;
+}
+
+.hackercat-ai-view .bg-primary strong {
+  color: #55ffb0;
+}
+
+.hackercat-ai-view #new-message-container {
+  flex-shrink: 0;
+}
+
+.hackercat-ai-view #new-message-container .form-control, .hackercat-ai-view #new-message-container input[type = "text"], .hackercat-ai-view #new-message-container textarea {
+  background: #181818 !important;
+  color: #55ffb0 !important;
+  border: 1px solid #3c3c3c !important;
+  border-radius: 3px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
+  transition: 0.15s ease;
+}
+
+.hackercat-ai-view #new-message-container .form-control:focus, .hackercat-ai-view #new-message-container input[type = "text"]:focus, .hackercat-ai-view #new-message-container textarea:focus {
+  background: #181818 !important;
+  color: #55ffb0 !important;
+  border-color: #00ffcc !important;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.35), 0 0 7px rgba(0, 255, 204, 0.2);
+  outline: none;
+}
+
+.hackercat-ai-view #new-message-container input::placeholder, .hackercat-ai-view #new-message-container textarea::placeholder {
+  color: #777f80;
+  opacity: 1;
+}
+
+.hackercat-ai-view .btn-primary {
+  background: #252526 !important;
+  color: #55ffb0 !important;
+  border: 2px solid #53f5d2 !important;
+  border-radius: 3px;
+  font-weight: 700;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  box-shadow: 3px 3px 0 #ff4fc8, 0 0 8px rgba(83, 245, 210, 0.3);
+  transition: 0.15s ease;
+
+  &:hover {
+    background: #111817 !important;
+    color: #55ffb0 !important;
+    border-color: #53f5d2 !important;
+    transform: translate(-1px, -1px);
+  }
+}
+
+.hackercat-ai-view .btn-primary::after {
+  content: "█";
+  margin-left: 6px;
+  animation: terminal-blink 1s steps(1) infinite;
+}
