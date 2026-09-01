@@ -1,62 +1,73 @@
-<h2>Notebook Metropolis. </h2>
-<h3> Mobile version </h3>
+<div class="mobile-bg">
+  <div class="mobile-header">
+    <h1>Notebook Metropolis </h1>
 
-<div class="modal-body p-0">
-  <div class="card border-0 shadow-sm p-3 style-postit-detail">
-    <%= form_with model: Category.new, url: categories_path, method: :post do |f| %>
-      <% tile = @indexed_tiles.sample %>
-      <%= hidden_field_tag :source, "mobile" %>
-
-      <%= f.hidden_field :name, value: "trash" %>
-      <%= f.hidden_field :x, value: tile[:column] %>
-      <%= f.hidden_field :y, value: tile[:row] %>
-      <%= f.hidden_field :sprite_image, value: "trash.png" %>
+  </div>
+  <div class="mobile-trash-container">
 
 
-      <%= f.fields_for :notes, Note.new do |nf| %>
-        <%= nf.hidden_field :hotspot_type, value: "street" %>
+        <%= form_with model: Category.new, url: categories_path, method: :post do |f| %>
+          <% tile = @indexed_tiles.sample %>
+          <%= hidden_field_tag :source, "mobile" %>
 
-        <div class="mb-3">
-          <%= nf.label :title, class: "form-label fw-bold text-dark" %>
-          <%= nf.text_field :title,
-                          class: "form-control",
-                          placeholder: "Write a best-seller",
-                          required: true,
-                          autofocus: true %>
+          <%= f.hidden_field :name, value: "trash" %>
+          <%= f.hidden_field :x, value: tile[:column] %>
+          <%= f.hidden_field :y, value: tile[:row] %>
+          <%= f.hidden_field :sprite_image, value: "trash.png" %>
+        
+          <%= f.fields_for :notes, Note.new do |nf| %>
+            <%= nf.hidden_field :hotspot_type, value: "street" %>
+
+            <div class="trash-title">
+              <%= nf.label :title, class: "visually-hidden" %>
+              <%= nf.text_field :title,
+                              class: "form-control",
+                              placeholder: "Title",
+                              required: true,
+                              autofocus: true %>
+            </div>
+
+            <div class="trash-content ">
+              <%= nf.label :content, class: "visually-hidden"%>
+              <%= nf.text_area :content,
+                              rows: 4,
+                              class: "form-control",
+                              placeholder: "Write your thoughts or tasks here...",
+                              required: true %>
+            </div>
+          <% end %>
+          <div class="d-grid">
+            <%= f.button type: :submit, class: "btn p-0 border-0 bg-transparent text-secondary p-2" do %>
+              <i class="fa-regular fa-paper-plane fa-xl"></i>
+            <% end %>
+          </div>
+        <% end %>
+
+
+  </div>
+
+  <div class="trash-list">
+    <div class="mobile-header">
+      <h3> Thoughts for recycling </h3>
+    </div>
+    <% @trash_notes.each do |note|%>
+      <% bg_classes = ["bg-note-napkin", "bg-note-paper", "bg-note-receipt"] %>
+      <div class="trash-list-container <%= bg_classes.sample %>">
+        <div class="trash-list-content">
+          <p class="fw-bold text-dark fs-3 ">
+            <%= note.title %>
+          </p>
+          <p class=" text-dark fs-5" >
+            <%= note.content %>
+          </p>
+          <%= button_to category_path(note.category),
+              method: :delete,
+              data: { turbo_confirm: "Are you sure you want to throw it away?"},
+              class: "btn btn-sm" do %>
+                <i class="fa-solid fa-recycle fa-xl"></i>
+                <% end %>
         </div>
-
-        <div class="mb-3">
-          <%= nf.label :content, "Note Details", class: "form-label fw-bold text-dark" %>
-          <%= nf.text_area :content,
-                          rows: 4,
-                          class: "form-control",
-                          placeholder: "Write your thoughts or tasks here...",
-                          required: true %>
-        </div>
-      <% end %>
-      <div class="d-grid">
-        <%= f.submit "Throw on the streets", class: "btn btn-dark fw-bold" %>
       </div>
-
     <% end %>
   </div>
 </div>
-
-  <% @trash_notes.each do |note|%>
-    <div class="card shadow-sm border-0 my-3 style-postit-detail">
-      <div class="card-body p-4">
-        <h4 class="card-title fw-bold text-dark border-bottom pb-2 mb-3">
-          <%= note.title %>
-        </h4>
-        <p class="card-text text-dark fs-5" style="white-space: pre-line;">
-          <%= note.content %>
-        </p>
-        <%= button_to category_path(note.category),
-            method: :delete,
-            data: { turbo_confirm: "Are you sure you want to throw it away?"},
-            class: "btn btn-outline-danger btn-sm" do %>
-              ❌
-              <% end %>
-      </div>
-    </div>
-  <% end %>
