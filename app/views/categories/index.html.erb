@@ -2,7 +2,7 @@
   <%= render "layouts/mobile_index" %>
 <% else %>
   <%= render "shared/navbar" %>
-  <h3>Hello <%= current_user.name %>!</h3>
+
   <div class = "map-container">
     <!--Search Results-->
     <% if @query.present? %>
@@ -76,7 +76,7 @@
           class="map-edit-button"
           data-board-target="editBtn"
           data-action="click->board#edit">
-          ✏️ Edit Map
+          ✏️
         </button>
 
         <button type="button"

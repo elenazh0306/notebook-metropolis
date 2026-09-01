@@ -1,8 +1,16 @@
 .metropolis-navbar {
   min-height: 72px;
   padding: 0 16px;
-  background: rgb(240, 242, 240);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  background: #D1E7F4;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow:
+    inset 0 3px 6px rgba(255, 255, 255, 0.9),
+    inset 0 -6px 12px rgba(180, 200, 225, 0.45),
+    0 10px 20px -5px rgba(120, 145, 175, 0.3),
+    0 4px 6px -2px rgba(100, 120, 150, 0.15);
 }
 
 .metropolis-navbar .container-fluid {
@@ -13,11 +21,11 @@
 .metropolis-brand {
   color: black;
   text-decoration: none;
+  &:hover {
+    color: rgb(42, 39, 39);
+  }
 }
 
-.metropolis-brand:hover {
-  color: rgb(42, 39, 39);
-}
 
 .metropolis-name {
   font-size: 20px;
@@ -43,7 +51,7 @@
 }
 
 .metropolis-navbar .global-search-form {
-  width: 100%;
+  width: 80%;
   display: flex;
   align-items: center;
   background: rgba(255, 255, 255, 0.4);
@@ -85,4 +93,108 @@
 
 .random-thoughts-button:hover, .map-edit-button:hover, .map-save-button:hover {
   background: rgba(220, 211, 211, 0.4);
+}
+
+
+.search-overlay {
+  position: relative;
+  z-index: 101;
+}
+
+.global-search-form {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 45px;
+  padding: 0 16px 0 24px;
+  background: rgba(255, 255, 255, 0.28);
+  border: 1.5px solid rgba(100, 140, 155, 0.55);
+  border-radius: 999px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15), inset 0 1px 2px rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  transition: border-color 0.2s ease;
+  box-shadow: 0.2s ease;
+  background: 0.2s ease;
+}
+
+.global-search-input {
+  flex: 1;
+  height: 100%;
+  padding: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #495057;
+  font-size: 1.1rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+}
+
+.global-search-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.global-search-button svg {
+  width: 34px;
+  height: 34px;
+  fill: none;
+  stroke: rgba(65, 100, 110, 0.8);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  transition: stroke 0.2s ease, filter 0.2s ease, transform 0.2s ease;
+}
+
+.global-search-button:hover svg {
+  stroke: #2f6f80;
+  filter: drop-shadow(0 0 4px #00d9ff);
+  transform: scale(1.05);
+}
+
+.global-search-form:focus-within {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22), 0 0 8px rgba(255, 255, 255, 0.2), 0 0 18px rgba(0, 180, 255, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.25);
+}
+
+.search-result {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  max-height: 450px;
+  overflow-y: auto;
+  background: white;
+  padding: 14px;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+}
+
+.search-close {
+  color: #666;
+  font-size: 24px;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.search-close:hover {
+  color: #000;
+}
+
+.map-actions {
+  position: fixed;
+  top: 102px;
+  right: 150px;
+  transform: translateY(-50%);
+  z-index: 200;
+  display: flex;
+  align-items: center;
 }
