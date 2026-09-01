@@ -3,16 +3,33 @@ alas, I could not figure out how to set this up for any number of potential subf
 
 <!-- Links to the ID on app/views/categories/index.html.erb -->
 <turbo-frame id="room_hotspot_content">
-  <!-- We keep the exact same container as notes/index.html.erb so the note overlays perfectly -->
-  <div class="corkboard-container p-3">
+  <% laptop_view = @note.hotspot_type == "laptop" %>
+  <% posters_view = @note.hotspot_type == "posters" %>
 
+  <% if laptop_view %>
+    <div class = "hackercat-laptop-view">
+      <div class = "hackercat-laptop-shell">
+        <%= image_tag "hackercat-laptop-frame.png", class: "hackercat-laptop-image", alt: "Hackercat Laptop" %>
+        <div class = "hackercat-laptop-screen">
+  <% elsif posters_view %>
+    <div class = "posters-view">
+      <div class = "posters-shell">
+        <%= image_tag "cozy-study-posters-frame.png", class: "cozy-study-posters-image", alt: "Cozy Study Posters" %>
+        <div class = "posters-wall">
+  <% end %>
+  <!-- We keep the exact same container as notes/index.html.erb so the note overlays perfectly -->
+  <div class = "<%= if laptop_view then 'laptop-container' elsif posters_view then 'posters-container' else 'corkboard-container' end %> p-3">
     <!-- Header with Edit Button, Delete Button and Back Link -->
-    <div class="mb-3">
+    <div class="<%= 'posters-show-header' if posters_view %> mb-3">
       <!-- Link back to the active hotspot view on notes/index.html.erb -->
       <%= link_to category_notes_path(@category, hotspot_type: @note.hotspot_type),
                   data: { turbo_frame: "room_hotspot_content" }, # the ID that connects us to app/views/categories/index.html.erb
                   class: "btn btn-outline-secondary btn-sm mb-2" do %>
-        ⬅️ <%= @note.hotspot_type == "bookcase" ? "Back to Shelf" : "Back to Board" %>
+        ⬅️ <%= case @note.hotspot_type
+                when "bookcase" then "Back to Shelf"
+                when "laptop" then "Back to Drive"
+                else "Back to Board"
+                end %>
       <% end %>
 
       <div class="d-flex gap-2">
@@ -20,7 +37,11 @@ alas, I could not figure out how to set this up for any number of potential subf
         <%= link_to edit_category_note_path(@category, @note),
                     data: { turbo_frame: "room_hotspot_content" }, # the ID that connects to app/views/categories/index.html.erb
                     class: "btn btn-outline-warning btn-sm fw-bold text-dark" do %>
-          ✏️ <%= @note.hotspot_type == "bookcase" ? "Edit Book" : "Edit Note" %>
+          ✏️ <%= case @note.hotspot_type
+                when "bookcase" then "Edit Book"
+                when "laptop" then "Edit File"
+                else "Edit Note"
+                end %>
         <% end %>
 
         <!-- Delete Button -->
@@ -28,33 +49,56 @@ alas, I could not figure out how to set this up for any number of potential subf
                       method: :delete,
                       data: {
                         turbo_frame: "room_hotspot_content", # the ID that connects to app/views/categories/index.html.erb
-                        turbo_confirm: (@note.hotspot_type == "bookcase" ? "Are you sure you want to remove this book?" : "Are you sure you want to unpin this note?")
+                        turbo_confirm: (case @note.hotspot_type
+                                        when "bookcase" then "Are you sure you want to remove this book?"
+                                        when "laptop" then "Are you sure you want to delete this file?"
+                                        else "Are you sure you want to unpin this note?"
+                                        end)
                       },
                       class: "btn btn-outline-danger btn-sm" do %>
-          🗑️ <%= @note.hotspot_type == "bookcase" ? "Remove Book" : "Unpin Note" %>
+          🗑️ <%= case @note.hotspot_type
+                when "bookcase" then "Remove Book"
+                when "laptop" then "Delete File"
+                else "Unpin Note"
+                end %>
         <% end %>
       </div>
     </div>
 
     <!-- The Full Note Displayed as an expanded note -->
-    <div class="card shadow-sm border-0 my-3 style-postit-detail">
-      <div class="card-body p-4">
+    <div class = "<%= if laptop_view then 'laptop-show-card' elsif posters_view then 'posters-show-card' else 'card shadow-sm border-0 my-3 style-postit-detail' end %>">
+      <% if posters_view %>
+        <div class = "posters-show-tape"></div>
+      <% end %>
+      <div class="<%= if laptop_view then 'laptop-show-body' elsif posters_view then 'posters-show-body' else 'card-body p-4' end %>">
         <% if @note.image.attached? %>
           <div class = "text-center mb-3">
-            <%= cl_image_tag @note.image.key, width: 600, height: 400, crop: :limit, class: "notes-image", alt: @note.title %>
+            <%= cl_image_tag @note.image.key, width: 600, height: 400, crop: :limit, class: (posters_view ? "posters-show-image" : "notes-image"), alt: @note.title %>
           </div>
         <% end %>
-        <h4 class="card-title fw-bold text-dark border-bottom pb-2 mb-3">
-          <%= @note.hotspot_type == "bookcase" ? "📖" : "📌" %> <%= raw(render_markdown(@note.title)) %>
+        <h4 class="<%= if laptop_view then 'laptop-show-title' elsif posters_view then 'posters-show-title' else 'card-title fw-bold text-dark border-bottom pb-2 mb-3' end %>">
+          <%= case @note.hotspot_type
+              when "bookcase" then "📖"
+              when "laptop" then "💾"
+              else "📌" end %>
+          <%= raw(render_markdown(@note.title)) %>
         </h4>
-        <small>
+        <small class = "<%= if laptop_view then 'laptop-show-date' elsif posters_view then 'posters-show-date' end %>">
           Created <%= @note.created_at.strftime("%b %d, %Y・%I:%M %p") %>
         </small>
-        <p class="card-text text-dark fs-5" style="white-space: pre-line;">
+        <div class = "<%= if laptop_view then 'laptop-show-content' elsif posters_view then 'posters-show-content' else 'card-text text-dark fs-5' end %>" style="white-space: pre-line;">
           <%= raw(render_markdown(@note.content)) %>
-        </p>
+        </div>
       </div>
     </div>
-
   </div>
+<% if laptop_view %>
+      </div>
+    </div>
+  </div>
+<% elsif posters_view %>
+      </div>
+    </div>
+  </div>
+<% end %>
 </turbo-frame>

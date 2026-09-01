@@ -1,8 +1,22 @@
 <!-- Turbo Frame ID *matches* the receiver ID in app/views/categories/index.html.erb -->
 <turbo-frame id="room_hotspot_content">
-  <div class="corkboard-container p-3">
+  <% laptop_view = @note.hotspot_type == "laptop" %>
+  <% posters_view = @note.hotspot_type == "posters" %>
 
-    <div class="d-flex justify-content-between align-items-center mb-3">
+  <% if laptop_view %>
+    <div class = "hackercat-laptop-view">
+      <div class = "hackercat-laptop-shell">
+        <%= image_tag "hackercat-laptop-frame.png", class: "hackercat-laptop-image", alt: "Hackercat Laptop" %>
+        <div class = "hackercat-laptop-screen">
+  <% elsif posters_view %>
+    <div class = "posters-view">
+      <div class = "posters-shell">
+        <%= image_tag "cozy-study-posters-frame.png", class: "cozy-study-posters-image", alt: "Cozy Study Posters" %>
+        <div class = "posters-wall">
+  <% end %>
+
+  <div class = "<%= if laptop_view then 'laptop-container' elsif posters_view then 'posters-container' else 'corkboard-container' end %> p-3">
+    <div class="<%= posters_view ? 'posters-form-header' : '' %> d-flex justify-content-between align-items-center mb-3">
       <h5 class="m-0">
         <%= case @note.hotspot_type
               when "bookcase" then "📖 Write a Book Note"
@@ -15,11 +29,11 @@
       <!-- Cancel button just in case we change our minds -->
       <%= link_to "Cancel", category_notes_path(@category, hotspot_type: @note.hotspot_type), # If the user doesn't want to save the new note
                   data: { turbo_frame: "room_hotspot_content" },
-                  class: "btn btn-outline-secondary btn-sm" %>
+                  class: (posters_view ? 'btn posters-cancel-btn' : 'btn btn-outline-secondary btn-sm') %>
     </div>
 
     <!-- Here with make the new note with a styled Form Container -->
-    <div class="card border-0 shadow-sm p-3 style-postit-detail">
+    <div class="<%= if laptop_view then 'laptop-note-form' elsif posters_view then 'posters-note-form' else 'card border-0 shadow-sm p-3 style-postit-detail' end %>">
       <%= form_with(model: [@category, @note],
                     data: { turbo_frame: "room_hotspot_content" }) do |f| %> <!-- Turbo Frame ID links to app/views/categories/index.html.erb -->
 
@@ -69,18 +83,38 @@
           </div>
         <% end %>
 
-        <div class="d-grid">
-          <%= f.submit (case @note.hotspot_type
-                        when "bookcase" then "📖 Add to Shelf"
-                        when "laptop" then "💻 Save to Drive"
-                        when "posters" then "🖼️ Hang Poster"
-                        else "📌 Pin to Board"
-                        end),
-                      class: "btn btn-dark fw-bold" %>
-        </div>
-
+        <% if laptop_view %>
+          <div class="d-grid">
+            <%= f.button type: "submit", class: "btn btn-info btn-sm fw-bold shadow-sm text-dark" do %>
+              💻 Save to Drive
+            <% end %>
+          </div>
+        <% elsif posters_view %>
+          <div class = "posters-submit">
+            <%= f.button type: "submit", class: "btn posters-action-btn" do %>
+              🖼️ Hang Poster
+            <% end %>
+          </div>
+        <% else %>
+          <div class="d-grid">
+            <%= f.submit (case @note.hotspot_type
+                          when "bookcase" then "📖 Add to Shelf"
+                          else "📌 Pin to Board"
+                          end),
+                        class: "btn btn-dark fw-bold" %>
+          </div>
+        <% end %>
       <% end %>
     </div>
 
   </div>
+<% if laptop_view %>
+      </div>
+    </div>
+  </div>
+<% elsif posters_view %>
+      </div>
+    </div>
+  </div>
+<% end %>
 </turbo-frame>
