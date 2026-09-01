@@ -106,7 +106,7 @@ TILE_TYPES = {
       url: 'rooms/gothic_library.jpeg'},
     { name: "hackercat_room",
       display: "Futuristic lab",
-      url: 'rooms/hackercat_room.jpeg'},
+      url: 'rooms/hackercat_room.jpeg'}
     ]
 
   ROOM_VIDEOS = {

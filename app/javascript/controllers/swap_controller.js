@@ -21,13 +21,14 @@ export default class extends Controller {
 
     event.dataTransfer.setDragImage(this.customIcon, 2, 2);
     this.element.classList.add("dragging")
-
+    console.log("drag start")
   }
 
   dragOver(event) {
     event.preventDefault() // Required to allow drop
     event.dataTransfer.dropEffect = "move"
     this.element.classList.add("drag-over")
+    console.log("drag over")
 
   }
 
@@ -58,9 +59,12 @@ export default class extends Controller {
         source: sourceData,
         target: targetData
       })
+
+
     })
     .then(response => response.text())
     .then(html => Turbo.renderStreamMessage(html))
+    console.log("drag drop")
   }
 
 }
