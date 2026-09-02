@@ -81,8 +81,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_29_091752) do
     t.string "hotspot_type"
     t.string "title"
     t.datetime "updated_at", null: false
-    t.integer "x"
-    t.integer "y"
     t.index ["category_id"], name: "index_notes_on_category_id"
   end
 
