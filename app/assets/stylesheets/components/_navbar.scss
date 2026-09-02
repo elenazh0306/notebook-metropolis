@@ -81,61 +81,33 @@
   margin: 0;
 }
 
-.random-thoughts-button, .map-edit-button, .map-save-button {
-  border: none;
-  background: rgba(255, 255, 255, 0.3);
-  padding: 8px 14px;
-  color: black;
-  font-size: 14px;
-  font-weight: 600;
-  border-radius: 20px;
-  cursor: pointer;
-  box-shadow:
-    inset 0 1px 1px rgba(255, 255, 255, 0.6),
-    inset 0 -1px 2px rgba(0, 0, 0, 0.1),
-    0 8px 32px 0 rgba(0, 0, 0, 0.15);
-  &:hover {
-    background: rgba(220, 211, 211, 0.4);
-  }
-}
 
-
-.map-edit-button {
+.map-edit-button, .random-thoughts-button, .map-save-button {
   background: rgba(255, 255, 255, 0.1);
 
-
-  /* 2. Glass Edge Border (Highlights top/left for light source) */
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  border-top-color: rgba(255, 255, 255, 0.6);
-  border-left-color: rgba(255, 255, 255, 0.5);
-
-  /* 3. Refractive Inner Light & Ambient Floor Shadow */
   box-shadow:
     inset 0 1px 1px rgba(255, 255, 255, 0.6),
     inset 0 -1px 2px rgba(0, 0, 0, 0.1),
     0 8px 32px 0 rgba(0, 0, 0, 0.15);
 
-  /* 4. Smooth visual transitions */
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  /* Typography & Layout */
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 12px 24px;
+  padding: 10px 16px;
   border-radius: 12px;
 
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   font-weight: 600;
-  font-size: 0.95rem;
-  color: #ffffff;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  color: black;
+  border: none;
+
 
   cursor: pointer;
   outline: none;
   user-select: none;
 
-  /* Glass Specular Reflection Ribbon across top corner */
   position: relative;
   overflow: hidden;
 
@@ -155,7 +127,6 @@
     pointer-events: none;
   }
 
-  /* Interactive States */
   &:hover {
     background: rgba(255, 255, 255, 0.28);
     border-color: rgba(255, 255, 255, 0.55);
@@ -165,24 +136,11 @@
       0 12px 40px 0 rgba(0, 0, 0, 0.22);
   }
 
-  &:active {
-    transform: translateY(1px);
-    background: rgba(255, 255, 255, 0.12);
-    box-shadow:
-      inset 0 2px 4px rgba(0, 0, 0, 0.15),
-      0 4px 16px 0 rgba(0, 0, 0, 0.1);
-  }
-
   i, svg {
-    font-size: 1.1rem;
+    font-size: 1rem;
     filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
   }
 }
-
-
-
-
-
 
 
 .search-overlay {
@@ -281,7 +239,7 @@
 .map-actions {
   position: fixed;
   top: 102px;
-  right: 150px;
+  right: 100px;
   transform: translateY(-50%);
   z-index: 200;
   display: flex;
