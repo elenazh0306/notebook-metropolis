@@ -7,21 +7,24 @@ class CategoriesController < ApplicationController
     @rooms = User::ROOMS
     @trash_notes = current_user.notes.joins(:category).where(categories: { name: "trash" })
 
-    @indexed_tiles = current_user.tile_map.each_with_index.map do |sub_array, index|
-      sub_array.each_with_index.map do |item, sub_index|
-        next if item == "base"
+  # Grab all [x, y] pairs of existing buildings/notes so we don't drop notes on top of them
+  occupied_coords = current_user.categories.pluck(:x, :y).to_set
 
-        { tile: item, row: index, column: sub_index }
-      end.compact
-    end.flatten
+  # Collect only open grass tiles that have no buildings
+  @indexed_tiles = current_user.tile_map.each_with_index.map do |sub_array, index|
+    sub_array.each_with_index.map do |item, sub_index|
+      next unless item == "grass"
+      next if occupied_coords.include?([sub_index, index]) # sub_index is x, index is y
+
+      { tile: item, row: index, column: sub_index }
+    end.compact
+  end.flatten
 
     @query = params[:q].to_s.strip
     @search_results = search_notes
 
     # quick fix for mobile
     @note = Note.new
-
-
   end
 
   def show
