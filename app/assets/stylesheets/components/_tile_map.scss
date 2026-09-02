@@ -45,6 +45,26 @@
       }
   }
 
+    .cobblestone {
+    position: relative;
+    height: 100px;
+    width: 100px;
+    box-shadow: 0 0 0 0 rgba(0,0,0,.7);
+    background-image: image-url('tiles/cobblestone.png');
+    background-size: cover;
+    border: 2px solid #f59e0b;
+    color: #78350f;
+    border-radius: 4px;
+      &:hover {
+        cursor: pointer;
+        background-color: #78350f;
+        transform: translate(-8px, -8px);
+        outline: solid 2px white;
+        box-shadow: 8px 8px 0 0 rgba(0,0,0,.7);
+        transition: .3s;
+      }
+  }
+
   .btn-container {
     display: flex;
     align-content: flex-end;
@@ -97,7 +117,7 @@
   .tree-willow,
   .tree-oak,
   .tree-poplar,
-  .tree-sakura {
+  .tree-sakura-animated {
     position: relative;
     height: 100px;
     width: 100px;
@@ -168,10 +188,10 @@
   }
 
   /* Sakura Tree */
-  .tree-sakura::after {
-    background-image: image-url('buildings/sakura_tree.png');
-    bottom: 35px;
-    left: 16px;
+  .tree-sakura-animated::after {
+    background-image: image-url('buildings/sakura_tree_animated.gif');
+    bottom: 30px;
+    left: 14px;
     width: 140%;
     height: 120%;
     transform: translateX(-10%)
@@ -259,7 +279,7 @@
   bottom: 15px;
   left: 12px;
   transform: translateX(-50%)
-            rotate3d(-3, 3, 0, -55deg)
+            rotate3d(-3, 3, 0, -45deg)
             rotate(-45deg)
             scaleY(2.5);
 }
@@ -313,6 +333,72 @@
 .house-tile--narrow {
   bottom: 25px;
   left: 10px;
+}
+
+.house-tile--cathedral {
+  bottom: 38px;
+  left: -22px;
+  max-width: 200%;
+  max-height: 450%;
+}
+
+.house-tile--cathedral2 {
+  bottom: 30px;
+  left: -21px;
+    transform: translateX(-50%)
+            rotate3d(-3, 3, 0, -55deg)
+            rotate(-45deg)
+            scaleY(3);
+
+  max-width: 170%;
+  max-height: 270%;
+}
+
+.house-tile--clocktower {
+bottom: 42px;
+  left: -28px;
+    transform: translateX(-50%)
+            rotate3d(-3, 3, 0, -50deg)
+            rotate(-45deg)
+            scaleY(3);
+
+  max-width: 150%;
+  max-height: 250%;
+}
+
+.house-tile--catcafe {
+  bottom: 30px;
+  left: 5px;
+  max-width: 120%;
+  max-height: 120%;
+}
+
+.house-tile--fountain {
+  bottom: 36px;
+  left: -3px;
+  max-width: 130%;
+  max-height: 130%;
+}
+
+.house-tile--ramen {
+  bottom: 0;
+  left: 22px;
+  max-width: 150%;
+  max-height: 170%;
+}
+
+.house-tile--robot_statue {
+  bottom: 40px;
+  left: 18px;
+  max-width: 95%;
+  max-height: 115%;
+}
+
+.house-tile--gargoyle_statue {
+  bottom: 35px;
+  left: 4px;
+  max-width: 95%;
+  max-height: 115%;
 }
 
 .house-tile--tall1 {
