@@ -2,9 +2,12 @@
 body {
   background-color: #CDE4F6;
   background-image: url("bg-sky.jpeg");
-  background-size: cover;
+  background-size: 100% 100%;
   background-repeat: no-repeat;
-  background-position: auto 100%;
+  background-position: center bottom;
+  background-attachment: fixed;
+
+  width: 150vw;
   height: 100dvh;
   overflow-x: auto;
   display: flex;
@@ -18,7 +21,7 @@ body {
 .city-board-container {
   box-sizing: border-box;
 
-  width: 200vw;
+  width: 150vw;
   max-height: 100dvh;
   margin: 0 auto;
 
