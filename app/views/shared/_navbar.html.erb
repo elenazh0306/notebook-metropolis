@@ -25,7 +25,9 @@
         </div>
         <div class = "metropolis-navbar-actions">
           <% if controller_name == "categories" && action_name == "index" && @indexed_tiles.present? %>
-            <%= button_to "💭 Random Thoughts", categories_path(category: { name: "trash", x: @indexed_tiles.sample[:row], y:@indexed_tiles.sample[:column] , sprite_image: "trash.png" }), method: :post, class: "random-thoughts-button" %>
+            <% # Sample one tile so both X (column) and Y (row) are drawn from the exact same grass coordinate %>
+            <% random_tile = @indexed_tiles.sample %>
+            <%= button_to "💭 Random Thoughts", categories_path(category: { name: "trash", x: random_tile[:column], y: random_tile[:row], sprite_image: "trash.png" }), method: :post, class: "random-thoughts-button" %>
           <% end %>
           <div class = "nav-item dropdown">
             <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
