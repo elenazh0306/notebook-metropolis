@@ -11,18 +11,19 @@ class User < ApplicationRecord
         :recoverable, :rememberable, :validatable
 
 TILE_TYPES = {
-    "grass": { buildable: false, name: "grass" },
-    "base":  { buildable: true,  name: "base" },
+    "grass":        { buildable: false, name: "grass" },
+    "cobblestone":  { buildable: false,  name: "cobblestone" },
+    "base":         { buildable: true,  name: "base" },
 
     # Decorative Trees
     "willow_tree": { buildable: false, name: "tree-willow" },
     "oak_tree":    { buildable: false, name: "tree-oak" },
     "poplar_tree": { buildable: false, name: "tree-poplar" },
-    "sakura_tree": { buildable: false, name: "tree-sakura" },
-    "tree_grove": { buildable: false, name: "tree-grove" },
-    "wild_grove": { buildable: false, name: "wild-grove" },
-    "pine_grove": { buildable: false, name: "pine-grove" },
-    "park_trees": { buildable: false, name: "park-trees" },
+    "tree_sakura_animated": { buildable: false, name: "tree-sakura-animated" },
+    "tree_grove":  { buildable: false, name: "tree-grove" },
+    "wild_grove":  { buildable: false, name: "wild-grove" },
+    "pine_grove":  { buildable: false, name: "pine-grove" },
+    "park_trees":  { buildable: false, name: "park-trees" },
 
     # Grass Road Network
     "grass_road_v":          { buildable: false, name: "path grass-straight" },
@@ -73,28 +74,32 @@ TILE_TYPES = {
     { name: "Brick Apartment 4", url: 'brick_apartment4.png',  css_class: 'house-tile--medium1' },
     { name: "Convini 1",         url: 'convini1.png',          css_class: 'house-tile--xwide3' },
     { name: "Convini 2",         url: 'convini2.png',          css_class: 'house-tile--xwide3' },
-    { name: "Clock Tower",       url: 'clock_tower.png',       css_class: 'house-tile--xwide3' },
-    { name: "Ramen Train",       url: 'ramen_train.png',       css_class: 'house-tile--xwide3' },
+    { name: "Ramen Train",       url: 'ramen_train_animated.gif',       css_class: 'house-tile--ramen' },
+    { name: "Cat Cafe",          url: 'cat_cafe_animated.gif',          css_class: 'house-tile--catcafe' },
+    { name: "Cat Fountain 1",    url: 'cat_fountain1_animated.gif',     css_class: 'house-tile--fountain' },
+    { name: "Cat Fountain 2",    url: 'cat_fountain2.png',     css_class: 'house-tile--catcafe' },
     { name: "Coffee Shop 1",     url: 'coffee_shop1.png',      css_class: 'house-tile--xwide3' },
     { name: "Coffee Shop 2",     url: 'coffee_shop2.png',      css_class: 'house-tile--xwide3' },
-    { name: "Clock Tower",       url: 'clock_tower.png',       css_class: 'house-tile--xwide3' },
+    { name: "Clock Tower",       url: 'clock_tower_animated.gif',       css_class: 'house-tile--clocktower' },
     { name: "Finance Tower 1",   url: 'finance1.png',          css_class: 'house-tile--tall1' },
     { name: "Finance Tower 2",   url: 'finance2.png',          css_class: 'house-tile--tall2' },
     { name: "Finance Tower 3",   url: 'finance3.png',          css_class: 'house-tile--tall3' },
     { name: "Finance Tower 4",   url: 'finance4.png',          css_class: 'house-tile--medium3' },
     { name: "Hacker Tower 1",    url: 'hacker_tower.png',      css_class: 'house-tile--tall1' },
     { name: "Server House 1",    url: 'server_house1.png',     css_class: 'house-tile--medium1' },
-    { name: "Server House 2",    url: 'server_house2.png',     css_class: 'house-tile--medium1' },
+    { name: "Server House 2",    url: 'server_house2_animated.gif',     css_class: 'house-tile--medium1' },
     { name: "Hacker Tower 2",    url: 'hacker_tower2.png',     css_class: 'house-tile--tall1' },
-    { name: "Hacker Tower 3",    url: 'hacker_tower3.png',     css_class: 'house-tile--tall1' },
-    { name: "Gothic Library 1",  url: 'gothic_library.png',    css_class: 'house-tile--narrow' },
-    { name: "Gothic Library 2",  url: 'gothic_library2.png',   css_class: 'house-tile--narrow' },
+    { name: "Hacker Tower 3",    url: 'hacker_tower3_animated.gif',     css_class: 'house-tile--tall1' },
+    { name: "Gothic Library 1",  url: 'gothic_library.png',    css_class: 'house-tile--cathedral' },
+    { name: "Gothic Library 2",  url: 'gothic_library2.png',   css_class: 'house-tile--cathedral2' },
     { name: "Tea Pavilion",      url: 'tea_pavilion.png',      css_class: 'house-tile--large' },
     { name: "Cozy Hut 1",        url: 'cozy_hut.png',          css_class: 'house-tile--xwide3' },
     { name: "Cozy Hut 2",        url: 'cozy_hut2.png',         css_class: 'house-tile--xwide3' },
     { name: "Greenhouse",        url: 'greenhouse1.png',       css_class: 'house-tile--medium2' },
     { name: "Apothecary",        url: 'apothecary.png',        css_class: 'house-tile--tall2' },
-    { name: "Observatory",       url: 'observatory.png',       css_class: 'house-tile--medium2' }
+    { name: "Observatory",       url: 'observatory.png',       css_class: 'house-tile--medium2' },
+    { name: "Robot Statue",      url: 'robot_statue.png',      css_class: 'house-tile--robot_statue' },
+    { name: "Gargoyle Statue",      url: 'gargoyle_statue.png',   css_class: 'house-tile--gargoyle_statue' }
   ]
 
   ROOMS = [
@@ -106,7 +111,7 @@ TILE_TYPES = {
       url: 'rooms/gothic_library.jpeg'},
     { name: "hackercat_room",
       display: "Futuristic lab",
-      url: 'rooms/hackercat_room.jpeg'},
+      url: 'rooms/hackercat_room.jpeg'}
     ]
 
   ROOM_VIDEOS = {

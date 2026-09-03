@@ -1,47 +1,40 @@
-<% hackercat_laptop = @category.name == "Hackercat Room" %>
-<% if hackercat_laptop %>
-  <div class = "hackercat-laptop-view">
-    <div class = "hackercat-laptop-shell">
-      <%= image_tag "hackercat-laptop-frame.png", class: "hackercat-laptop-image", alt: "Hackercat Laptop" %>
-      <div class = "hackercat-laptop-screen">
-        <%= video_tag "hackercat-laptop-background.mp4", class: "hackercat-laptop-video", autoplay: true, muted: true, playsinline: true %>
-<% end %>
+<div class = "hackercat-laptop-view">
+  <div class = "hackercat-laptop-shell">
+    <%= image_tag "hackercat-laptop-frame.png", class: "hackercat-laptop-image", alt: "Hackercat Laptop" %>
+    <div class = "hackercat-laptop-screen">
+      <%= video_tag "hackercat-laptop-background.mp4", class: "hackercat-laptop-video", autoplay: true, muted: true, playsinline: true, onloadedmetadata: "this.playbackRate = 0.5" %>
+        <div class="laptop-container p-3">
+          <!-- Header with Category Title & New File Note Button -->
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 class="m-0 text-light fw-bold">💻 <%= @category.name %> Terminal</h4>
 
-<div class="laptop-container p-3">
-  <!-- Header with Category Title & New File Note Button -->
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h4 class="m-0 text-light fw-bold">💻 <%= @category.name %> Terminal</h4>
-
-    <!-- New Laptop Note Link (passes hotspot_type: "laptop") -->
-    <%= link_to new_category_note_path(@category, hotspot_type: "laptop"),
-                data: { turbo_frame: "room_hotspot_content" }, # once again, linking with the correct id
-                class: "btn btn-info btn-sm fw-bold shadow-sm text-dark" do %>
-      ⚡ + New File Note
-    <% end %>
-  </div>
-
-  <% if @notes.any? %>
-    <div class="laptop-grid">
-      <% @notes.each do |note| %>
-        <%= link_to category_note_path(@category, note),
-                    data: { turbo_frame: "room_hotspot_content" },
-                    class: "laptop-card-link" do %>
-          <div class="laptop-card">
-            <h6 class="laptop-title"><%= raw(render_markdown(note.title)) %></h6>
-            <p class="laptop-preview"><%= truncate(note.content, length: 45) %></p>
+            <!-- New Laptop Note Link (passes hotspot_type: "laptop") -->
+            <%= link_to new_category_note_path(@category, hotspot_type: "laptop"),
+                        data: { turbo_frame: "room_hotspot_content" }, # once again, linking with the correct id
+                        class: "btn btn-info btn-sm fw-bold shadow-sm text-dark" do %>
+              ⚡ + New File Note
+            <% end %>
           </div>
-        <% end %>
-      <% end %>
-    </div>
-  <% else %>
-    <div class="text-center py-5">
-      <p class="text-muted">No digital files or notes stored in this laptop yet!</p>
-    </div>
-  <% end %>
-</div>
 
-<% if hackercat_laptop %>
+          <% if @notes.any? %>
+            <div class="laptop-grid">
+              <% @notes.each do |note| %>
+                <%= link_to category_note_path(@category, note),
+                            data: { turbo_frame: "room_hotspot_content" },
+                            class: "laptop-card-link" do %>
+                  <div class="laptop-card">
+                    <h6 class="laptop-title"><%= raw(render_markdown(note.title)) %></h6>
+                    <p class="laptop-preview"><%= truncate(note.content, length: 45) %></p>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+          <% else %>
+            <div class="text-center py-5">
+              <p class="text-muted">No digital files or notes stored in this laptop yet!</p>
+            </div>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
-<% end %>

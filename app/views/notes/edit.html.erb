@@ -2,10 +2,23 @@
 <% frame_id = @note.hotspot_type == "street" ? "note_content_#{@note.id}" : "room_hotspot_content" %>
 
 <turbo-frame id="<%= frame_id %>">
-  <!-- The container from notes/index.html.erb, ensuring the note overlays perfectly -->
-  <div class="corkboard-container p-3">
+  <% laptop_view = @note.hotspot_type == "laptop" %>
+  <% posters_view = @note.hotspot_type == "posters" %>
 
-    <div class="d-flex justify-content-between align-items-center mb-3">
+  <% if laptop_view %>
+    <div class = "hackercat-laptop-view">
+      <div class = "hackercat-laptop-shell">
+        <%= image_tag "hackercat-laptop-frame.png", class: "hackercat-laptop-image", alt: "Hackercat Laptop" %>
+        <div class = "hackercat-laptop-screen">
+  <% elsif posters_view %>
+    <div class = "posters-view">
+      <div class = "posters-shell">
+        <%= image_tag "cozy-study-posters-frame.png", class: "cozy-study-posters-image", alt: "Cozy Study Posters" %>
+        <div class = "posters-wall">
+  <% end %>
+  <!-- The container from notes/index.html.erb, ensuring the note overlays perfectly -->
+  <div class = "<%= if laptop_view then 'laptop-container' elsif posters_view then 'posters-container' else 'corkboard-container' end %> p-3">
+    <div class="<%= 'posters-form-header' if posters_view %> d-flex justify-content-between align-items-center mb-3">
       <h5 class="m-0">
         <%= case @note.hotspot_type
               when "bookcase" then "📖 Edit a Book Note"
@@ -14,7 +27,7 @@
               when "street" then "🖼️ Edit a Note"
               else "📌 Edit a Post-it Note"
             end %>
-
+      </h5>
       <!-- Cancel button just in case we regret our edits -->
       <% if @note.hotspot_type == "street" %>
         <%= link_to "Cancel", categories_path,
@@ -77,7 +90,7 @@
         <% end %>
       </div>
     <% else %>
-      <div class="card border-0 shadow-sm p-3 style-postit-detail">
+      <div class = "<%= if laptop_view then 'laptop-note-form' elsif posters_view then 'posters-note-form' else 'card border-0 shadow-sm p-3 style-postit-detail' end %>">
         <%= form_with(model: [@category, @note],
                       data: { turbo_frame: "room_hotspot_content" }) do |f| %> <!-- once again, the ID from app/views/categories/index.html.erb -->
 
@@ -106,13 +119,41 @@
                             required: true %>
           </div>
 
-          <div class="d-grid">
-            <%= f.submit "💾 Save Changes", class: "btn btn-dark fw-bold" %>
-          </div>
+          <% if posters_view %>
+            <div class = "mb-3">
+              <%= f.label :image, "Replace Image", class: "form-label fw-bold text-dark" %>
+              <%= f.file_field :image, accept: "image/png, image/jpeg", class: "form-control" %>
+            </div>
+          <% end %>
 
+          <% if laptop_view %>
+            <div class="d-grid">
+              <%= f.button type: "submit", class: "btn btn-info btn-sm shadow-sm text-dark" do %>
+                💾 Save Changes
+              <% end %>
+            </div>
+          <% elsif posters_view %>
+            <div class = "posters-submit">
+              <%= f.button type: "submit", class: "btn posters-action-btn" do %>
+                💾 Save Changes
+              <% end %>
+            </div>
+          <% else %>
+            <div class = "d-grid">
+              <%= f.submit "💾 Save Changes", class: "btn btn-dark fw-bold" %>
+            </div>
+          <% end %>
         <% end %>
       </div>
     <% end %>
-
   </div>
+<% if laptop_view %>
+      </div>
+    </div>
+  </div>
+<% elsif posters_view %>
+      </div>
+    </div>
+  </div>
+<% end %>
 </turbo-frame>
