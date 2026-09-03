@@ -1,6 +1,46 @@
 // Specific CSS for your home-page
 body {
   background-color: #CDE4F6;
-  padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
+  background-image: url("bg-sky.jpeg");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-attachment: fixed;
+
+  width: 150vw;
+  height: 100dvh;
+  overflow-x: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+
+
+}
+
+.city-board-container {
+  box-sizing: border-box;
+
+  width: 150vw;
+  max-height: 100dvh;
+  margin: 0 auto;
+
+  overflow-y: auto;
+  overflow-x: auto;
+
+
+  padding: 80px 40px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+}
+
+.map-container {
+  position: relative;
+  width: 90%;
+  max-width: 620px;
+  margin: 0 auto 10px;
 }
