@@ -50,16 +50,16 @@
           <%= image_tag "buildings/#{category_on_tile.building_sprite}", class: "house-tile #{extra_class}".strip, alt: category_on_tile.name %>
           <div class="house-name"> <%= category_on_tile.name %></div>
         </div>
-        <div class='btn-container'>
-              <div>
-                <button type="button"
-                        class="building-btn"
-                        data-bs-toggle="modal"
-                        data-bs-target="#categoryModal_<%= category_on_tile.id %>">
-                          <div> Visit house 🗝️</div>
-                        </button>
-              </div>
-        </div>
+
+
+          <button type="button"
+                  class="building-view-btn"
+                  data-bs-toggle="modal"
+                  data-bs-target="#categoryModal_<%= category_on_tile.id %>">
+                    <div> Visit house 🗝️</div>
+                  </button>
+
+
       <% else %>
           <div>
 
@@ -69,12 +69,12 @@
 
           </div>
           <% note = category_on_tile.notes[0] %>
-          <div class="building-btn">
+          <div class="trash-view-btn">
             <button type="button"
-                    class="building-btn"
+                    class="trash-view-btn"
                     data-bs-toggle="modal"
                     data-bs-target="#noteModal_<%= note&.id %>">
-                      <div> View the note  🗝️</div>
+                      <div> Recycle trash </div>
                     </button>
           </div>
 
@@ -83,22 +83,22 @@
             <%= button_to category_path(category_on_tile),
             method: :delete,
             data: { turbo_confirm: "Are you sure you want to demolish this building?"},
-            class: "btn btn-outline-danger btn-sm" do %>
-              ❌
+            class: "btn  btn-sm btn-delete" do %>
+              <i class="fa-solid fa-x"></i>
               <% end %>
 
 
     <% elsif tile[:buildable] %>
       <!-- Tile is buildable but empty: Show '+' build button -->
       <button type="button"
-            class="btn btn-light btn-lg"
+            class="building-btn"
             data-bs-toggle="offcanvas"
             data-bs-target="#new-category-menu"
             data-action="click->tile#buildForm"
             data-tile-x-param="<%= x %>"
             data-tile-y-param="<%= y %>"
             title="Build here">
-      🏗️
+      <i class="fa-solid fa-house"></i>
       </button>
     <% end %>
 </div>
