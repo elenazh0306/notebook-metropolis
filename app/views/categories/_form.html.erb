@@ -1,40 +1,41 @@
-<%= simple_form_for category,
-    data: {
-      controller: "offcanvas",
-      action: "turbo:submit-end->offcanvas#closeOnSuccess"
-    } do |f| %>
 
-  <%= render "shared/errors", object: category %>
-  <%= f.input :name, label: "Building Name", placeholder: "Enter a building name" %>
-  <%= f.hidden_field :x, id: "category_x_input" %>
-  <%= f.hidden_field :y, id: "category_y_input" %>
+  <%= simple_form_for category,
+      data: {
+        controller: "offcanvas",
+        action: "turbo:submit-end->offcanvas#closeOnSuccess"
+      } do |f| %>
 
-  <div class="mb-3">
-    <%= f.label :sprite_image, "Choose a building", class: "form-label" %>
-    <div class="d-flex flex-wrap gap-2">
-      <% @images.each do |image| %>
-        <%= f.radio_button :sprite_image, image[:url], class: "btn-check", id: "sprite_#{image[:url].parameterize}" %>
-        <label class="btn btn-outline-secondary d-flex align-items-center gap-2" for="sprite_<%= image[:url].parameterize %>">
-          <%= image_tag("buildings/#{image[:url]}", class: "rounded-circle", width: 30, height: 30) %>
-          <span><%= image[:name] %></span>
-        </label>
-      <% end %>
+    <%= render "shared/errors", object: category %>
+    <%= f.input :name, label: "Building Name", placeholder: "Enter a building name" %>
+    <%= f.hidden_field :x, id: "category_x_input" %>
+    <%= f.hidden_field :y, id: "category_y_input" %>
+
+    <div class="mb-3">
+      <%= f.label :sprite_image, "Choose a building", class: "form-label" %>
+      <div class="d-flex flex-wrap gap-2">
+        <% @images.each do |image| %>
+          <%= f.radio_button :sprite_image, image[:url], class: "btn-check", id: "sprite_#{image[:url].parameterize}" %>
+          <label class="btn-option" for="sprite_<%= image[:url].parameterize %>">
+            <%= image_tag("buildings/#{image[:url]}", class: "rounded-circle", width: 30, height: 30) %>
+            <span><%= image[:name] %></span>
+          </label>
+        <% end %>
+      </div>
     </div>
-  </div>
 
-  <div class="mb-3">
-    <%= f.label :room_image, "Choose a room", class: "form-label" %>
-    <div class="d-flex flex-wrap gap-2">
-      <% @rooms.each do |room| %>
-        <%= f.radio_button :room_image, room[:name], class: "btn-check", id: "sprite_#{room[:name].parameterize}" %>
-        <label class="btn btn-outline-secondary d-flex align-items-center gap-2" for="sprite_<%= room[:name].parameterize %>">
-          <%= image_tag(room[:url], class: "rounded-circle", width: 50, height: 50) %>
-          <span><%= room[:display] %></span>
-        </label>
-      <% end %>
+    <div class="mb-3">
+      <%= f.label :room_image, "Choose a room", class: "form-label" %>
+      <div class="d-flex flex-wrap gap-2">
+        <% @rooms.each do |room| %>
+          <%= f.radio_button :room_image, room[:name], class: "btn-check", id: "sprite_#{room[:name].parameterize}" %>
+          <label class="btn-option" for="sprite_<%= room[:name].parameterize %>">
+            <%= image_tag(room[:url], class: "rounded-circle", width: 50, height: 50) %>
+            <span><%= room[:display] %></span>
+          </label>
+        <% end %>
+      </div>
     </div>
-  </div>
 
 
-  <%= f.button :submit, "Create Building", class: "btn btn-primary" %>
-<% end %>
+    <%= f.button :submit, "Create Building", class: "create-bld-btn" %>
+  <% end %>

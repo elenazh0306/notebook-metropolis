@@ -1,9 +1,13 @@
 .board {
   width: fit-content;
   display: grid;
-  gap: 2px;
+  gap: 0;
   margin: 0 auto;
   transform: rotate(45deg) rotate3d(-3, 3, 0, 60deg);
+
+  .tile-dropdown {
+
+  }
 
   .grass {
     position: relative;
@@ -12,20 +16,160 @@
     box-shadow: 0 0 0 0 rgba(0,0,0,.7);
     background-image: image-url('tiles/grass.png');
     background-size: cover;
-    border: 2px solid #22c55e;
+    border: none;
     color: #14532d;
-    border-radius: 4px;
+    border-radius: 0;
       &:hover {
         cursor: pointer;
-        background-color: #14532d;;
+        background-color: #14532d;
         transform: translate(-8px, -8px);
         outline: solid 2px white;
+        border-radius: 4px;
         box-shadow: 8px 8px 0 0 rgba(0,0,0,.7);
         transition: .3s;
+      }
+
+    // ADD THIS TILES WHERE TRASH CAN BE PLACED
+    .btn-delete,
+      .trash-view-btn {
+        position: absolute;
+        border: none;
+        top: 4px;
+        z-index: 102;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease, transform 0.2s ease;
+        transform: rotate(-45deg) scaleY(1.75);
+      }
+
+      .btn-delete {
+        top: 80px;
+        right: -10px;
+      }
+
+      .trash-view-btn {
+        top: 50px;
+        right: -10px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: #1a202c;
+        text-align: center;
+
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        border-radius: 12px;
+        display: inline-block;
+        white-space: nowrap;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+
+      &:hover {
+        .btn-delete,
+        .trash-view-btn {
+          opacity: 1;
+          pointer-events: auto;
+        }
       }
   }
 
   .base {
+    position: relative;
+    height: 100px;
+    width: 100px;
+    box-shadow: 0 0 0 0 rgba(0,0,0,.7);
+    background-image: image-url('tiles/cobblestone.png');
+    background-size: cover;
+    border: none;
+    color: #78350f;
+    border-radius: 4px;
+    &:hover {
+      cursor: pointer;
+      background-color: #78350f;
+      transform: translate(-8px, -8px);
+      outline: solid 2px white;
+      box-shadow: 8px 8px 0 0 rgba(0,0,0,.7);
+      transition: .3s;
+      .house-name {
+        top: 60px;
+        right: 130px;
+        transition: ease .4s;
+        z-index: 1000;
+        opacity: 1;
+      }
+    }
+
+
+    .house-name {
+      position: absolute;
+      padding: 0 8px;
+      top: 80px;
+      right: -70px;
+      width: max-content;
+      z-index: 101;
+      transform: rotate(-45deg) scaleY(1.75);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #1a202c;
+      text-align: center;
+
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border-radius: 12px;
+      display: inline-block;
+      white-space: nowrap;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      opacity: 0;
+
+
+
+    }
+
+      .btn-delete,
+      .building-view-btn {
+        position: absolute;
+        border: none;
+        top: 4px;
+        z-index: 102;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease, transform 0.2s ease;
+        transform: rotate(-45deg) scaleY(1.75);
+      }
+
+      .btn-delete {
+        top: 80px;
+        right: -2px;
+      }
+
+      .building-view-btn {
+        top: 50px;
+        right: 10px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: #1a202c;
+        text-align: center;
+
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        border-radius: 12px;
+        display: inline-block;
+        white-space: nowrap;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+
+      &:hover {
+        .btn-delete,
+        .building-view-btn {
+          opacity: 1;
+          pointer-events: auto;
+        }
+      }
+  }
+
+    .cobblestone {
     position: relative;
     height: 100px;
     width: 100px;
@@ -53,8 +197,27 @@
 
   .building-btn {
     background-color: transparent;
-    color: transparent;
+    position: absolute;
+    width: fit-content;
+    padding: 0 8px;
+
+    left: 10%;
+
+    transform: rotate(-45deg) scaleY(1.75);
+
     border: none;
+    width: 100px;
+    height: 100px;
+    opacity: 0;
+    transition: opacity ease  0.3s;
+    &:hover {
+        opacity: 1;
+    }
+
+    i {
+      font-size: 2rem;
+    }
+
   }
 
   .path {
@@ -63,9 +226,9 @@
     width: 100px;
     box-shadow: 0 0 0 0 rgba(0,0,0,.7);
     background-size: cover;
-    border: 2px solid #cbd5e1;
+    border: none;
     color: #334155;
-    border-radius: 4px;
+    border-radius: 0;
 
     /* Grass Roads */
     &.grass-straight     { background-image: image-url('tiles/road_grass_straight.png'); }
@@ -88,8 +251,30 @@
       cursor: pointer;
       background-color: #334155;
       outline: solid 2px white;
+      border-radius: 4px;
       box-shadow: 8px 8px 0 0 rgba(0,0,0,.7);
       transition: .3s;
+    }
+  }
+
+  /* Debug Override placed at the bottom so it wins the cascade */
+  &.debug {
+    gap: 2px;
+
+    .row {
+      gap: 2px;
+    }
+    .grass {
+      border: 2px solid #22c55e !important;
+      border-radius: 4px !important;
+    }
+    .base {
+      border: 2px solid #f59e0b !important;
+      border-radius: 4px !important;
+    }
+    .path {
+      border: 2px solid #cbd5e1 !important;
+      border-radius: 4px !important;
     }
   }
 
@@ -97,13 +282,13 @@
   .tree-willow,
   .tree-oak,
   .tree-poplar,
-  .tree-sakura {
+  .tree-sakura-animated {
     position: relative;
     height: 100px;
     width: 100px;
     background-image: image-url('tiles/grass.png'); /* The floor ground texture */
     background-size: cover;
-    border-radius: 4px;
+    border-radius: 0;
 
     &:hover {
       cursor: pointer;
@@ -168,10 +353,10 @@
   }
 
   /* Sakura Tree */
-  .tree-sakura::after {
-    background-image: image-url('buildings/sakura_tree.png');
-    bottom: 35px;
-    left: 16px;
+  .tree-sakura-animated::after {
+    background-image: image-url('buildings/sakura_tree_animated.gif');
+    bottom: 30px;
+    left: 14px;
     width: 140%;
     height: 120%;
     transform: translateX(-10%)
@@ -259,7 +444,7 @@
   bottom: 15px;
   left: 12px;
   transform: translateX(-50%)
-            rotate3d(-3, 3, 0, -55deg)
+            rotate3d(-3, 3, 0, -45deg)
             rotate(-45deg)
             scaleY(2.5);
 }
@@ -315,6 +500,72 @@
   left: 10px;
 }
 
+.house-tile--cathedral {
+  bottom: 38px;
+  left: -22px;
+  max-width: 200%;
+  max-height: 450%;
+}
+
+.house-tile--cathedral2 {
+  bottom: 30px;
+  left: -21px;
+    transform: translateX(-50%)
+            rotate3d(-3, 3, 0, -55deg)
+            rotate(-45deg)
+            scaleY(3);
+
+  max-width: 170%;
+  max-height: 270%;
+}
+
+.house-tile--clocktower {
+bottom: 42px;
+  left: -28px;
+    transform: translateX(-50%)
+            rotate3d(-3, 3, 0, -50deg)
+            rotate(-45deg)
+            scaleY(3);
+
+  max-width: 150%;
+  max-height: 250%;
+}
+
+.house-tile--catcafe {
+  bottom: 30px;
+  left: 5px;
+  max-width: 120%;
+  max-height: 120%;
+}
+
+.house-tile--fountain {
+  bottom: 36px;
+  left: -3px;
+  max-width: 130%;
+  max-height: 130%;
+}
+
+.house-tile--ramen {
+  bottom: 0;
+  left: 22px;
+  max-width: 150%;
+  max-height: 170%;
+}
+
+.house-tile--robot_statue {
+  bottom: 40px;
+  left: 18px;
+  max-width: 95%;
+  max-height: 115%;
+}
+
+.house-tile--gargoyle_statue {
+  bottom: 35px;
+  left: 4px;
+  max-width: 95%;
+  max-height: 115%;
+}
+
 .house-tile--tall1 {
   width: 140%;
   max-height: 300%;
@@ -360,25 +611,6 @@
             scaleY(4.0);
 }
 
-  .house-name {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 50%;
-    height: 50%;
-    background: rgba(0, 0, 0, 0.6);
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-
-    &:hover {
-      opacity: 1;
-    }
-  }
-
 .building-block {
   position: absolute;
   top: 0;
@@ -407,7 +639,7 @@
 
 .row {
   display: flex;
-  gap: 2px;
+  gap: 0;
 }
 .tile {
   user-select: none;

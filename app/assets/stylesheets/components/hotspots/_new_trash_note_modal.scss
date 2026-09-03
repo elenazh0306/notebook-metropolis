@@ -1,0 +1,280 @@
+.trash-note-shell {
+  position: relative;
+  width: 900px;
+  height: 680px;
+  max-width: 92vw;
+  margin-left: auto;
+  margin-right: auto;
+  transform: translateY(-100px);
+}
+
+.trash-note-frame {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 950px;
+  height: auto;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.trash-note-screen {
+  position: absolute;
+  width: 760px;
+  height: 500px;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.street-trash-view .trash-note-modal {
+  width: 100%;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+.street-trash-view .modal-body {
+  background: transparent;
+}
+
+.street-trash-view .modal-dialog {
+  width: 950px;
+  max-width: 92vw;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.street-trash-view .style-postit-detail {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+.street-trash-view textarea.form-control {
+  min-height: 210px;
+  padding: 0.7rem 0.4rem;
+  border: none;
+  line-height: 2rem;
+}
+
+.street-trash-view .form-control {
+  padding: 0.65rem 0.4rem;
+  font-size: 1rem;
+  background: transparent !important;
+  border: none;
+  border-bottom: 1px solid rgba(75, 61, 50, 0.35);
+  border-radius: 0;
+  box-shadow: none !important;
+  color: #2f2924;
+  font-family: 'Nunito', sans-serif;
+}
+
+.street-trash-view .form-control:focus {
+  background: transparent !important;
+  border-color: #6f5542;
+  box-shadow: none !important;
+  outline: none;
+}
+
+.street-trash-view .form-label {
+  color: #3e342c !important;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700 !important;
+  letter-spacing: 1px;
+  margin-bottom: 0.15rem;
+}
+
+.street-trash-view .modal-title {
+  color: #29231f;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  transform: rotate(-1deg);
+}
+
+.street-trash-view .btn-outline-secondary {
+  position: relative;
+  background: #f5eddc;
+  color: #5f5145;
+  border: 1px solid #b9aa94;
+  border-radius: 2px;
+  padding: 0.45rem 0.8rem;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  box-shadow: 2px 3px 0 rgba(70, 55, 40, 0.12);
+  transform: rotate(1deg);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease;
+
+  &:hover {
+    background: #fff4dc;
+    box-shadow: 4px 6px 0 rgba(70, 55, 40, 0.14);
+    transform: translateY(-3px) rotate(-2deg);
+  }
+
+  &:active {
+    transform: translateY(1px) rotate(0deg);
+    box-shadow: 1px 1px 0 rgba(70, 55, 40, 0.12);
+  }
+}
+
+.street-trash-view .btn-dark, .street-trash-view .btn-outline-warning, .street-trash-view form button [type = "submit"], .street-trash-view form input [type = "submit"] {
+  position: absolute;
+  width: 50%;
+  top: 550px;
+  left: 0;
+  margin: 0;
+  background: transparent !important;
+  color: #7b4033 !important;
+  border: 2px solid #7b4033 !important;
+  border-radius: 2px;
+  padding: 0.7rem 1rem;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  box-shadow: 3px 3px 0 rgba(123, 64, 51, 0.14);
+  transform: rotate(-0.5deg);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+
+  &:hover {
+    animation: trash-wobble 0.3s ease;
+  }
+
+  &:active {
+    transform: translateY(2px) rotate(-1deg) scale(0.99);
+  }
+}
+
+.street-trash-view .btn-dark::before {
+  content: "🗑️";
+  display: inline-block;
+  margin-right: 0.5rem;
+  transform: rotate(0deg);
+  transition: transform 0.2s ease;
+}
+
+.street-trash-view .btn-dark:hover::before {
+  transform: translateY(-3px) rotate(-16deg) scale(1.15);
+}
+
+@keyframes trash-wobble {
+  0% {transform: translateY(0) rotate(-0.5deg);}
+  30% {transform: translateY(-3px) rotate(1.5deg);}
+  60% {transform: translateY(-3px) rotate(-1deg);}
+  100% {transform: translateY(-3px) rotate(0.5deg);}
+}
+
+.street-trash-view .form-control::placeholder {
+  color: rgba(75, 61, 50, 0.5);
+  opacity: 1;
+}
+
+.street-trash-view .trash-show-title {
+  padding: 0.65rem 0.4rem;
+  color: #2f2924;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1rem;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(75, 61, 50, 0.35);
+}
+
+.street-trash-view .trash-show-content {
+  min-height: 210px;
+  padding: 0.7rem 0.4rem;
+  color: #2f2924;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1rem;
+  line-height: 2rem;
+  background: transparent;
+  white-space: pre-line;
+}
+
+.street-trash-view .btn-outline-warning {
+  background-color: transparent !important;
+  color: #7b4033 !important;
+  border: 2px solid #7b4033 !important;
+  border-radius: 2px;
+  padding: 0.7rem 1rem;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  box-shadow: 3px 3px 0 rgba(123, 64, 51, 0.14);
+  transform: rotate(-0.5deg);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+
+  &:hover {
+    background-color: rgba(123, 64, 51, 0.08) !important;
+    color: #7b4033 !important;
+    transform: translateY(-3px) rotate(0.5deg);
+    box-shadow: 5px 6px 0 rgba(123, 64, 51, 0.16);
+  }
+
+  &:active {
+    transform: translateY(1px) rotate(0deg) scale(0.99);
+    box-shadow: 1px 1px 0 rgba(123, 64, 51, 0.12);
+  }
+}
+
+.street-trash-view form button[type="submit"],
+.street-trash-view form input[type="submit"] {
+  background-color: transparent !important;
+  color: #7b4033 !important;
+  border: 2px solid #7b4033 !important;
+  border-radius: 2px;
+  padding: 0.7rem 1rem;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  box-shadow: 3px 3px 0 rgba(123, 64, 51, 0.14);
+  transform: rotate(-0.5deg);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background-color 0.18s ease;
+}
+
+.street-trash-view form button[type = "submit"]:hover, .street-trash-view form input[type = "submit"]:hover {
+  background-color: rgba(123, 64, 51, 0.08) !important;
+  transform: translateY(-3px) rotate(0.5deg);
+  box-shadow:
+    5px 6px 0 rgba(123, 64, 51, 0.16);
+}
+
+.street-trash-view .form-select {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #2f2924;
+  border: none;
+  border-bottom: 1px solid rgba(75, 61, 50, 0.35);
+  border-radius: 0;
+  padding: 0.65rem 2.2rem 0.65rem 0.4rem;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1rem;
+  box-shadow: none !important;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.street-trash-view .form-select:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.street-trash-view .form-select:focus {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: #6f5542;
+  box-shadow: none !important;
+  outline: none;
+}

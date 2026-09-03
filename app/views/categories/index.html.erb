@@ -2,7 +2,7 @@
   <%= render "layouts/mobile_index" %>
 <% else %>
   <%= render "shared/navbar" %>
-  <h3>Hello <%= current_user.name %>!</h3>
+
   <div class = "map-container">
     <!--Search Results-->
     <% if @query.present? %>
@@ -76,14 +76,14 @@
           class="map-edit-button"
           data-board-target="editBtn"
           data-action="click->board#edit">
-          ✏️ Edit Map
+          🔨 Renovate the City
         </button>
 
         <button type="button"
           class="map-save-button"
           data-board-target="saveBtn"
           data-action="click->board#save">
-          💾 Save Changes
+          ✅ Approve Changes
         </button>
       </div>
       <div class="board" >
@@ -97,8 +97,9 @@
       </div>
   </div>
 
+
   <div class = "new-category-menu">
-    <div class = "offcanvas offcanvas-end" style = "width: 25vw" id = "new-category-menu" >
+    <div class = "offcanvas offcanvas-end" id = "new-category-menu" >
       <div class = "offcanvas-header">
         <h3>Create a New Building</h3>
           <button
