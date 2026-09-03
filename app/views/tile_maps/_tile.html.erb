@@ -61,22 +61,18 @@
 
 
       <% else %>
-          <div>
-
-              <%= image_tag "buildings/#{category_on_tile.building_sprite}", class: "house-tile trash-tile #{extra_class}".strip, alt: category_on_tile.name %>
-
-              <div class="house-name"> <%= category_on_tile.name %></div>
-
-          </div>
           <% note = category_on_tile.notes[0] %>
-          <div class="trash-view-btn">
+          <div>
+              <%= image_tag "buildings/#{category_on_tile.building_sprite}", class: "house-tile trash-tile #{extra_class}".strip, alt: category_on_tile.name %>
+          </div>
+
             <button type="button"
                     class="trash-view-btn"
                     data-bs-toggle="modal"
                     data-bs-target="#noteModal_<%= note&.id %>">
                       <div> Recycle trash </div>
                     </button>
-          </div>
+
 
       <% end %>
 
