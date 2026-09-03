@@ -5,3 +5,6 @@
 //= link popper.js
 //= link bootstrap.min.js
 //= link_tree ../videos
+// app/assets/config/manifest.js
+
+//= link manifest.json
