@@ -2,13 +2,25 @@
 .laptop-container {
   background-color: #181818; /* Dark IDE outer background */
   border-radius: 8px;
-  min-height: 380px;
+  height: 380px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .laptop-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 1.25rem;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  align-content: start;
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: #55ffb0 transparent;
 }
 
 .laptop-card-link {

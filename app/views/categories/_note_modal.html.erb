@@ -1,51 +1,54 @@
 <% if note %>
-  <div class="modal fade room-modal"
+  <div class="modal fade room-modal street-trash-view"
       id="noteModal_<%= note.id %>"
       tabindex="-1"
       aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
-      <div class="modal-content">
-
-        <div class="corkboard-container p-3">
-
-          <!-- Start of Turbo Frame for viewing and editing a trash note -->
-          <turbo-frame id="note_content_<%= note.id %>">
-
-            <div class="mb-3">
-              <!-- Link back to the active hotspot view on notes/index.html.erb -->
-              <%= link_to categories_path, class: "btn btn-outline-secondary btn-sm mb-2" do %>
-                ⬅️ Back to the map
-              <% end %>
-
-              <div class="d-flex gap-2">
-                <!-- Edit Button -->
-                <%= link_to edit_category_note_path(category, note),
-                            class: "btn btn-outline-warning btn-sm fw-bold text-dark" do %>
-                  ✏️ Edit note
+      <div class="trash-note-shell">
+        <%= image_tag "napkin-note-frame.png", class: "trash-note-frame", alt: "Random Thought" %>
+        <div class = "trash-note-screen">
+          <div class = "modal-content trash-note-modal">
+            <!-- Start of Turbo Frame for viewing and editing a trash note -->
+            <turbo-frame id="note_content_<%= note.id %>">
+              <div class="modal-header border-0 p-0 mb-3 d-flex justify-content-between align-items-center">
+                <!-- Link back to the active hotspot view on notes/index.html.erb -->
+                <%= link_to categories_path, data: { turbo_frame: "_top" }, class: "btn btn-outline-secondary btn-sm mb-2" do %>
+                  ⬅️ Back to Map
                 <% end %>
+              </div>
 
-                <!-- Delete Button -->
-                <!-- deleting of a trash note is only rendered through the map view,
-                because it is basically one category with one note -->
+              <div class="modal-body p-0">
+                <!-- The Full Note Displayed as an expanded note -->
+                <div class="card shadow-sm border-0 my-3 style-postit-detail">
+                  <div class = "mb-3">
+                    <div class = "form-label fw-bold text-dark">
+                      Title
+                    </div>
+                    <div class="trash-show-title">
+                      <%= note.title %>
+                    </div>
+                  </div>
+                <div class="mb-3">
+                  <div class = "form-label fw-bold text-dark">
+                    Note Details
+                  </div>
+                  <div class = "trash-show-content">
+                    <%= note.content %>
+                  </div>
+                </div>
 
+                <!-- Edit Button -->
+                <div class = "d-grid">
+                  <%= link_to edit_category_note_path(category, note),
+                              class: "btn btn-outline-warning btn-sm fw-bold text-dark" do %>
+                    ✏️ Edit Note
+                  <% end %>
+                </div>
               </div>
             </div>
-
-            <!-- The Full Note Displayed as an expanded note -->
-            <div class="card shadow-sm border-0 my-3 style-postit-detail">
-              <div class="card-body p-4">
-                <h4 class="card-title fw-bold text-dark border-bottom pb-2 mb-3">
-                  <%= note.title %>
-                </h4>
-                <p class="card-text text-dark fs-5" style="white-space: pre-line;">
-                  <%= note.content %>
-                </p>
-              </div>
-            </div>
-
-          </turbo-frame>
-          <!-- End of Turbo Frame for viewing and editing a trash note -->
-
+            </turbo-frame>
+            <!-- End of Turbo Frame for viewing and editing a trash note -->
+          </div>
         </div>
       </div>
     </div>
