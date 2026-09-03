@@ -2,7 +2,7 @@
 .laptop-container {
   background-color: #181818; /* Dark IDE outer background */
   border-radius: 8px;
-  max-height: 380px;
+  height: 380px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -248,7 +248,9 @@
 
 .laptop-show-card {
   position: relative;
-  height: 280px;
+  height: 265px;
+  min-height: 265px;
+  max-height: 265px;
   overflow: hidden;
   background: #252526;
   border: 1px solid #3c3c3c;
@@ -284,7 +286,7 @@
   display: block;
   color: #55ffb0;
   font-family: 'Fira Code', 'Courier New', monospace;
-  margin-bottom: 1.2rem;
+  margin-bottom: 0.8rem;
 }
 
 .hackercat-laptop-view .btn-outline-secondary, .hackercat-laptop-view .btn-outline-warning, .hackercat-laptop-view .btn-outline-danger {
