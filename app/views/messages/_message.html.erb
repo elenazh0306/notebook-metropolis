@@ -18,8 +18,8 @@
       <%= raw(render_markdown(message.content)) %>
 
       <% if message.content.present? %>
-        <div class = "mt-2">
-          <%= button_to "Save as Note", category_notes_path(message.citizen.category), method: :post, params: {ai_generated: true, note: {content: raw(render_markdown(message.content)), hotspot_type: "notice_board"}}, class: "btn btn-sm btn-outline-dark" %>
+        <div class = "ai-save-note-container">
+          <%= button_to "Save as Note", category_notes_path(message.citizen.category), method: :post, params: {ai_generated: true, note: {content: message.content, hotspot_type: "laptop"}}, class: "ai-save-note-btn" %>
         </div>
       <% end %>
     </div>

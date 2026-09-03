@@ -2,6 +2,7 @@
 <turbo-frame id="room_hotspot_content">
   <% laptop_view = @note.hotspot_type == "laptop" %>
   <% posters_view = @note.hotspot_type == "posters" %>
+  <% book_view = @note.hotspot_type == "bookcase" %>
 
   <% if laptop_view %>
     <div class = "hackercat-laptop-view">
@@ -13,10 +14,16 @@
       <div class = "posters-shell">
         <%= image_tag "cozy-study-posters-frame.png", class: "cozy-study-posters-image", alt: "Cozy Study Posters" %>
         <div class = "posters-wall">
+  <% elsif book_view %>
+    <div class = "book-view">
+      <div class = "book-shell">
+        <%= image_tag "gothic-library-book-frame.png", class: "book-image", alt: "Gothic Library Book" %>
+        <%= image_tag "gothic-library-pen.png", class: "pen-image", alt: "Gothic Library Pen" %>
+          <div class = "book-page">
   <% end %>
 
-  <div class = "<%= if laptop_view then 'laptop-container' elsif posters_view then 'posters-container' else 'corkboard-container' end %> p-3">
-    <div class="<%= posters_view ? 'posters-form-header' : '' %> d-flex justify-content-between align-items-center mb-3">
+  <div class = "<%= if laptop_view then 'laptop-container' elsif posters_view then 'posters-container' elsif book_view then 'book-container' else 'corkboard-container' end %> p-3">
+    <div class="<%= if posters_view then 'posters-form-header' elsif book_view then 'book-form-header' end %> d-flex justify-content-between align-items-center mb-3">
       <h5 class="m-0">
         <%= case @note.hotspot_type
               when "bookcase" then "📖 Write a Book Note"
@@ -33,7 +40,7 @@
     </div>
 
     <!-- Here with make the new note with a styled Form Container -->
-    <div class="<%= if laptop_view then 'laptop-note-form' elsif posters_view then 'posters-note-form' else 'card border-0 shadow-sm p-3 style-postit-detail' end %>">
+    <div class="<%= if laptop_view then 'laptop-note-form' elsif posters_view then 'posters-note-form' elsif book_view then 'book-note-form' else 'card border-0 shadow-sm p-3 style-postit-detail' end %>">
       <%= form_with(model: [@category, @note],
                     data: { turbo_frame: "room_hotspot_content" }) do |f| %> <!-- Turbo Frame ID links to app/views/categories/index.html.erb -->
 
@@ -95,13 +102,15 @@
               🖼️ Hang Poster
             <% end %>
           </div>
+        <% elsif book_view %>
+          <div class = "book-submit">
+            <%= f.button type: "sbumit", class: "btn book-save-btn" do %>
+              📖 Add to Library
+            <% end %>
+          </div>
         <% else %>
           <div class="d-grid">
-            <%= f.submit (case @note.hotspot_type
-                          when "bookcase" then "📖 Add to Shelf"
-                          else "📌 Pin to Board"
-                          end),
-                        class: "btn btn-dark fw-bold" %>
+            <%= f.submit "📌 Pin to Board", class: "btn btn-dark fw-bold" %>
           </div>
         <% end %>
       <% end %>
@@ -113,6 +122,10 @@
     </div>
   </div>
 <% elsif posters_view %>
+      </div>
+    </div>
+  </div>
+<% elsif book_view %>
       </div>
     </div>
   </div>
