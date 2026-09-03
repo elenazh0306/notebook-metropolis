@@ -2,7 +2,7 @@
 .laptop-container {
   background-color: #181818; /* Dark IDE outer background */
   border-radius: 8px;
-  height: 380px;
+  max-height: 380px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -17,8 +17,10 @@
   overflow-y: auto;
   overflow-x: hidden;
   align-content: start;
+  padding-top: 0.5rem;
   padding-right: 0.5rem;
   padding-left: 0.5rem;
+  padding-bottom: 0.5rem;
   scrollbar-width: thin;
   scrollbar-color: #55ffb0 transparent;
 }
@@ -142,6 +144,7 @@
   position: relative;
   background: transparent;
   border: 2px solid;
+  padding-bottom: 0 !important;
 }
 
 .hackercat-laptop-view .m-0 {
@@ -245,11 +248,14 @@
 
 .laptop-show-card {
   position: relative;
+  height: 280px;
+  overflow: hidden;
   background: #252526;
   border: 1px solid #3c3c3c;
   border-radius: 6px;
   font-family: 'Fira Code', 'Courier New', monospace;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  padding: 0.5rem 0.5rem;
 }
 
 .laptop-show-title {
@@ -275,8 +281,10 @@
 }
 
 .laptop-show-date {
+  display: block;
   color: #55ffb0;
   font-family: 'Fira Code', 'Courier New', monospace;
+  margin-bottom: 1.2rem;
 }
 
 .hackercat-laptop-view .btn-outline-secondary, .hackercat-laptop-view .btn-outline-warning, .hackercat-laptop-view .btn-outline-danger {

@@ -2,10 +2,9 @@
   <div class = "bookcase-shell">
     <%= image_tag "gothic-library-bookcase-frame.png", class: "bookcase-image", alt: "Gothic Library Bookcase" %>
     <div class = "bookcase-shelf">
-      <%= image_tag "gothic-library-bookcase-background.png", class: "bookcase-background", alt: "Gothic Library Bookcase Background" %>
       <div class="bookcase-container p-3">
         <!-- Header with Category Title & New Book Button -->
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class=" bookcase-header d-flex justify-content-between align-items-center mb-4">
           <h4 class="m-0">📚 <%= @category.name %> Bookcase</h4>
 
           <!-- New Bookcase Note Link (passes hotspot_type: "bookcase") -->
