@@ -4,6 +4,7 @@
   min-height: 100dvh;
   position: relative;
   padding-top: 70px;
+  width: 450px;
 
   &::before {
     content: "";
@@ -19,8 +20,6 @@
     background-repeat: no-repeat;
     background-position: center;
   }
-
-
 }
 
 .mobile-header {
