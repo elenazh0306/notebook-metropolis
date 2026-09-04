@@ -7,7 +7,7 @@ class Category < ApplicationRecord
   validates :sprite_image, presence: { message: "Pick a building!"}
   accepts_nested_attributes_for :notes
   # trigger hotspot method after creating category
-  after_create_commit :hotspot
+  after_create_commit :hotspot, unless: :trash_category?
 
   # sets the building sprite on the map grid
   def building_sprite
@@ -63,5 +63,9 @@ class Category < ApplicationRecord
       content: "🌠 Turn your pictures into motivational posts! Just! Do! It!",
       hotspot_type: "posters"
     )
+  end
+
+  def trash_category?
+    name == 'trash'
   end
 end
