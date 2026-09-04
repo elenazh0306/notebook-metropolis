@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_26_050052) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_29_091752) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -81,8 +81,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_26_050052) do
     t.string "hotspot_type"
     t.string "title"
     t.datetime "updated_at", null: false
-    t.integer "x"
-    t.integer "y"
     t.index ["category_id"], name: "index_notes_on_category_id"
   end
 
