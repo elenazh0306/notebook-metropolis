@@ -1,4 +1,4 @@
-<% if mobile_app? %>
+<% if mobile_app? || request.user_agent =~ /Mobile|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i %>
   <%= render "layouts/mobile_index" %>
 <% else %>
   <%= render "shared/navbar" %>
