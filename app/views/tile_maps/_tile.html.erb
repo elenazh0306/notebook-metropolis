@@ -85,16 +85,16 @@
 
 
     <% elsif tile[:buildable] %>
-      <!-- Tile is buildable but empty: Show '+' build button -->
+      <!-- Tile is buildable but empty: Show build indicator on hover -->
       <button type="button"
-            class="building-btn"
-            data-bs-toggle="offcanvas"
-            data-bs-target="#new-category-menu"
-            data-action="click->tile#buildForm"
-            data-tile-x-param="<%= x %>"
-            data-tile-y-param="<%= y %>"
-            title="Build here">
-      <i class="fa-solid fa-house"></i>
+              class="building-btn build-hover-btn"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#new-category-menu"
+              data-action="click->tile#buildForm"
+              data-tile-x-param="<%= x %>"
+              data-tile-y-param="<%= y %>"
+              title="Build here">
+        <%= image_tag "tiles/build_here.png", class: "build-here-hover", alt: "Build Here" %>
       </button>
     <% end %>
 </div>
