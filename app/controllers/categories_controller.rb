@@ -60,7 +60,6 @@ class CategoriesController < ApplicationController
       end
 
     elsif @category.save
-      hotspot(@category)
       respond_to do |format|
         format.turbo_stream { render turbo_stream: turbo_stream.refresh(request_id: nil) }
         format.html { redirect_to categories_path }

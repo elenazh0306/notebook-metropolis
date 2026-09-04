@@ -197,12 +197,11 @@
     box-shadow: 0 0 0 0 rgba(0,0,0,.7);
     background-image: image-url('tiles/cobblestone.png');
     background-size: cover;
-    border: 2px solid #f59e0b;
     color: #78350f;
-    border-radius: 4px;
       &:hover {
         cursor: pointer;
         background-color: #78350f;
+        border-radius: 4px;
         transform: translate(-8px, -8px);
         outline: solid 2px white;
         box-shadow: 8px 8px 0 0 rgba(0,0,0,.7);
@@ -575,7 +574,7 @@ bottom: 42px;
 
 .house-tile--robot_statue {
   bottom: 40px;
-  left: 18px;
+  left: 10px;
   max-width: 95%;
   max-height: 115%;
 }
@@ -615,6 +614,17 @@ bottom: 42px;
   bottom: 15px;
   left: 35px;
   transform: translate(-100%, -10%)
+            rotate3d(-3, 3, 0, -60deg)
+            rotate(-45deg)
+            scaleY(3.5);
+}
+
+.house-tile--hacker_tower {
+  width: 140%;
+  max-height: 300%;
+  left: -10px;
+  bottom: 10%;
+  transform: translate(-108%, -10%)
             rotate3d(-3, 3, 0, -60deg)
             rotate(-45deg)
             scaleY(3.5);

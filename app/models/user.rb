@@ -89,7 +89,7 @@ TILE_TYPES = {
     { name: "Server House 1",    url: 'server_house1.png',     css_class: 'house-tile--medium1' },
     { name: "Server House 2",    url: 'server_house2_animated.gif',     css_class: 'house-tile--medium1' },
     { name: "Hacker Tower 2",    url: 'hacker_tower2.png',     css_class: 'house-tile--tall1' },
-    { name: "Hacker Tower 3",    url: 'hacker_tower3_animated.gif',     css_class: 'house-tile--tall1' },
+    { name: "Hacker Tower 3",    url: 'hacker_tower3_animated.gif',     css_class: 'house-tile--hacker_tower' },
     { name: "Gothic Library 1",  url: 'gothic_library.png',    css_class: 'house-tile--cathedral' },
     { name: "Gothic Library 2",  url: 'gothic_library2.png',   css_class: 'house-tile--cathedral2' },
     { name: "Tea Pavilion",      url: 'tea_pavilion.png',      css_class: 'house-tile--large' },
